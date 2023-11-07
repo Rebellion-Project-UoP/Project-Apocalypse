@@ -2,6 +2,8 @@
 
 
 #include "DayNightCycle.h"
+#include "Engine/DirectionalLight.h"
+#include <Kismet/GameplayStatics.h>
 
 // Sets default values
 ADayNightCycle::ADayNightCycle()
@@ -9,12 +11,20 @@ ADayNightCycle::ADayNightCycle()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	
 }
 
 // Called when the game starts or when spawned
 void ADayNightCycle::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	//	AActor* SunLight;
+
+	TArray<AActor*> SunLight;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADirectionalLight::StaticClass(), SunLight)
+	
 	
 }
 
