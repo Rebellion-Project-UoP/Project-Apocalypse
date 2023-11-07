@@ -2,6 +2,8 @@
 
 
 #include "SteeringBehaviour.h"
+#include <Kismet/GameplayStatics.h>
+
 
 // Sets default values for this component's properties
 USteeringBehaviour::USteeringBehaviour()
@@ -9,7 +11,7 @@ USteeringBehaviour::USteeringBehaviour()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
+	player = nullptr;
 	// ...
 }
 
@@ -18,8 +20,8 @@ USteeringBehaviour::USteeringBehaviour()
 void USteeringBehaviour::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
+	player = Cast<AProjectApocalypseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	
 	
 }
 
@@ -30,5 +32,10 @@ void USteeringBehaviour::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+FVector USteeringBehaviour::Calculate()
+{
+	return FVector(0, 0, 0);
 }
 
