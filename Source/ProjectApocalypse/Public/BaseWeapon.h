@@ -14,6 +14,7 @@ class PROJECTAPOCALYPSE_API ABaseWeapon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ABaseWeapon();
+	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Ammo")
 	int Ammunition;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Ammo")
@@ -51,11 +52,14 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
     bool bIsProjectile;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY()
+	USceneComponent* Root;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
 	USkeletalMeshComponent* WeaponBody;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* WeaponBodyMesh;
+	USkeletalMesh* WeaponBodySkeletalMesh;
 	
 	// UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
 	// ENUM FiringMode;
