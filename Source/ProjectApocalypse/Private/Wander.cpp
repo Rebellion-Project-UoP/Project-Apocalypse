@@ -6,6 +6,11 @@
 #include "Engine/DirectionalLight.h"
 
 
+void UWander::BeginPlay()
+{
+	//navMesh = Cast<ANavMeshBoundsVolume>(UGameplayStatics::GetActorOfClass(GetWorld(), ANavMeshBoundsVolume::StaticClass()));
+}
+
 FVector UWander::Calculate()
 {
 
