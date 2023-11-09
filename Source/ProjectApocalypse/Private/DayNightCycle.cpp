@@ -23,7 +23,7 @@ void ADayNightCycle::BeginPlay()
 	//	AActor* SunLight;
 
 	TArray<AActor*> SunLight;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADirectionalLight::StaticClass(), SunLight)
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADirectionalLight::StaticClass(), SunLight);
 	
 	
 }
