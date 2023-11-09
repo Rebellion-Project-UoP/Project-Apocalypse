@@ -2,8 +2,6 @@
 
 
 #include "BaseWeapon.h"
-
-#include "MovieSceneSequenceID.h"
 #include "Components/SkeletalMeshComponent.h"
 
 // Sets default values
@@ -17,21 +15,18 @@ ABaseWeapon::ABaseWeapon()
 	
 	WeaponBody = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponBody"));
 	WeaponBody->SetupAttachment(Root);
-
 }
 
 // Called when the game starts or when spawned
 void ABaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	WeaponBody->SetSkeletalMeshAsset(WeaponBodySkeletalMesh);
 }
 
 // Called every frame
 void ABaseWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	WeaponBody->SetSkinnedAssetAndUpdate(WeaponBodySkeletalMesh);
 }
-

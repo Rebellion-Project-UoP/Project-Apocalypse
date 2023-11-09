@@ -55,11 +55,11 @@ public:
 	UPROPERTY()
 	USceneComponent* Root;
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY()
 	USkeletalMeshComponent* WeaponBody;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* WeaponBodySkeletalMesh;
+	USkeletalMesh* WeaponBodySkeletalMesh = NewObject<USkeletalMesh>();
 	
 	// UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
 	// ENUM FiringMode;
