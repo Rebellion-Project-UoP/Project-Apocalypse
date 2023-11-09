@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
 #include "CoreMinimal.h"
+#include "AIController.h"
 #include "GameFramework/Character.h"
 #include "ZombieBase.generated.h"
 
@@ -11,6 +11,12 @@ class PROJECTAPOCALYPSE_API AZombieBase : public ACharacter
 {
 	GENERATED_BODY()
 
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float radius;
+
+private:
+	AAIController* _aiController;
 public:
 	// Sets default values for this character's properties
 	AZombieBase();
@@ -25,5 +31,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	//UPathFollowingComponent::FMoveComplete OnMoveComplete(FAIRequestID requestID, const FPathFollowingResult& result);
 
 };
