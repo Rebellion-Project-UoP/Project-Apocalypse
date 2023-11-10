@@ -32,6 +32,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	//UPathFollowingComponent::FMoveComplete OnMoveComplete(FAIRequestID requestID, const FPathFollowingResult& result);
+	void Move();
 
+	
 };
