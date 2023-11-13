@@ -15,6 +15,12 @@ ABaseWeapon::ABaseWeapon()
 	
 	WeaponBody = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponBody"));
 	WeaponBody->SetupAttachment(Root);
+
+	WeaponBarrel = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon Barrel"));
+	WeaponBarrel->SetupAttachment(WeaponBody);
+
+	WeaponBarrelExtension = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("ldaigf"));
+	WeaponBarrelExtension->SetupAttachment(WeaponBody);
 }
 
 // Called when the game starts or when spawned
@@ -23,6 +29,10 @@ void ABaseWeapon::BeginPlay()
 	Super::BeginPlay();
 
 	WeaponBody->SetSkeletalMeshAsset(WeaponBodySkeletalMesh);
+
+	WeaponBarrel->SetSkeletalMeshAsset(BarrelSkeletalMesh);
+
+	
 }
 
 // Called every frame

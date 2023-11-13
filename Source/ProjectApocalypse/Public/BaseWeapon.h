@@ -57,9 +57,29 @@ public:
 
 	UPROPERTY()
 	USkeletalMeshComponent* WeaponBody;
+	UPROPERTY()
+	USkeletalMeshComponent* WeaponBarrel;
+	UPROPERTY()
+	USkeletalMeshComponent* WeaponBarrelExtension;
+	UPROPERTY()
+	USkeletalMeshComponent* WeaponGrip;
+	UPROPERTY()
+	USkeletalMeshComponent* WeaponMagazine;
+	UPROPERTY()
+	USkeletalMeshComponent* WeaponStock;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* WeaponBodySkeletalMesh = NewObject<USkeletalMesh>();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USkeletalMesh* BarrelSkeletalMesh = NewObject<USkeletalMesh>();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USkeletalMesh* BarrelExtensionSkeletalMesh = NewObject<USkeletalMesh>();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USkeletalMesh* GripSkeletalMesh = NewObject<USkeletalMesh>();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USkeletalMesh* MagazineSkeletalMesh = NewObject<USkeletalMesh>();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USkeletalMesh* StockSkeletalMesh = NewObject<USkeletalMesh>();
 	
 	// UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
 	// ENUM FiringMode;
