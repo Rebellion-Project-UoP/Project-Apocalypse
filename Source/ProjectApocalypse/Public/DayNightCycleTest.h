@@ -4,16 +4,16 @@
 #include "Engine/DirectionalLight.h"
 #include "Misc/OutputDeviceNull.h"
 #include "GameFramework/Actor.h"
-#include "DayNightCycle.generated.h"
+#include "DayNightCycleTest.generated.h"
 
 UCLASS()
-class PROJECTAPOCALYPSE_API ADayNightCycle : public AActor
+class PROJECTAPOCALYPSE_API ADayNightCycleTest : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ADayNightCycle();
+	ADayNightCycleTest();
 
 protected:
 	// Called when the game starts or when spawned
@@ -23,18 +23,19 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere, Category = "Sky")
-	AActor* sun;
 
 	UPROPERTY(EditAnywhere, Category = "Sky")
-	ADirectionalLight* dayLightSource;
+		AActor* sun;
 
 	UPROPERTY(EditAnywhere, Category = "Sky")
-	ADirectionalLight* nightLightSource;
+		ADirectionalLight* dayLightSource;
 
 	UPROPERTY(EditAnywhere, Category = "Sky")
-	float turnRate;
+		ADirectionalLight* nightLightSource;
+
+	UPROPERTY(EditAnywhere, Category = "Sky")
+		float turnRate;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Environment")
-	bool bIsNightTime = false;
+		bool bIsNightTime = false;
 };
