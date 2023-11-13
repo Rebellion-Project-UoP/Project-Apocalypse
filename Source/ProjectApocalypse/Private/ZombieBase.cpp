@@ -13,7 +13,10 @@ AZombieBase::AZombieBase()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	radius = 200.0f;
+
+	aggroRange = 200.0f;
+
+	_behaviours = TArray<USteeringBehaviour*>();
 }
 
 // Called when the game starts or when spawned
@@ -22,29 +25,35 @@ void AZombieBase::BeginPlay()
 	Super::BeginPlay();
 
 	_aiController = Cast<AAIController>(GetController());
-	
-	FTimerHandle UnusedHandle;
 
-	GetWorldTimerManager().SetTimer(UnusedHandle, this, &AZombieBase::Move, 4, true, 0);
+
+	//gets the behaviours attached to the zombie
+	TArray<UActorComponent*> behavioursFound = GetComponentsByClass(USteeringBehaviour::StaticClass());
+
+	for(int i = 0; i < behavioursFound.Num(); i++ )
+	{
+		USteeringBehaviour* b = Cast<USteeringBehaviour>(behavioursFound[i]);
+		_behaviours.Add(b);
+	};
+	
+	MoveToPlayer();
 	
 }
 
 
-void AZombieBase::Move()
+void AZombieBase::MoveToPlayer()
 {
+
+	FTimerHandle UnusedHandle;
+	GetWorldTimerManager().SetTimer(UnusedHandle, this, &AZombieBase::MoveToPlayer, 4, true, 0);
 	FNavLocation result;
 
 	UNavigationSystemV1* navData = UNavigationSystemV1::GetCurrent(GetWorld());
-	navData->GetRandomReachablePointInRadius(GetActorLocation() , radius, result);
+	navData->GetRandomReachablePointInRadius(GetActorLocation() , aggroRange, result);
 	
-	_aiController->MoveToLocation(result.Location, (-1.0f), false);
+	_aiController->MoveToLocation(FVector(1700,1880,0), 5, false);
 
-	//_aiController->MoveToActor(UGameplayStatics::GetPlayerCharacter(GetWorld(),0));
-
-	
-	
-	
-
+	//_aiController->MoveToActor(UGameplayStatics::GetPlayerCharacter(GetWorld(),0), (-1.0f), false);
 
 }
 
@@ -57,12 +66,7 @@ void AZombieBase::Tick(float DeltaTime)
 }
 
 
-// Called to bind functionality to input
-void AZombieBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-}
 
 
 

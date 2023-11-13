@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class PROJECTAPOCALYPSE_API UWander : public USteeringBehaviour
 {
 	GENERATED_BODY()

@@ -3,20 +3,25 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "SteeringBehaviour.h"
 #include "GameFramework/Character.h"
 #include "ZombieBase.generated.h"
-
 UCLASS()
 class PROJECTAPOCALYPSE_API AZombieBase : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
+	//stores the zombies aggro range
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float radius;
+	float aggroRange;
 
 private:
+	//stores the reference to the zombies ai controller
 	AAIController* _aiController;
+
+	//stores all steering behaviours for the zombie
+	TArray<USteeringBehaviour*> _behaviours;
 public:
 	// Sets default values for this character's properties
 	AZombieBase();
@@ -29,10 +34,16 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	void Move();
+	// moves the zombie towards the player
+	void MoveToPlayer();
 
 	
 };
+
+
+//steering behaviours to add
+//Wander
+//Separation
+//wall avoidance
+//obstacle avoidance
+//
