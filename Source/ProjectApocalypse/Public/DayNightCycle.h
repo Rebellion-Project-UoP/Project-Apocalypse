@@ -27,23 +27,23 @@ public:
 	AActor* sun;
 
 	UPROPERTY(EditAnywhere, Category = "Sky")
-	ADirectionalLight* lightSource;
+	ADirectionalLight* dayLightSource;
+
+	UPROPERTY(EditAnywhere, Category = "Sky")
+	ADirectionalLight* nightLightSource;
 
 	UPROPERTY(EditAnywhere, Category = "Sky")
 	float turnRate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sky")
-	UStaticMesh* Day;
+	UStaticMesh* day;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sky")
-	UStaticMesh* Night;
+	UStaticMesh* night;
 
 	//static ConstructorHelpers::FObjectFinder<UStaticMesh>MeshAsset
 
 
 	//static ConstructorHelpers::FObjectFinder<UStaticMesh>MeshAsset(TEXT("StaticMesh'/Script/Engine.MaterialInstanceConstant'/Engine/MapTemplates/Sky/M_Procedural_Sky_Night.M_Procedural_Sky_Night'"));
 	//UStaticMesh* Asset = MeshAsset;
-
-	float toleranceLevels = 1;
-
 };

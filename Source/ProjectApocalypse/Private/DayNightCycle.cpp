@@ -22,25 +22,31 @@ void ADayNightCycle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (lightSource)
-	{
-		lightSource->AddActorLocalRotation(FRotator(0, (DeltaTime * turnRate), 0));
+	//dayLightSource->GetActorRotation().Pitch;
 
-		if (lightSource->GetActorRotation() == FRotator(0, 180, 0))
+	if (dayLightSource)
+	{
+		dayLightSource->AddActorLocalRotation(FRotator((DeltaTime * turnRate), 0, 0));
+
+		if (dayLightSource->GetActorRotation().Pitch >= 0)
 		{
+			dayLightSource->SetActorHiddenInGame(true);
+
 			if (sun)
 			{
-				//Night->SetMaterial()
+				//sun->setmaterial
+			}
+		}
+
+		if (dayLightSource->GetActorRotation().Pitch <= 0)
+		{
+			dayLightSource->SetActorHiddenInGame(false);
+
+			if (sun)
+			{
+				//sun->setmaterial
 			}
 		}
 	}
-
-	//if (sun)
-	//{
-	//	FOutputDeviceNull ar;
-	//	sun->CallFunctionByNameWithArguments(TEXT("UpdateSunDirection"), ar, NULL, true);
-
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("True"));
-	//}
 }
 
