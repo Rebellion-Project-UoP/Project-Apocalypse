@@ -16,11 +16,25 @@ ABaseWeapon::ABaseWeapon()
 	WeaponBody = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponBody"));
 	WeaponBody->SetupAttachment(Root);
 
-	WeaponBarrel = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon Barrel"));
+	WeaponBarrel = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Barrel"));
 	WeaponBarrel->SetupAttachment(WeaponBody);
 
-	WeaponBarrelExtension = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("ldaigf"));
+	WeaponBarrelExtension = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Barrel Extension"));
 	WeaponBarrelExtension->SetupAttachment(WeaponBody);
+
+	WeaponGrip = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Grip"));
+	WeaponGrip->SetupAttachment(WeaponBody);
+
+	WeaponMagazine = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Magazine"));
+	WeaponMagazine->SetupAttachment(WeaponBody);
+
+	WeaponStock = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Stock"));
+	WeaponStock->SetupAttachment(WeaponBody);
+
+	WeaponScope = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Scope"));
+	WeaponScope->SetupAttachment(WeaponBody);
+
+	WeaponBarrelExtension->SetWorldLocation(WeaponBarrel->GetSocketLocation(TEXT("BarrelEndSocket")));
 }
 
 // Called when the game starts or when spawned
@@ -28,15 +42,42 @@ void ABaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 
-	WeaponBody->SetSkeletalMeshAsset(WeaponBodySkeletalMesh);
-
-	WeaponBarrel->SetSkeletalMeshAsset(BarrelSkeletalMesh);
-
-	
+	UpdateWeaponMesh();
 }
 
 // Called every frame
 void ABaseWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	UpdateWeaponMesh();
+}
+
+void ABaseWeapon::UpdateWeaponMesh()
+{
+	WeaponBody->SetSkeletalMeshAsset(WeaponBodySkeletalMesh);
+
+	WeaponBarrel->SetSkeletalMeshAsset(BarrelSkeletalMesh);
+
+	WeaponGrip->SetSkeletalMeshAsset(GripSkeletalMesh);
+
+	WeaponMagazine->SetSkeletalMeshAsset(MagazineSkeletalMesh);
+
+	WeaponStock->SetSkeletalMeshAsset(StockSkeletalMesh);
+
+	WeaponScope->SetSkeletalMeshAsset(ScopeSkeletalMesh);
+	
+	//early return
+	if (BarrelSkeletalMesh)
+	{
+		WeaponBarrelExtension->SetWorldLocation(WeaponBarrel->GetSocketLocation(TEXT("BarrelEndSocket")));
+
+		WeaponBarrelExtension->SetStaticMesh(BarrelExtensionSkeletalMesh);
+
+		return;
+	}
+	
+	BarrelExtensionSkeletalMesh=nullptr;
+
+	WeaponBarrelExtension->SetStaticMesh(nullptr);
 }

@@ -59,27 +59,41 @@ public:
 	USkeletalMeshComponent* WeaponBody;
 	UPROPERTY()
 	USkeletalMeshComponent* WeaponBarrel;
+
+	
 	UPROPERTY()
-	USkeletalMeshComponent* WeaponBarrelExtension;
+	UStaticMeshComponent* WeaponBarrelExtension;
+
+	
 	UPROPERTY()
 	USkeletalMeshComponent* WeaponGrip;
 	UPROPERTY()
 	USkeletalMeshComponent* WeaponMagazine;
 	UPROPERTY()
 	USkeletalMeshComponent* WeaponStock;
+	UPROPERTY()
+	USkeletalMeshComponent* WeaponScope;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* WeaponBodySkeletalMesh = NewObject<USkeletalMesh>();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* BarrelSkeletalMesh = NewObject<USkeletalMesh>();
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* BarrelExtensionSkeletalMesh = NewObject<USkeletalMesh>();
+	UStaticMesh* BarrelExtensionSkeletalMesh = NewObject<UStaticMesh>();
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* GripSkeletalMesh = NewObject<USkeletalMesh>();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* MagazineSkeletalMesh = NewObject<USkeletalMesh>();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* StockSkeletalMesh = NewObject<USkeletalMesh>();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USkeletalMesh* ScopeSkeletalMesh = NewObject<USkeletalMesh>();
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateWeaponMesh();
+
 	
 	// UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
 	// ENUM FiringMode;
@@ -97,6 +111,8 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	USkeletalMesh* _CurrentScopeSkeletalMesh = NewObject<USkeletalMesh>();
 
 public:	
 	// Called every frame
