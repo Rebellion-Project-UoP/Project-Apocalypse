@@ -19,6 +19,7 @@ public:
 private:
 	//stores the reference to the zombies ai controller
 	AAIController* _aiController;
+	FVector _velocity;
 
 	//stores all steering behaviours for the zombie
 	TArray<USteeringBehaviour*> _behaviours;

@@ -14,7 +14,9 @@ AZombieBase::AZombieBase()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	aggroRange = 200.0f;
+	aggroRange = 2000.0f;
+
+	_velocity = FVector(0);
 
 	_behaviours = TArray<USteeringBehaviour*>();
 }
@@ -34,9 +36,14 @@ void AZombieBase::BeginPlay()
 	{
 		USteeringBehaviour* b = Cast<USteeringBehaviour>(behavioursFound[i]);
 		_behaviours.Add(b);
+		
 	};
 	
-	MoveToPlayer();
+	//MoveToPlayer();
+	FTimerHandle UnusedHandle;
+	GetWorldTimerManager().SetTimer(UnusedHandle, this, &AZombieBase::MoveToPlayer, 2, true, 0);
+
+	
 	
 }
 
@@ -44,14 +51,19 @@ void AZombieBase::BeginPlay()
 void AZombieBase::MoveToPlayer()
 {
 
-	FTimerHandle UnusedHandle;
-	GetWorldTimerManager().SetTimer(UnusedHandle, this, &AZombieBase::MoveToPlayer, 4, true, 0);
-	FNavLocation result;
+	/*FNavLocation result;
 
 	UNavigationSystemV1* navData = UNavigationSystemV1::GetCurrent(GetWorld());
-	navData->GetRandomReachablePointInRadius(GetActorLocation() , aggroRange, result);
+
 	
-	_aiController->MoveToLocation(FVector(1700,1880,0), 5, false);
+	bool bPointFound = false;
+
+	while (!bPointFound)
+	{
+		bPointFound = navData->GetRandomReachablePointInRadius(GetActorLocation(), aggroRange, result);
+	}
+	
+	_aiController->MoveToLocation(result.Location, 5.0f, false);*/
 
 	//_aiController->MoveToActor(UGameplayStatics::GetPlayerCharacter(GetWorld(),0), (-1.0f), false);
 
@@ -62,6 +74,8 @@ void AZombieBase::MoveToPlayer()
 void AZombieBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+
 
 }
 

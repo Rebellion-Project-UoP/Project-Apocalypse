@@ -14,13 +14,25 @@ class PROJECTAPOCALYPSE_API UWander : public USteeringBehaviour
 {
 	GENERATED_BODY()
 
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float _wanderRadius;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float _wanderDistance;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float _wanderJitter;
+
 private:
-	ANavMeshBoundsVolume* navMesh;
+	FVector _wanderTarget;
+	float _wanderAngle;
 
 public:
+	UWander();
 	void BeginPlay() override;
 	
 public:
 	FVector Calculate() override;
 
+private:
+	void UpdateAngle();
 };
