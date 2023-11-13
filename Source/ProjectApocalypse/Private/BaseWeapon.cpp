@@ -55,8 +55,6 @@ void ABaseWeapon::Tick(float DeltaTime)
 
 void ABaseWeapon::UpdateWeaponMesh()
 {
-	WeaponBody->SetSkeletalMeshAsset(WeaponBodySkeletalMesh);
-
 	WeaponBarrel->SetSkeletalMeshAsset(BarrelSkeletalMesh);
 
 	WeaponGrip->SetSkeletalMeshAsset(GripSkeletalMesh);
@@ -72,12 +70,12 @@ void ABaseWeapon::UpdateWeaponMesh()
 	{
 		WeaponBarrelExtension->SetWorldLocation(WeaponBarrel->GetSocketLocation(TEXT("BarrelEndSocket")));
 
-		WeaponBarrelExtension->SetStaticMesh(BarrelExtensionSkeletalMesh);
+		WeaponBarrelExtension->SetStaticMesh(BarrelExtensionStaticMesh);
 
 		return;
 	}
 	
-	BarrelExtensionSkeletalMesh=nullptr;
+	BarrelExtensionStaticMesh = nullptr;
 
 	WeaponBarrelExtension->SetStaticMesh(nullptr);
 }

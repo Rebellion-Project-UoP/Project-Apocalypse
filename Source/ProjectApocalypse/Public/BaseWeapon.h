@@ -55,16 +55,10 @@ public:
 	UPROPERTY()
 	USceneComponent* Root;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	USkeletalMeshComponent* WeaponBody;
 	UPROPERTY()
-	USkeletalMeshComponent* WeaponBarrel;
-
-	
-	UPROPERTY()
-	UStaticMeshComponent* WeaponBarrelExtension;
-
-	
+	USkeletalMeshComponent* WeaponBarrel;	
 	UPROPERTY()
 	USkeletalMeshComponent* WeaponGrip;
 	UPROPERTY()
@@ -73,15 +67,12 @@ public:
 	USkeletalMeshComponent* WeaponStock;
 	UPROPERTY()
 	USkeletalMeshComponent* WeaponScope;
+
+	UPROPERTY()
+	UStaticMeshComponent* WeaponBarrelExtension;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* WeaponBodySkeletalMesh = NewObject<USkeletalMesh>();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* BarrelSkeletalMesh = NewObject<USkeletalMesh>();
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMesh* BarrelExtensionSkeletalMesh = NewObject<UStaticMesh>();
-	
+	USkeletalMesh* BarrelSkeletalMesh = NewObject<USkeletalMesh>();	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* GripSkeletalMesh = NewObject<USkeletalMesh>();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -90,6 +81,9 @@ public:
 	USkeletalMesh* StockSkeletalMesh = NewObject<USkeletalMesh>();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* ScopeSkeletalMesh = NewObject<USkeletalMesh>();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UStaticMesh* BarrelExtensionStaticMesh = NewObject<UStaticMesh>();
 
 	UFUNCTION(BlueprintCallable)
 	void UpdateWeaponMesh();
