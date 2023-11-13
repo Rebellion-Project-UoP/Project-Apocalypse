@@ -39,34 +39,11 @@ void AZombieBase::BeginPlay()
 		
 	};
 	
-	//MoveToPlayer();
-	FTimerHandle UnusedHandle;
-	GetWorldTimerManager().SetTimer(UnusedHandle, this, &AZombieBase::MoveToPlayer, 2, true, 0);
+	//FTimerHandle UnusedHandle;
+	//GetWorldTimerManager().SetTimer(UnusedHandle, this, &AZombieBase::MoveToPlayer, 2, true, 0);
 
 	
 	
-}
-
-
-void AZombieBase::MoveToPlayer()
-{
-
-	/*FNavLocation result;
-
-	UNavigationSystemV1* navData = UNavigationSystemV1::GetCurrent(GetWorld());
-
-	
-	bool bPointFound = false;
-
-	while (!bPointFound)
-	{
-		bPointFound = navData->GetRandomReachablePointInRadius(GetActorLocation(), aggroRange, result);
-	}
-	
-	_aiController->MoveToLocation(result.Location, 5.0f, false);*/
-
-	//_aiController->MoveToActor(UGameplayStatics::GetPlayerCharacter(GetWorld(),0), (-1.0f), false);
-
 }
 
 
