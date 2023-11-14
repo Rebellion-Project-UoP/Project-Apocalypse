@@ -52,13 +52,16 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
     bool bIsProjectile;
 
+	
 	UPROPERTY()
 	USceneComponent* Root;
 
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	USkeletalMeshComponent* WeaponBody;
 	UPROPERTY()
-	USkeletalMeshComponent* WeaponBarrel;	
+	USkeletalMeshComponent* WeaponBarrel;
+
+	//These should be static meshes
 	UPROPERTY()
 	USkeletalMeshComponent* WeaponGrip;
 	UPROPERTY()
@@ -72,7 +75,9 @@ public:
 	UStaticMeshComponent* WeaponBarrelExtension;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* BarrelSkeletalMesh = NewObject<USkeletalMesh>();	
+	USkeletalMesh* BarrelSkeletalMesh = NewObject<USkeletalMesh>();
+
+	//These should be static meshes
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* GripSkeletalMesh = NewObject<USkeletalMesh>();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -85,28 +90,27 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMesh* BarrelExtensionStaticMesh = NewObject<UStaticMesh>();
 
+	// Weapon Materials
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UMaterial* WeaponSkin;
+
 	UFUNCTION(BlueprintCallable)
 	void UpdateWeaponMesh();
 
+	UFUNCTION(BlueprintCallable)
+	virtual void FireWeapon();
 	
 	// UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
 	// ENUM FiringMode;
-
-	// weapon parts:
-	// 		body
-	// 		Magazine
-	// 		Barrel
-	// 		Grip
-	//		scope
-	// 		Ammo type
-	// 		Stock
-	//		paint
+	// Single fire
+	// Burst-fire
+	// Auto-fire
+	// Toggleable
+	// Binary trigger
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	USkeletalMesh* _CurrentScopeSkeletalMesh = NewObject<USkeletalMesh>();
 
 public:	
 	// Called every frame
