@@ -8,6 +8,7 @@
 
 
 
+
 // Sets default values
 AZombieBase::AZombieBase()
 {
@@ -26,7 +27,7 @@ void AZombieBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	_aiController = Cast<AAIController>(GetController());
+	_aiController = Cast<Azombiecon>(GetController());
 
 
 	//gets the behaviours attached to the zombie
