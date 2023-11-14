@@ -13,6 +13,4 @@ void AAssaultRifle::FireWeapon()
 void AAssaultRifle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	FireWeapon();
 }

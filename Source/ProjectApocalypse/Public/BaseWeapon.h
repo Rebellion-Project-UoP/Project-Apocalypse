@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/Actor.h"
 #include "BaseWeapon.generated.h"
 
@@ -52,6 +53,11 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
     bool bIsProjectile;
 
+	UPROPERTY()
+	class UCapsuleComponent* InteractionCapsule;
+
+	UFUNCTION()
+	void OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodytypeIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
 	UPROPERTY()
 	USceneComponent* Root;

@@ -3,6 +3,7 @@
 
 #include "BaseWeapon.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 
 // Sets default values
 ABaseWeapon::ABaseWeapon()
@@ -33,6 +34,11 @@ ABaseWeapon::ABaseWeapon()
 
 	WeaponScope = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Scope"));
 	WeaponScope->SetupAttachment(WeaponBody);
+
+	InteractionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Interaction Capsule"));
+	InteractionCapsule->SetupAttachment(Root);
+
+	InteractionCapsule->OnComponentBeginOverlap.AddDynamic(this,&ABaseWeapon::OnInteractionCapsuleOverlap);
 
 	WeaponBarrelExtension->SetWorldLocation(WeaponBarrel->GetSocketLocation(TEXT("BarrelEndSocket")));
 }
@@ -90,4 +96,17 @@ void ABaseWeapon::UpdateWeaponMesh()
 
 void ABaseWeapon::FireWeapon()
 {
+	
+}
+
+void ABaseWeapon::OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComponent, int32 OtherBodytypeIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (Cast<AProjectApocalypseCharacter>(OtherActor))
+	{
+		Destroy();
+		return;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("not player"));
 }
