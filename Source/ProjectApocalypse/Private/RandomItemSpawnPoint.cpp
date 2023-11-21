@@ -15,6 +15,7 @@ ARandomItemSpawnPoint::ARandomItemSpawnPoint()
 void ARandomItemSpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
+
 	
 }
 
@@ -25,3 +26,4 @@ void ARandomItemSpawnPoint::Tick(float DeltaTime)
 
 }
 
+//when choosing the random item to spawn, it should be relevant to the environment around it. Examples: next to an ammo/gun crate spawn weapons/ammo or next to a rubbish pile spawn trashy items or building materials.
