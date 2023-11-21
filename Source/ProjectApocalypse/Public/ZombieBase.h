@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "SteeringBehaviour.h"
+#include "ZombieController.h"
 #include "GameFramework/Character.h"
 #include "ZombieBase.generated.h"
 UCLASS()
@@ -18,7 +18,7 @@ public:
 
 private:
 	//stores the reference to the zombies ai controller
-	AAIController* _aiController;
+	AZombieController* _aiController;
 	FVector _velocity;
 
 	//stores all steering behaviours for the zombie
@@ -35,6 +35,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void Move();
 	
 };
 

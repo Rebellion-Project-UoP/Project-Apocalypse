@@ -27,18 +27,17 @@ void AZombieBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	_aiController = Cast<Azombiecon>(GetController());
-
-
+	_aiController = Cast<AZombieController>(GetController());
+	
 	//gets the behaviours attached to the zombie
-	TArray<UActorComponent*> behavioursFound = GetComponentsByClass(USteeringBehaviour::StaticClass());
+	//TArray<UActorComponent*> behavioursFound = GetComponentsByClass(USteeringBehaviour::StaticClass());
 
-	for(int i = 0; i < behavioursFound.Num(); i++ )
-	{
-		USteeringBehaviour* b = Cast<USteeringBehaviour>(behavioursFound[i]);
-		_behaviours.Add(b);
+	//for(int i = 0; i < behavioursFound.Num(); i++ )
+	//{
+		//USteeringBehaviour* b = Cast<USteeringBehaviour>(behavioursFound[i]);
+		//_behaviours.Add(b);
 		
-	};
+	//};
 	
 	//FTimerHandle UnusedHandle;
 	//GetWorldTimerManager().SetTimer(UnusedHandle, this, &AZombieBase::MoveToPlayer, 2, true, 0);
@@ -54,6 +53,14 @@ void AZombieBase::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 
+
+}
+
+void AZombieBase::Move()
+{
+	FVector steeringForce = FVector(0);
+
+	
 
 }
 
