@@ -15,7 +15,8 @@
 AZombieBase::AZombieBase()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.TickInterval = 1.0f;
+
+
 	PrimaryActorTick.bCanEverTick = true;
 
 	aggroRange = 2000.0f;
@@ -23,6 +24,8 @@ AZombieBase::AZombieBase()
 	_velocity = FVector::Zero();
 
 	_behaviours = TArray<USteeringBehaviour*>();
+
+	playerDetected = false;
 }
 
 // Called when the game starts or when spawned
@@ -55,7 +58,10 @@ void AZombieBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	Move();
+	if (!playerDetected) {
+
+		Move();
+	}
 
 }
 
@@ -84,13 +90,11 @@ void AZombieBase::Move()
 
 		GetCharacterMovement()->MovementMode = EMovementMode::MOVE_Walking;
 
-		//GetTransform().GetLocation() += _velocity * UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
-		SetActorRotation(FMath::RInterpConstantTo(GetTransform().GetRotation().Rotator(), UKismetMathLibrary::Conv_VectorToRotator(_velocity), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 90)) ;
+		SetActorRotation(FMath::RInterpConstantTo(GetTransform().GetRotation().Rotator(), UKismetMathLibrary::Conv_VectorToRotator(_velocity), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 90));
 
-		/*velocity.y = 0;
-		transform.position += velocity * Time.deltaTime;
+		SetActorLocation(GetTransform().GetLocation() + (GetActorForwardVector() * GetCharacterMovement()->MaxWalkSpeed)* UGameplayStatics::GetWorldDeltaSeconds(GetWorld()));
+		
 
-		transform.forward = velocity.normalized;*/
 	}
 
 }

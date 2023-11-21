@@ -16,6 +16,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float aggroRange;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		bool playerDetected;
+
 private:
 	//stores the reference to the zombies ai controller
 	AZombieController* _aiController;
