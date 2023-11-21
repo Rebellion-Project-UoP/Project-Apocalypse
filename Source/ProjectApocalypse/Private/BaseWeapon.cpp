@@ -104,8 +104,9 @@ void ABaseWeapon::OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedCom
 {
 	if (Cast<AProjectApocalypseCharacter>(OtherActor))
 	{
-		Destroy();
-		return;
+		UE_LOG(LogTemp, Warning, TEXT("The player"));
+		// Destroy();
+		// return;
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("not player"));

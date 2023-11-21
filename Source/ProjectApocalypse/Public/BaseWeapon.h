@@ -64,17 +64,17 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	USkeletalMeshComponent* WeaponBody;
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	USkeletalMeshComponent* WeaponBarrel;
 
 	//These should be static meshes
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	USkeletalMeshComponent* WeaponGrip;
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	USkeletalMeshComponent* WeaponMagazine;
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	USkeletalMeshComponent* WeaponStock;
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	USkeletalMeshComponent* WeaponScope;
 
 	UPROPERTY()
@@ -82,8 +82,7 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* BarrelSkeletalMesh = NewObject<USkeletalMesh>();
-
-	//These should be static meshes
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMesh* GripSkeletalMesh = NewObject<USkeletalMesh>();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
