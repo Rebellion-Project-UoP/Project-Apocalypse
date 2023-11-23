@@ -18,6 +18,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<class AActor>> itemToSpawn;
 
+	UPROPERTY(EditAnywhere)
+	int numOfEmptyItemSpawn = 1;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

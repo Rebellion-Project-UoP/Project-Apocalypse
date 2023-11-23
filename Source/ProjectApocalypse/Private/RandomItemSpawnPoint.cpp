@@ -16,30 +16,29 @@ void ARandomItemSpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//for (int i = 0; i < numOfEmptyItemSpawn; i++)
+	//{
+	//	itemToSpawn.AddZeroed();
+	//}
+	
 	SpawnItem();
 
-	//FVector Location(0.0f, 0.0f, 0.0f);
-	//FRotator Rotation(0.0f, 0.0f, 0.0f);
-	//FActorSpawnParameters SpawnInfo;
-	//GetWorld()->SpawnActor<itemToSpawn>(Location, Rotation, SpawnInfo);
-
-	//UWorld::SpawnActor(itemToSpawn[0]);
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Your Message"));
+	//UE_LOG(LogTemp, Warning, TEXT("%i"), itemToSpawn.Num());
 }
 
 // Called every frame
 void ARandomItemSpawnPoint::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ARandomItemSpawnPoint::SpawnItem()
 {
 	FActorSpawnParameters spawnInfo;
-	spawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
-
-	GetWorld()->SpawnActor<AActor>(itemToSpawn[0], GetActorTransform(), spawnInfo);
-
+	spawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	
+	//GetWorld()->SpawnActor<AActor>(itemToSpawn[FMath::RandRange(0, itemToSpawn.Max)], GetActorTransform(), spawnInfo);
 }
 
 //when choosing the random item to spawn, it should be relevant to the environment around it. Examples: next to an ammo/gun crate spawn weapons/ammo or next to a rubbish pile spawn trashy items or building materials.
