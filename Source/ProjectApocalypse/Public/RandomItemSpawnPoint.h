@@ -16,7 +16,7 @@ public:
 	ARandomItemSpawnPoint();
 
 	UPROPERTY(EditAnywhere)
-		TArray<AActor*> itemToSpawn;
+	TArray<TSubclassOf<class AActor>> itemToSpawn;
 
 protected:
 	// Called when the game starts or when spawned
@@ -26,5 +26,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-
+	UFUNCTION()
+	void SpawnItem();
 };

@@ -16,13 +16,29 @@ void ARandomItemSpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
+	SpawnItem();
+
+	//FVector Location(0.0f, 0.0f, 0.0f);
+	//FRotator Rotation(0.0f, 0.0f, 0.0f);
+	//FActorSpawnParameters SpawnInfo;
+	//GetWorld()->SpawnActor<itemToSpawn>(Location, Rotation, SpawnInfo);
+
+	//UWorld::SpawnActor(itemToSpawn[0]);
 }
 
 // Called every frame
 void ARandomItemSpawnPoint::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+}
+
+void ARandomItemSpawnPoint::SpawnItem()
+{
+	FActorSpawnParameters spawnInfo;
+	spawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+
+	GetWorld()->SpawnActor<AActor>(itemToSpawn[0], GetActorTransform(), spawnInfo);
 
 }
 
