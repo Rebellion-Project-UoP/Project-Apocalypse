@@ -21,22 +21,22 @@ UWander::UWander()
 
 void UWander::BeginPlay()
 {
-	_wanderAngle = FMath::RandRange(0.0f, PI * 2);
-	_wanderTarget = FVector(cos(_wanderAngle), sin(_wanderAngle), 0);
+	_wanderAngle = UKismetMathLibrary::RandomFloatInRange(0.0f, PI * 2);
+	_wanderTarget = FVector(cos(_wanderAngle), sin(_wanderAngle), 0) * _wanderRadius;
 
 	FTimerHandle UnusedHandle;
 	
-	//GetOwner()->GetWorldTimerManager().SetTimer(UnusedHandle, this, &UWander::UpdateAngle, 0.01, true, 0);
+	GetOwner()->GetWorldTimerManager().SetTimer(UnusedHandle, this, &UWander::UpdateAngle, 0.1, true, 0);
 
 }
 
 FVector UWander::Calculate()
 {
 
-	_wanderAngle += FMath::RandRange(-_wanderJitter, _wanderJitter);
+
 
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::SanitizeFloat(FMath::RadiansToDegrees(_wanderAngle)));
-	_wanderTarget = FVector(cos(_wanderAngle), sin(_wanderAngle), 0);
+	_wanderTarget = FVector(cos(_wanderAngle), sin(_wanderAngle), 0) * _wanderRadius;
 
 	FVector targetWorld = GetOwner()->GetActorLocation() + _wanderTarget;
 
@@ -47,7 +47,7 @@ FVector UWander::Calculate()
 
 void UWander::UpdateAngle()
 {
-	_wanderAngle += FMath::RandRange(-_wanderJitter, _wanderJitter);
+	_wanderAngle += UKismetMathLibrary::RandomFloatInRange(-FMath::DegreesToRadians(_wanderJitter), FMath::DegreesToRadians(_wanderJitter) );
 
 }
 

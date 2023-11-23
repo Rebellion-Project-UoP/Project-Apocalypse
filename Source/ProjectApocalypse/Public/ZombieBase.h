@@ -19,6 +19,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		bool playerDetected;
 
+	UFUNCTION(BlueprintCallable)
+		FVector getSteeringVelocity();
+
 private:
 	//stores the reference to the zombies ai controller
 	AZombieController* _aiController;
