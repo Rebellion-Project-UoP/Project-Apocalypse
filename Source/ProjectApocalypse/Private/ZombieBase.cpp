@@ -87,16 +87,18 @@ void AZombieBase::Move()
 
 	}
 
-	FVector accel = steeringForce / GetCharacterMovement()->Mass;
+	FVector accel = steeringForce / 1;
 	_velocity = accel * UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
 	
 
-	_velocity.GetClampedToSize(0,GetCharacterMovement()->MaxWalkSpeed);
+	_velocity.GetClampedToSize(70,GetCharacterMovement()->MaxWalkSpeed);
 
 	if (_velocity != FVector::Zero()) {
 		_velocity.Z = 0;
 
 		GetCharacterMovement()->MovementMode = EMovementMode::MOVE_Walking; 
+
+		GetCharacterMovement()->Velocity = _velocity;
 
 		SetActorLocation(GetTransform().GetLocation() + (GetActorForwardVector() * GetCharacterMovement()->MaxWalkSpeed)* UGameplayStatics::GetWorldDeltaSeconds(GetWorld()));
 		
