@@ -77,8 +77,8 @@ void AZombieBase::Move()
 
 	}
 
-	_velocity = steeringForce;
-
+	FVector accel = steeringForce / 1;
+	_velocity += accel * UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
 	
 
 	_velocity.GetClampedToMaxSize(GetCharacterMovement()->MaxWalkSpeed);
@@ -90,9 +90,11 @@ void AZombieBase::Move()
 
 		GetCharacterMovement()->MovementMode = EMovementMode::MOVE_Walking;
 
-		SetActorRotation(FMath::RInterpConstantTo(GetTransform().GetRotation().Rotator(), UKismetMathLibrary::Conv_VectorToRotator(_velocity), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 90));
+		//SetActorRotation(FMath::RInterpConstantTo(GetTransform().GetRotation().Rotator(), UKismetMathLibrary::Conv_VectorToRotator(_velocity), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 90));
 
-		SetActorLocation(GetTransform().GetLocation() + (GetActorForwardVector() * GetCharacterMovement()->MaxWalkSpeed)* UGameplayStatics::GetWorldDeltaSeconds(GetWorld()));
+		SetActorRotation(_velocity.ToOrientationRotator())
+
+		//SetActorLocation(GetTransform().GetLocation() + (GetActorForwardVector() * GetCharacterMovement()->MaxWalkSpeed)* UGameplayStatics::GetWorldDeltaSeconds(GetWorld()));
 		
 
 	}

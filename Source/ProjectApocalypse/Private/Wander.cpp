@@ -4,6 +4,8 @@
 #include "Wander.h"
 #include <Kismet/GameplayStatics.h>
 #include "Engine/DirectionalLight.h"
+#include "Kismet/KismetMathLibrary.h"
+
 
 
 
@@ -24,14 +26,16 @@ void UWander::BeginPlay()
 
 	FTimerHandle UnusedHandle;
 	
-	GetOwner()->GetWorldTimerManager().SetTimer(UnusedHandle, this, &UWander::UpdateAngle, 0.1, true, 0);
+	//GetOwner()->GetWorldTimerManager().SetTimer(UnusedHandle, this, &UWander::UpdateAngle, 0.01, true, 0);
 
 }
 
 FVector UWander::Calculate()
 {
 
+	_wanderAngle += FMath::RandRange(-_wanderJitter, _wanderJitter);
 
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::SanitizeFloat(FMath::RadiansToDegrees(_wanderAngle)));
 	_wanderTarget = FVector(cos(_wanderAngle), sin(_wanderAngle), 0);
 
 	FVector targetWorld = GetOwner()->GetActorLocation() + _wanderTarget;
