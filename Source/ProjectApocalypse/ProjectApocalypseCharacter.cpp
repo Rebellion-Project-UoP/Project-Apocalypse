@@ -84,6 +84,9 @@ void AProjectApocalypseCharacter::SetupPlayerInputComponent(class UInputComponen
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProjectApocalypseCharacter::Look);
 
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered, this, &AProjectApocalypseCharacter::SprintStart);
+
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AProjectApocalypseCharacter::SprintEnd);
 	}
 
 }
@@ -124,6 +127,16 @@ void AProjectApocalypseCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
+void AProjectApocalypseCharacter::SprintStart()
+{
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 
+}
+
+void AProjectApocalypseCharacter::SprintEnd()
+{
+	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
+
+}
 
 

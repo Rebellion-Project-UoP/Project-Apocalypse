@@ -37,11 +37,23 @@ class AProjectApocalypseCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* SprintAction;
+
+
+
 public:
 	AProjectApocalypseCharacter();
 	
 
 protected:
+
+	void SprintStart();
+	void SprintEnd();
+
+	float RunSpeed = 600.f;
+	float SprintSpeed = 900.f;
+
 
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
