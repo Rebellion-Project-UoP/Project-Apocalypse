@@ -15,9 +15,6 @@ public:
 	// Sets default values for this actor's properties
 	ARandomItemSpawnPoint();
 
-	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<class AActor>> itemToSpawn;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -25,6 +22,18 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(EditAnywhere, Category = "Item Spawning")
+	TArray<TSubclassOf<class AActor>> itemToSpawn;
+
+	UPROPERTY(VisibleAnywhere, Category = "Item Spawning")
+	TSubclassOf<class AActor> spawnedActor;
+
+	UPROPERTY(VisibleAnywhere, Category = "Item Spawning")
+	UClass* spawnedActorsClass;
+
+	UPROPERTY(VisibleAnywhere, Category = "Item Spawning")
+	bool bItemPickedUp = false;
 
 	UFUNCTION()
 	void SpawnItem();
