@@ -9,11 +9,18 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class PROJECTAPOCALYPSE_API UWallAvoidance : public USteeringBehaviour
 {
 	GENERATED_BODY()
 	
+
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float viewDistance;
+	
+
 
 public:
 		FVector Calculate() override;
