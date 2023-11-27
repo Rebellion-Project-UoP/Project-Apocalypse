@@ -16,9 +16,12 @@
 
 AProjectApocalypseCharacter::AProjectApocalypseCharacter()
 {
+
+	CurrentStamina = MaxStamina;
+
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-		
+
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
@@ -73,7 +76,7 @@ void AProjectApocalypseCharacter::SetupPlayerInputComponent(class UInputComponen
 {
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
-		
+
 		//Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
@@ -104,7 +107,7 @@ void AProjectApocalypseCharacter::Move(const FInputActionValue& Value)
 
 		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	
+
 		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
@@ -129,14 +132,34 @@ void AProjectApocalypseCharacter::Look(const FInputActionValue& Value)
 
 void AProjectApocalypseCharacter::SprintStart()
 {
-	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+	if (CurrentStamina > 0)
+	{
+		IsSprinting = true;
+		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+		GetWorldTimerManager().SetTimer(StaminaDrainTimerHandle, this, &AProjectApocalypseCharacter::DrainStamina, 1.f, true);
 
+	}
 }
 
 void AProjectApocalypseCharacter::SprintEnd()
 {
+	IsSprinting = false;
 	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
-
+	GetWorldTimerManager().ClearTimer(StaminaDrainTimerHandle);
 }
 
+void AProjectApocalypseCharacter::DrainStamina()
+{
+	if (CurrentStamina > 0)
+	{
+		CurrentStamina -= SprintStaminaDrainRate * 1.f; // Decrease stamina based on the drain rate and interval
+		UE_LOG(LogTemp, Warning, TEXT("DrainStamina: CurrentStamina = %f"), CurrentStamina); // Debug log
 
+		if (CurrentStamina <= 0)
+		{
+			CurrentStamina = 0;
+			GetWorldTimerManager().ClearTimer(StaminaDrainTimerHandle);
+			SprintEnd(); // Stop sprinting when stamina is depleted
+		}
+	}
+}
