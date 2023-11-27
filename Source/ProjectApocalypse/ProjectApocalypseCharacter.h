@@ -85,12 +85,20 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
 	float SprintStaminaDrainRate = 10.f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
+	float StaminaRegenRate = 10.f;
 
+
+
+	UFUNCTION()
+	void RegenStamina();
 
 	UFUNCTION()
 	void DrainStamina();
 
 	FTimerHandle StaminaDrainTimerHandle;
+	FTimerHandle StaminaRegenTimerHandle;
+
 	//float StaminaUsageRate;
 	//float StaminaRegenRate;
 

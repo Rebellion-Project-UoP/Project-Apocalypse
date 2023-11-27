@@ -11,12 +11,12 @@
 #include "EnhancedInputSubsystems.h"
 
 
+
 //////////////////////////////////////////////////////////////////////////
 // AProjectApocalypseCharacter
 
 AProjectApocalypseCharacter::AProjectApocalypseCharacter()
 {
-
 	CurrentStamina = MaxStamina;
 
 	// Set size for collision capsule
@@ -87,7 +87,7 @@ void AProjectApocalypseCharacter::SetupPlayerInputComponent(class UInputComponen
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProjectApocalypseCharacter::Look);
 
-		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered, this, &AProjectApocalypseCharacter::SprintStart);
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started , this, &AProjectApocalypseCharacter::SprintStart);
 
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AProjectApocalypseCharacter::SprintEnd);
 	}
@@ -132,11 +132,13 @@ void AProjectApocalypseCharacter::Look(const FInputActionValue& Value)
 
 void AProjectApocalypseCharacter::SprintStart()
 {
-	if (CurrentStamina > 0)
+	if (CurrentStamina > 0 && GetCharacterMovement()->Velocity.Size() > 0)
 	{
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.0f, FColor::Blue, "current drain is ");
+		GetWorld()->GetTimerManager().SetTimer(StaminaDrainTimerHandle,this, &AProjectApocalypseCharacter::DrainStamina, 0.1f, true,0.0f);
 		IsSprinting = true;
 		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
-		GetWorldTimerManager().SetTimer(StaminaDrainTimerHandle, this, &AProjectApocalypseCharacter::DrainStamina, 1.f, true);
+		/*GetWorldTimerManager().SetTimer(StaminaDrainTimerHandle, this, &AProjectApocalypseCharacter::DrainStamina, 0.1f, true);*/
 
 	}
 }
@@ -146,20 +148,45 @@ void AProjectApocalypseCharacter::SprintEnd()
 	IsSprinting = false;
 	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
 	GetWorldTimerManager().ClearTimer(StaminaDrainTimerHandle);
+	if (!IsSprinting && GetCharacterMovement()->Velocity.Size() <= 0)
+	{
+		GetWorld()->GetTimerManager().SetTimer(StaminaRegenTimerHandle, this, &AProjectApocalypseCharacter::RegenStamina, 0.1f, true, 0.0f);
+	}
+	else
+	{
+		GetWorldTimerManager().ClearTimer(StaminaRegenTimerHandle);
+	}
+	
 }
 
 void AProjectApocalypseCharacter::DrainStamina()
 {
-	if (CurrentStamina > 0)
-	{
-		CurrentStamina -= SprintStaminaDrainRate * 1.f; // Decrease stamina based on the drain rate and interval
-		UE_LOG(LogTemp, Warning, TEXT("DrainStamina: CurrentStamina = %f"), CurrentStamina); // Debug log
-
+	//CurrentStamina -= 1;
+		if (CurrentStamina > 0)
+		{
+			CurrentStamina -= SprintStaminaDrainRate * 0.1f; // Decrease stamina based on the drain rate and interval
+	
+	
+		}
 		if (CurrentStamina <= 0)
 		{
 			CurrentStamina = 0;
 			GetWorldTimerManager().ClearTimer(StaminaDrainTimerHandle);
 			SprintEnd(); // Stop sprinting when stamina is depleted
 		}
+}
+
+void AProjectApocalypseCharacter::RegenStamina()
+{
+	if (CurrentStamina < MaxStamina)
+	{
+		CurrentStamina += StaminaRegenRate * 0.1f;
+	}
+
+	if (CurrentStamina >= MaxStamina)
+	{
+		CurrentStamina = MaxStamina;
+		GetWorldTimerManager().ClearTimer(StaminaRegenTimerHandle);
+		
 	}
 }
