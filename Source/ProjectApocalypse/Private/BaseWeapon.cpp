@@ -96,7 +96,7 @@ void ABaseWeapon::UpdateWeaponMesh()
 
 void ABaseWeapon::FireWeapon()
 {
-	
+	UE_LOG(LogTemp,Warning,TEXT("BANG! BANG!"));
 }
 
 void ABaseWeapon::OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

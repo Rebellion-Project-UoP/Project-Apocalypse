@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BlueprintNodeHelpers.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Actor.h"
 #include "BaseWeapon.generated.h"
@@ -64,17 +65,17 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	USkeletalMeshComponent* WeaponBody;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* WeaponBarrel;
 
 	//These should be static meshes
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* WeaponGrip;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* WeaponMagazine;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* WeaponStock;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* WeaponScope;
 
 	UPROPERTY()
