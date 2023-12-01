@@ -16,7 +16,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float aggroRange;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool playerDetected;
 
 	UFUNCTION(BlueprintCallable)
