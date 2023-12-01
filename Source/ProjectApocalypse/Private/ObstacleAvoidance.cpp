@@ -23,7 +23,7 @@ FVector UObstacleAvoidance::Calculate()
 	FVector closestObstacle;
 	float forceMulti;
 
-	if (UKismetSystemLibrary::BoxTraceMulti(GetWorld(), location, location + fwdVector * viewDistance, FVector(parent->GetCapsuleComponent()->GetScaledCapsuleRadius()), FRotator::ZeroRotator, ETraceTypeQuery::TraceTypeQuery1, true, TArray<AActor*>(), EDrawDebugTrace::ForOneFrame, hits, true, FLinearColor::Red))
+	if (UKismetSystemLibrary::BoxTraceMulti(GetWorld(), location, location + fwdVector * viewDistance, FVector(parent->GetCapsuleComponent()->GetScaledCapsuleRadius()), FRotator::ZeroRotator, ETraceTypeQuery::TraceTypeQuery1, true, TArray<AActor*>(), EDrawDebugTrace::None, hits, true, FLinearColor::Red))
 	{
 		for (int i = 0; i<  hits.Num(); i++)
 		{
