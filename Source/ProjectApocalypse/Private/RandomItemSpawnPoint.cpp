@@ -49,4 +49,4 @@ void ARandomItemSpawnPoint::SpawnItem()
 
 //when choosing the random item to spawn, it should be relevant to the environment around it. Examples: next to an ammo/gun crate spawn weapons/ammo or next to a rubbish pile spawn trashy items or building materials.
 
-//
+//Add the feature of regenerating the random spawn after the item has been picked up. This will be done after I have completed working on the player pick up.
