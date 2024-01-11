@@ -18,9 +18,6 @@ UNeighbourhoodRadius::UNeighbourhoodRadius()
 void UNeighbourhoodRadius::BeginPlay()
 {
 	Super::BeginPlay();
-	FTimerHandle UnusedHandle;
-
-	GetOwner()->GetWorldTimerManager().SetTimer(UnusedHandle, this, &UNeighbourhoodRadius::UpdateNeighboursList, 0.5, true, 0);
 }
 
 
@@ -28,6 +25,8 @@ void UNeighbourhoodRadius::BeginPlay()
 void UNeighbourhoodRadius::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	UpdateNeighboursList();
+
 }
 
 void UNeighbourhoodRadius::UpdateNeighboursList()
