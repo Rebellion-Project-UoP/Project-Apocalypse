@@ -23,7 +23,7 @@ public:
 	int MaxAmmunition;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Ammo")
 	int MagSize;
-
+	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float Recoil;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
@@ -55,7 +55,7 @@ public:
     bool bIsProjectile;
 
 	UPROPERTY()
-	class UCapsuleComponent* InteractionCapsule;
+	UCapsuleComponent* InteractionCapsule;
 
 	UFUNCTION()
 	void OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodytypeIndex, bool bFromSweep, const FHitResult& SweepResult);
