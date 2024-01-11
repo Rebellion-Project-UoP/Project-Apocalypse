@@ -8,7 +8,7 @@
 #include "ProjectApocalypseCharacter.generated.h"
 
 
-UCLASS(config=Game)
+UCLASS(config = Game)
 class AProjectApocalypseCharacter : public ACharacter
 {
 	GENERATED_BODY()
@@ -20,7 +20,7 @@ class AProjectApocalypseCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
-	
+
 	/** MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputMappingContext* DefaultMappingContext;
@@ -37,25 +37,70 @@ class AProjectApocalypseCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
 
+	/** Sprint Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* SprintAction;
+
+
+
 public:
 	AProjectApocalypseCharacter();
-	
+
 
 protected:
+	/** Called for Sprint input */
+	void SprintStart();
+	void SprintEnd();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float RunSpeed = 500.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float SprintSpeed = 900.f;
+
 
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-			
+
 
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
 	// To add mapping context
 	virtual void BeginPlay();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	bool IsSprinting;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
+	float MaxStamina = 100.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
+	float CurrentStamina;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
+	float SprintStaminaDrainRate = 10.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
+	float StaminaRegenRate = 10.f;
+
+
+
+	UFUNCTION()
+	void RegenStamina();
+
+	UFUNCTION()
+	void DrainStamina();
+
+	FTimerHandle StaminaDrainTimerHandle;
+	FTimerHandle StaminaRegenTimerHandle;
+
+	//float StaminaUsageRate;
+	//float StaminaRegenRate;
 
 public:
 	/** Returns CameraBoom subobject **/
