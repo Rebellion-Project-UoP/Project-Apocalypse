@@ -82,19 +82,19 @@ public:
 	UStaticMeshComponent* WeaponBarrelExtension;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* BarrelSkeletalMesh = NewObject<USkeletalMesh>();
+	USkeletalMesh* BarrelSkeletalMesh;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* GripSkeletalMesh = NewObject<USkeletalMesh>();
+	USkeletalMesh* GripSkeletalMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* MagazineSkeletalMesh = NewObject<USkeletalMesh>();
+	USkeletalMesh* MagazineSkeletalMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* StockSkeletalMesh = NewObject<USkeletalMesh>();
+	USkeletalMesh* StockSkeletalMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* ScopeSkeletalMesh = NewObject<USkeletalMesh>();
+	USkeletalMesh* ScopeSkeletalMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMesh* BarrelExtensionStaticMesh = NewObject<UStaticMesh>();
+	UStaticMesh* BarrelExtensionStaticMesh;
 
 	// Weapon Materials
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)

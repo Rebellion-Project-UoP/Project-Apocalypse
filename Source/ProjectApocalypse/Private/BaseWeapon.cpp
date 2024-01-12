@@ -19,7 +19,7 @@ ABaseWeapon::ABaseWeapon()
 
 	WeaponBarrel = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Barrel"));
 	WeaponBarrel->SetupAttachment(WeaponBody);
-
+	
 	WeaponBarrelExtension = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Barrel Extension"));
 	WeaponBarrelExtension->SetupAttachment(WeaponBody);
 
@@ -41,6 +41,14 @@ ABaseWeapon::ABaseWeapon()
 	InteractionCapsule->OnComponentBeginOverlap.AddDynamic(this,&ABaseWeapon::OnInteractionCapsuleOverlap);
 
 	WeaponBarrelExtension->SetWorldLocation(WeaponBarrel->GetSocketLocation(TEXT("BarrelEndSocket")));
+
+	BarrelSkeletalMesh = NewObject<USkeletalMesh>();
+	GripSkeletalMesh = NewObject<USkeletalMesh>();
+	MagazineSkeletalMesh = NewObject<USkeletalMesh>();
+	StockSkeletalMesh = NewObject<USkeletalMesh>();
+	ScopeSkeletalMesh = NewObject<USkeletalMesh>();
+
+	BarrelExtensionStaticMesh = NewObject<UStaticMesh>();
 }
 
 // Called when the game starts or when spawned
