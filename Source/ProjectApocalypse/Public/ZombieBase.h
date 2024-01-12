@@ -1,9 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 #pragma once
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "SteeringBehaviour.h"
 #include "ZombieController.h"
+#include "NeighbourhoodRadius.h"
 #include "GameFramework/Character.h"
 #include "ZombieBase.generated.h"
 UCLASS()
@@ -21,6 +21,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		FVector getSteeringVelocity();
+
+		UNeighbourhoodRadius* neighbourhood;
 
 private:
 	//stores the reference to the zombies ai controller
@@ -44,11 +46,3 @@ public:
 	void Move();
 	
 };
-
-
-//steering behaviours to add
-//Wander
-//Separation
-//wall avoidance
-//obstacle avoidance
-//

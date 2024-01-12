@@ -2,6 +2,7 @@
 
 
 #include "NeighbourhoodRadius.h"
+#include "ZombieBase.h"
 
 // Sets default values for this component's properties
 UNeighbourhoodRadius::UNeighbourhoodRadius()
@@ -36,7 +37,7 @@ void UNeighbourhoodRadius::UpdateNeighboursList()
 
 	UKismetSystemLibrary::SphereOverlapActors(GetWorld(), GetOwner()->GetActorLocation(), radius, TArray<TEnumAsByte<EObjectTypeQuery>>(), AZombieBase::StaticClass(), TArray<AActor*>() = { GetOwner() }, neighbours);
 
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, FString::FormatAsNumber(neighbours.Num()));
+	//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, FString::FormatAsNumber(neighbours.Num()));
 
 }
 

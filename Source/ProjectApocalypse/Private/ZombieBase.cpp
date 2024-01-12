@@ -8,9 +8,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
-
-
-
 FVector AZombieBase::getSteeringVelocity()
 {
 	return _velocity;
@@ -21,7 +18,8 @@ AZombieBase::AZombieBase()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 
-
+	
+	
 	PrimaryActorTick.bCanEverTick = true;
 
 	aggroRange = 2000.0f;
@@ -37,6 +35,11 @@ AZombieBase::AZombieBase()
 void AZombieBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	AddComponentByClass(UNeighbourhoodRadius::StaticClass(), false, this->GetActorTransform(), true);
+
+	neighbourhood = GetComponentByClass<UNeighbourhoodRadius>();
+
 
 	_aiController = Cast<AZombieController>(GetController());
 	
