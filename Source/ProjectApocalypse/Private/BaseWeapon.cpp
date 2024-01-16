@@ -107,8 +107,15 @@ void ABaseWeapon::FireWeapon()
 	UE_LOG(LogTemp,Warning,TEXT("BANG! BANG!"));
 }
 
+void ABaseWeapon::Reload()
+{
+	UE_LOG(LogTemp,Warning,TEXT("RELOOOOOOOODING!"));
+
+}
+
 void ABaseWeapon::OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComponent, int32 OtherBodytypeIndex, bool bFromSweep, const FHitResult& SweepResult)
+                                              UPrimitiveComponent* OtherComponent, int32 OtherBodytypeIndex,
+                                              bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (Cast<AProjectApocalypseCharacter>(OtherActor))
 	{
@@ -117,5 +124,5 @@ void ABaseWeapon::OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedCom
 		// return;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("not player"));
+	UE_LOG(LogTemp, Warning, TEXT("Not the player"));
 }
