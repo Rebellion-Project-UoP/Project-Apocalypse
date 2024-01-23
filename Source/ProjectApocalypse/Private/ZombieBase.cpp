@@ -17,8 +17,6 @@ FVector AZombieBase::getSteeringVelocity()
 AZombieBase::AZombieBase()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-
-	
 	
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -29,6 +27,8 @@ AZombieBase::AZombieBase()
 	_behaviours = TArray<USteeringBehaviour*>();
 
 	playerDetected = false;
+
+
 }
 
 // Called when the game starts or when spawned
@@ -75,6 +75,8 @@ void AZombieBase::Tick(float DeltaTime)
 
 		Move();
 	}
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.1, FColor::Red, FString::SanitizeFloat(GetCharacterMovement()->Velocity.Length()));
+
 
 }
 
@@ -99,12 +101,7 @@ void AZombieBase::Move()
 	if (_velocity != FVector::Zero()) {
 		_velocity.Z = 0;
 
-		GetCharacterMovement()->MovementMode = EMovementMode::MOVE_Walking; 
-
-		GetCharacterMovement()->Velocity = _velocity;
-
-		SetActorLocation(GetTransform().GetLocation() + (GetActorForwardVector() * GetCharacterMovement()->MaxWalkSpeed)* UGameplayStatics::GetWorldDeltaSeconds(GetWorld()));
-		
+		GetMovementComponent()->AddInputVector((GetActorForwardVector()));
 
 	}
 

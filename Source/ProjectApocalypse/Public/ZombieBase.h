@@ -19,15 +19,26 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool playerDetected;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool isAttacking;
+
 	UFUNCTION(BlueprintCallable)
 		FVector getSteeringVelocity();
 
 		UNeighbourhoodRadius* neighbourhood;
 
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+			float maxWalkSpeed;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+			float maxRunSpeed;
+
+
 private:
 	//stores the reference to the zombies ai controller
 	AZombieController* _aiController;
 	FVector _velocity;
+
+	
 
 	//stores all steering behaviours for the zombie
 	TArray<USteeringBehaviour*> _behaviours;
