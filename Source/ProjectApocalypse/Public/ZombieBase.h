@@ -1,10 +1,10 @@
 #pragma once
 #include "CoreMinimal.h"
-#include "AIController.h"
 #include "SteeringBehaviour.h"
 #include "ZombieController.h"
 #include "NeighbourhoodRadius.h"
 #include "GameFramework/Character.h"
+#include "Components/BoxComponent.h"
 #include "ZombieBase.generated.h"
 UCLASS()
 class PROJECTAPOCALYPSE_API AZombieBase : public ACharacter
@@ -25,6 +25,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		FVector getSteeringVelocity();
 
+	UFUNCTION(BlueprintCallable)
+		void Attack();
+
 		UNeighbourhoodRadius* neighbourhood;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -34,11 +37,9 @@ public:
 
 
 private:
-	//stores the reference to the zombies ai controller
-	AZombieController* _aiController;
 	FVector _velocity;
 
-	
+	UBoxComponent* attackHitBox;
 
 	//stores all steering behaviours for the zombie
 	TArray<USteeringBehaviour*> _behaviours;
@@ -53,6 +54,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+		void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	void Move();
 	

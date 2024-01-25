@@ -6,11 +6,20 @@
 #include "NavigationSystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 
 FVector AZombieBase::getSteeringVelocity()
 {
 	return _velocity;
+}
+
+void AZombieBase::Attack()
+{
+	attackHitBox->SetGenerateOverlapEvents(true);
+
+	isAttacking = true;
+
 }
 
 // Sets default values
@@ -28,7 +37,6 @@ AZombieBase::AZombieBase()
 
 	playerDetected = false;
 
-
 }
 
 // Called when the game starts or when spawned
@@ -38,10 +46,15 @@ void AZombieBase::BeginPlay()
 
 	AddComponentByClass(UNeighbourhoodRadius::StaticClass(), false, this->GetActorTransform(), true);
 
+	attackHitBox = Cast<UBoxComponent>(GetComponentsByTag(UBoxComponent::StaticClass(), "attack")[0]);
+
+	attackHitBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::FAttachmentTransformRules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true), "rh_attackHitBox");
+
+	attackHitBox->OnComponentBeginOverlap.AddDynamic(this, &AZombieBase::OnBoxBeginOverlap);
+
 	neighbourhood = GetComponentByClass<UNeighbourhoodRadius>();
 
 
-	_aiController = Cast<AZombieController>(GetController());
 	
 	//gets the behaviours attached to the zombie
 	TArray<UActorComponent*> behavioursFound = GetComponentsByClass(USteeringBehaviour::StaticClass());
@@ -61,6 +74,8 @@ void AZombieBase::BeginPlay()
 }
 
 
+
+
 // Called every frame
 void AZombieBase::Tick(float DeltaTime)
 {
@@ -75,9 +90,15 @@ void AZombieBase::Tick(float DeltaTime)
 
 		Move();
 	}
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.1, FColor::Red, FString::SanitizeFloat(GetCharacterMovement()->Velocity.Length()));
 
 
+}
+
+void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (Cast<AProjectApocalypseCharacter>(OtherActor)) {
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, "damage");
+	}
 }
 
 void AZombieBase::Move()
