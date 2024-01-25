@@ -20,6 +20,8 @@ void AZombieBase::Attack()
 
 	isAttacking = true;
 
+	
+
 }
 
 // Sets default values
