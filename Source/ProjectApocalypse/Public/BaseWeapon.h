@@ -62,6 +62,9 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
     bool bIsProjectile;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(ClampMin = 1))
+	int pellets;
+
 	UPROPERTY()
 	UCapsuleComponent* InteractionCapsule;
 
@@ -120,6 +123,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void LineTrace();
+	FVector LineTrace(FVector startPoint, FVector endPoint);
 
 public:	
 	// Called every frame
