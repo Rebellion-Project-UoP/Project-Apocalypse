@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "RandomItemSpawnPoint.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ARandomItemSpawnPoint::ARandomItemSpawnPoint()
@@ -36,9 +36,13 @@ void ARandomItemSpawnPoint::SpawnItem()
 
 	spawnedActor = itemToSpawn[randNumber];
 
-	spawnedActorsClass = spawnedActor.Get();
+	if (spawnedActor != nullptr)
+	{
+		spawnedActorsClass = spawnedActor.Get();
+		
+		//spawnedActorsClass.
+	}
 
-	//spawnedActorsClass.
 
 	//Debug
 		//UE_LOG(LogTemp, Warning, TEXT("%i"), randNumber);
@@ -50,3 +54,7 @@ void ARandomItemSpawnPoint::SpawnItem()
 //when choosing the random item to spawn, it should be relevant to the environment around it. Examples: next to an ammo/gun crate spawn weapons/ammo or next to a rubbish pile spawn trashy items or building materials.
 
 //Add the feature of regenerating the random spawn after the item has been picked up. This will be done after I have completed working on the player pick up.
+
+//Maybe check whether the spawned item variable becomes null because the item is interacted with then it can be respawned?
+//But then need to get around the fact that the variable will be null when nothing is spawned
+//However this could be good and be what the designer wants.
