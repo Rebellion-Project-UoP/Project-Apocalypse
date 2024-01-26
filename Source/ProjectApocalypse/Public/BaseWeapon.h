@@ -3,10 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BlueprintNodeHelpers.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Actor.h"
 #include "BaseWeapon.generated.h"
+
+UENUM (BlueprintType)
+enum class FiringMode
+{	 SingleFire,
+	 BurstFire,
+	 AutoFire,
+	 Toggleable,
+	 BinaryTrigger
+};
 
 UCLASS()
 class PROJECTAPOCALYPSE_API ABaseWeapon : public AActor
@@ -54,6 +62,9 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
     bool bIsProjectile;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(ClampMin = 1))
+	int pellets;
+
 	UPROPERTY()
 	UCapsuleComponent* InteractionCapsule;
 
@@ -78,7 +89,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* WeaponScope;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* WeaponBarrelExtension;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -105,18 +116,16 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void FireWeapon();
-	
-	// UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
-	// ENUM FiringMode;
-	// Single fire
-	// Burst-fire
-	// Auto-fire
-	// Toggleable
-	// Binary trigger
+
+	UFUNCTION(BlueprintCallable)
+	virtual void Reload();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void LineTrace();
+	FVector LineTrace(FVector startPoint, FVector endPoint);
 
 public:	
 	// Called every frame
