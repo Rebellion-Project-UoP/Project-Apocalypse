@@ -47,7 +47,7 @@ void AZombieBase::BeginPlay()
 
 	neighbourhood = GetComponentByClass<UNeighbourhoodRadius>();
 	
-
+	healthComponent = Cast<UHealthComp>(GetComponentByClass(UHealthComp::StaticClass()));
 	
 	//gets the behaviours attached to the zombie
 	TArray<UActorComponent*> behavioursFound = GetComponentsByClass(USteeringBehaviour::StaticClass());
@@ -90,9 +90,15 @@ void AZombieBase::Tick(float DeltaTime)
 void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (Cast<AProjectApocalypseCharacter>(OtherActor)) {
+		AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(OtherActor);
+
 		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, "damage");
 
+		if (Cast<UHealthComp>(player->GetComponentByClass(UHealthComp::StaticClass()))->Implements<UDamageInterface>()) {
+			UHealthComp* health = Cast<UHealthComp>(player->GetComponentByClass(UHealthComp::StaticClass()));
 
+			IDamageInterface::Execute_TakeDamage(health, 20);
+		}
 	}
 }
 

@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "DamageInterface.h"
 #include "HealthComp.generated.h"
 
-
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Blueprintable )
-class PROJECTAPOCALYPSE_API UHealthComp : public UActorComponent
+class PROJECTAPOCALYPSE_API UHealthComp : public UActorComponent, public IDamageInterface
 {
 	GENERATED_BODY()
 
@@ -30,5 +30,5 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	virtual void TakeDamage_Implementation(float damage) override;
 };

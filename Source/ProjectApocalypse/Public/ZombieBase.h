@@ -5,6 +5,7 @@
 #include "NeighbourhoodRadius.h"
 #include "GameFramework/Character.h"
 #include "Components/BoxComponent.h"
+#include "HealthComp.h"
 #include "ZombieBase.generated.h"
 UCLASS()
 class PROJECTAPOCALYPSE_API AZombieBase : public ACharacter
@@ -37,6 +38,8 @@ private:
 	FVector _velocity;
 
 	UBoxComponent* swipeHitBox;
+
+	UHealthComp* healthComponent;
 
 	//stores all steering behaviours for the zombie
 	TArray<USteeringBehaviour*> _behaviours;
