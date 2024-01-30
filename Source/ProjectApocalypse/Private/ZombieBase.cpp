@@ -14,15 +14,6 @@ FVector AZombieBase::getSteeringVelocity()
 	return _velocity;
 }
 
-void AZombieBase::Attack()
-{
-	attackHitBox->SetGenerateOverlapEvents(true);
-
-	isAttacking = true;
-
-	
-
-}
 
 // Sets default values
 AZombieBase::AZombieBase()
@@ -48,11 +39,11 @@ void AZombieBase::BeginPlay()
 
 	AddComponentByClass(UNeighbourhoodRadius::StaticClass(), false, this->GetActorTransform(), true);
 
-	attackHitBox = Cast<UBoxComponent>(GetComponentsByTag(UBoxComponent::StaticClass(), "attack")[0]);
+	swipeHitBox = Cast<UBoxComponent>(GetComponentsByTag(UBoxComponent::StaticClass(), "attack")[0]);
 
-	attackHitBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::FAttachmentTransformRules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true), "rh_attackHitBox");
+	swipeHitBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::FAttachmentTransformRules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true), "rh_attackHitBox");
 
-	attackHitBox->OnComponentBeginOverlap.AddDynamic(this, &AZombieBase::OnBoxBeginOverlap);
+	swipeHitBox->OnComponentBeginOverlap.AddDynamic(this, &AZombieBase::OnBoxBeginOverlap);
 
 	neighbourhood = GetComponentByClass<UNeighbourhoodRadius>();
 
@@ -102,6 +93,7 @@ void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, "damage");
 	}
 }
+
 
 void AZombieBase::Move()
 {

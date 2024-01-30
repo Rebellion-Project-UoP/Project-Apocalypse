@@ -25,9 +25,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 		FVector getSteeringVelocity();
 
-	UFUNCTION(BlueprintCallable)
-		void Attack();
-
 		UNeighbourhoodRadius* neighbourhood;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -35,11 +32,11 @@ public:
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 			float maxRunSpeed;
 
-
+		
 private:
 	FVector _velocity;
 
-	UBoxComponent* attackHitBox;
+	UBoxComponent* swipeHitBox;
 
 	//stores all steering behaviours for the zombie
 	TArray<USteeringBehaviour*> _behaviours;
