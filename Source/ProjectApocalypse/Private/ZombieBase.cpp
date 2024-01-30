@@ -46,7 +46,7 @@ void AZombieBase::BeginPlay()
 	swipeHitBox->OnComponentBeginOverlap.AddDynamic(this, &AZombieBase::OnBoxBeginOverlap);
 
 	neighbourhood = GetComponentByClass<UNeighbourhoodRadius>();
-
+	
 
 	
 	//gets the behaviours attached to the zombie
@@ -91,6 +91,8 @@ void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 {
 	if (Cast<AProjectApocalypseCharacter>(OtherActor)) {
 		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, "damage");
+
+
 	}
 }
 
