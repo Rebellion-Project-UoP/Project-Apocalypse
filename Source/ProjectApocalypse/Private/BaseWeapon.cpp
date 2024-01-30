@@ -7,6 +7,8 @@
 #include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 #include "DrawDebugHelpers.h"
 #include "Camera/CameraComponent.h"
+#include "CollisionQueryParams.h"
+#include "PhysicalMaterials/PhysicalMaterial.h"
 
 // Sets default values
 ABaseWeapon::ABaseWeapon()
@@ -69,6 +71,10 @@ void ABaseWeapon::LineTrace()
 	// Set the collision channel to use for the line trace
 	ECollisionChannel TraceChannel = ECC_Visibility;
 
+	FCollisionQueryParams TraceParams;
+
+	TraceParams.bReturnPhysicalMaterial = true;
+
 	TArray<UCameraComponent*> FollowCamera;
 	GetParentActor()->GetComponents<UCameraComponent>(FollowCamera);
 	
@@ -77,7 +83,7 @@ void ABaseWeapon::LineTrace()
 	
 	FHitResult HitResult;
 
-	bool bHit = World->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, TraceChannel);
+	bool bHit = World->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, TraceChannel, TraceParams);
 
 	DrawDebugLine(World,StartPoint, EndPoint , FColor::Red, false, 2.0f, 0, 1.0f);
 
@@ -88,7 +94,18 @@ void ABaseWeapon::LineTrace()
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a zombie!"));
 			AZombieBase* Hit = Cast<AZombieBase>(HitResult.GetActor());
-			
+
+
+			if (HitResult.PhysMaterial.IsValid())
+			{
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.PhysMaterial.Get()->GetName());
+				
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Material: %s"), HitResult.PhysMaterial.Get()->SurfaceType));
+
+
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Hit physcis material!"));			
+			}
+
 			Hit->Destroy(); //temporary needs to have a damage function implimented.
 		}
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a something!"));
@@ -176,8 +193,7 @@ void ABaseWeapon::Reload()
 //int32 ABaseWeapon::CalculateScore(const FHitResult& HitResult)
 //{
 //	if (HitResult.BoneName == TEXT(""))
-//	
-//	
+//		
 //	return int32();
 //}
 
