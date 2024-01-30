@@ -120,6 +120,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void Reload();
 
+	//UFUNCTION()
+	//int32 CalculateScore(const FHitResult& HitResult);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

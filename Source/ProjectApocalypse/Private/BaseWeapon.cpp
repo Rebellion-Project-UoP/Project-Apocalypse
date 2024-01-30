@@ -173,6 +173,14 @@ void ABaseWeapon::Reload()
 
 }
 
+//int32 ABaseWeapon::CalculateScore(const FHitResult& HitResult)
+//{
+//	if (HitResult.BoneName == TEXT(""))
+//	
+//	
+//	return int32();
+//}
+
 void ABaseWeapon::OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                               UPrimitiveComponent* OtherComponent, int32 OtherBodytypeIndex,
                                               bool bFromSweep, const FHitResult& SweepResult)
