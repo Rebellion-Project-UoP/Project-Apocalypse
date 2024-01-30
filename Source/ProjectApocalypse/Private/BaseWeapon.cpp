@@ -7,6 +7,7 @@
 #include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 #include "DrawDebugHelpers.h"
 #include "Camera/CameraComponent.h"
+#include "Math/UnitConversion.h"
 
 // Sets default values
 ABaseWeapon::ABaseWeapon()
@@ -52,6 +53,12 @@ ABaseWeapon::ABaseWeapon()
 	ScopeSkeletalMesh = NewObject<USkeletalMesh>();
 
 	BarrelExtensionStaticMesh = NewObject<UStaticMesh>();
+
+	WorldRef = GetWorld();
+	
+	Mag = MagSize;
+
+	ReloadTime = 0;
 }
 
 // Called when the game starts or when spawned
@@ -64,53 +71,50 @@ void ABaseWeapon::BeginPlay()
 
 void ABaseWeapon::LineTrace()
 {
-	UWorld* World = GetWorld();
+		// Set the collision channel to use for the line trace
+		ECollisionChannel TraceChannel = ECC_Visibility;
 
-	// Set the collision channel to use for the line trace
-	ECollisionChannel TraceChannel = ECC_Visibility;
-
-	TArray<UCameraComponent*> FollowCamera;
-	GetParentActor()->GetComponents<UCameraComponent>(FollowCamera);
+		TArray<UCameraComponent*> FollowCamera;
+		GetParentActor()->GetComponents<UCameraComponent>(FollowCamera);
 	
-	FVector StartPoint = GetParentActor()->GetActorLocation(); //needs to be changed to barrel socket
-	FVector EndPoint = LineTrace(FollowCamera[0]->GetComponentLocation(), FollowCamera[0]->GetComponentLocation() + FollowCamera[0]->GetForwardVector()*5000); // change 5000 to the range variable
+		FVector StartPoint = GetParentActor()->GetActorLocation(); //needs to be changed to barrel socket
+		FVector EndPoint = LineTrace(FollowCamera[0]->GetComponentLocation(), FollowCamera[0]->GetComponentLocation() + FollowCamera[0]->GetForwardVector()*5000); // change 5000 to the range variable
 	
-	FHitResult HitResult;
+		FHitResult HitResult;
 
-	bool bHit = World->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, TraceChannel);
+		bool bHit = WorldRef->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, TraceChannel);
 
-	DrawDebugLine(World,StartPoint, EndPoint , FColor::Red, false, 2.0f, 0, 1.0f);
+		DrawDebugLine(WorldRef,StartPoint, EndPoint , FColor::Red, false, 2.0f, 0, 1.0f);
 
 
-	if (bHit)
-	{
-		if (Cast<AZombieBase>(HitResult.GetActor()))
+		if (bHit)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a zombie!"));
-			AZombieBase* Hit = Cast<AZombieBase>(HitResult.GetActor());
+			if (Cast<AZombieBase>(HitResult.GetActor()))
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a zombie!"));
+				AZombieBase* Hit = Cast<AZombieBase>(HitResult.GetActor());
 			
-			Hit->Destroy(); //temporary needs to have a damage function implimented.
-		}
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a something!"));
+				Hit->Destroy(); //temporary needs to have a damage function implimented.
+				return;
+			}
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a something!"));
 
-		return;
-	}
-	
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit nothing!"));
+			return;
+		}
+		
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit nothing!"));
 }
 
 FVector ABaseWeapon::LineTrace(FVector startPoint, FVector endPoint)
 {
-	UWorld* World = GetWorld();
-
 	// Set the collision channel to use for the line trace
 	ECollisionChannel TraceChannel = ECC_Visibility;
 	
 	FHitResult HitResult;
 
-	bool bHit = World->LineTraceSingleByChannel(HitResult, startPoint, endPoint, TraceChannel);
+	bool bHit = WorldRef->LineTraceSingleByChannel(HitResult, startPoint, endPoint, TraceChannel);
 
-	DrawDebugLine(World,startPoint, endPoint, FColor::Green, false, 2.0f, 0, 1.0f);
+	DrawDebugLine(WorldRef,startPoint, endPoint, FColor::Green, false, 2.0f, 0, 1.0f);
 
 	if (bHit)
 	{
@@ -159,18 +163,63 @@ void ABaseWeapon::UpdateWeaponMesh()
 
 void ABaseWeapon::FireWeapon()
 {
-	UE_LOG(LogTemp,Warning,TEXT("BANG! BANG!"));
-
-	for (int i = 0; i < pellets; ++i)
+	if (Mag > 0)
 	{
-		LineTrace();
+		UE_LOG(LogTemp,Warning,TEXT("BANG! BANG!"));
+
+		for (int i = 0; i < pellets; ++i)
+		{
+			LineTrace();
+		}
+		
+		--Mag;
+		
+		return;
 	}
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Click Click... No ammo!?"));
 }
 
 void ABaseWeapon::Reload()
 {
-	UE_LOG(LogTemp,Warning,TEXT("RELOOOOOOOODING!"));
+	//needs to be changed to actual reload time from weapons stat
+	// if (!ReloadTime>0.0f)
+	// {
+	// 	ReloadTime = 3.0f;
+	// } //safety net to stop reloading being re-triggered.
 
+	ReloadTime = 3.0f;
+
+	//GetWorldTimerManager().SetTimer(ReloadTimer, this, Reloading, 1.0f, true, 2.0f);
+	GetWorldTimerManager().SetTimer(ReloadingTimer, this, &ABaseWeapon::Reloading, 0.1f, true);
+	//
+}
+
+void ABaseWeapon::Reloading()
+{
+	ReloadTime -= 0.1f;
+	
+	UE_LOG(LogTemp,Warning,TEXT("RELOOOOOOOODING!"));
+	
+	if (ReloadTime <=0)
+	{
+		//some logic to detect remaining ammo supply and apply based on remaining suply or magsize.
+		//additionally need to remove reloaded amount from supply.
+		
+		Mag = MagSize;
+
+		UE_LOG(LogTemp,Warning,TEXT("%i"), Mag);
+
+
+		// setting ammunition and checking to see if its less than 0;
+		if ((Ammunition -= MagSize)<1)
+		{
+			Ammunition = 0;
+		}
+		
+		UE_LOG(LogTemp,Warning,TEXT("RELOADED!!"));
+		
+		GetWorldTimerManager().ClearTimer(ReloadingTimer); //stopping the timer as reloading has been finished.
+	}
 }
 
 void ABaseWeapon::OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -186,3 +235,4 @@ void ABaseWeapon::OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedCom
 
 	UE_LOG(LogTemp, Warning, TEXT("Not the player"));
 }
+
