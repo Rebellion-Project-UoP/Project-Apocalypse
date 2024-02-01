@@ -1,10 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 #pragma once
 #include "CoreMinimal.h"
-#include "AIController.h"
 #include "SteeringBehaviour.h"
 #include "ZombieController.h"
+#include "NeighbourhoodRadius.h"
 #include "GameFramework/Character.h"
+#include "Components/BoxComponent.h"
+#include "HealthComp.h"
 #include "ZombieBase.generated.h"
 UCLASS()
 class PROJECTAPOCALYPSE_API AZombieBase : public ACharacter
@@ -19,13 +20,26 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool playerDetected;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool isAttacking;
+
 	UFUNCTION(BlueprintCallable)
 		FVector getSteeringVelocity();
 
+		UNeighbourhoodRadius* neighbourhood;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+			float maxWalkSpeed;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+			float maxRunSpeed;
+
+		
 private:
-	//stores the reference to the zombies ai controller
-	AZombieController* _aiController;
 	FVector _velocity;
+
+	UBoxComponent* swipeHitBox;
+
+	UHealthComp* healthComponent;
 
 	//stores all steering behaviours for the zombie
 	TArray<USteeringBehaviour*> _behaviours;
@@ -41,14 +55,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+		void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 	void Move();
 	
 };
-
-
-//steering behaviours to add
-//Wander
-//Separation
-//wall avoidance
-//obstacle avoidance
-//

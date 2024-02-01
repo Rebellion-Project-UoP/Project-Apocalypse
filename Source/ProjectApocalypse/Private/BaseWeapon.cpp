@@ -30,14 +30,22 @@ ABaseWeapon::ABaseWeapon()
 	WeaponGrip = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Grip"));
 	WeaponGrip->SetupAttachment(WeaponBody);
 
+	GripSkeletalMesh = NewObject<USkeletalMesh>();
+
 	WeaponMagazine = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Magazine"));
 	WeaponMagazine->SetupAttachment(WeaponBody);
+
+	MagazineSkeletalMesh = NewObject<USkeletalMesh>();
 
 	WeaponStock = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Stock"));
 	WeaponStock->SetupAttachment(WeaponBody);
 
+	StockSkeletalMesh = NewObject<USkeletalMesh>();
+
 	WeaponScope = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Scope"));
 	WeaponScope->SetupAttachment(WeaponBody);
+
+	ScopeSkeletalMesh = NewObject<USkeletalMesh>();
 
 	InteractionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Interaction Capsule"));
 	InteractionCapsule->SetupAttachment(Root);
@@ -211,7 +219,9 @@ void ABaseWeapon::Reloading()
 {
 	ReloadTime -= 0.1f;
 	
-	UE_LOG(LogTemp,Warning,TEXT("RELOOOOOOOODING!"));
+	//UE_LOG(LogTemp,Warning,TEXT("RELOOOOOOOODING!"));
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("RELOOOOOOOODING!"));
+
 	
 	if (ReloadTime <=0)
 	{
@@ -220,7 +230,9 @@ void ABaseWeapon::Reloading()
 		
 		Mag = MagSize;
 
-		UE_LOG(LogTemp,Warning,TEXT("%i"), Mag);
+		//UE_LOG(LogTemp,Warning,TEXT("%i"), Mag);
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("%i"), Mag);
+
 
 
 		// setting ammunition and checking to see if its less than 0;
@@ -229,7 +241,9 @@ void ABaseWeapon::Reloading()
 			Ammunition = 0;
 		}
 		
-		UE_LOG(LogTemp,Warning,TEXT("RELOADED!!"));
+		//UE_LOG(LogTemp,Warning,TEXT("RELOADED!!"));
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("RELOADED!!"));
+
 		
 		GetWorldTimerManager().ClearTimer(ReloadingTimer); //stopping the timer as reloading has been finished.
 	}

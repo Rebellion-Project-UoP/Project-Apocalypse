@@ -1,0 +1,298 @@
+[
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\AssaultRifle.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\BaseWeapon.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\DayNightCycle.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\DayNightCycleTest.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\ItemBaseClass.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\ModularGunComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\ObstacleAvoidance.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\Pickupable.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\RandomItemSpawnPoint.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\Seek.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\SteeringBehaviour.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\WallAvoidance.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\Wander.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\ZombieBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\ZombieController.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\ProjectApocalypse.Build.cs",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\ProjectApocalypse.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\ProjectApocalypse.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\ProjectApocalypseCharacter.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\ProjectApocalypseCharacter.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\ProjectApocalypseGameMode.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\ProjectApocalypseGameMode.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\AssaultRifle.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\BaseWeapon.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\DayNightCycle.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\DayNightCycleTest.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\ItemBaseClass.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\ModularGunComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\ObstacleAvoidance.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\Pickupable.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\RandomItemSpawnPoint.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\Seek.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\SteeringBehaviour.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\WallAvoidance.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\Wander.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\ZombieBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\ZombieController.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	}
+]
