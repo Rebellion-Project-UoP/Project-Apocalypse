@@ -3,10 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BlueprintNodeHelpers.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Actor.h"
 #include "BaseWeapon.generated.h"
+
+UENUM (BlueprintType)
+enum class FiringMode
+{	 SingleFire,
+	 BurstFire,
+	 AutoFire,
+	 Toggleable,
+	 BinaryTrigger
+};
 
 UCLASS()
 class PROJECTAPOCALYPSE_API ABaseWeapon : public AActor
@@ -23,7 +31,7 @@ public:
 	int MaxAmmunition;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Ammo")
 	int MagSize;
-
+	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float Recoil;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
@@ -54,8 +62,11 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
     bool bIsProjectile;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(ClampMin = 1))
+	int pellets;
+
 	UPROPERTY()
-	class UCapsuleComponent* InteractionCapsule;
+	UCapsuleComponent* InteractionCapsule;
 
 	UFUNCTION()
 	void OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodytypeIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -78,23 +89,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* WeaponScope;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* WeaponBarrelExtension;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* BarrelSkeletalMesh = NewObject<USkeletalMesh>();
+	USkeletalMesh* BarrelSkeletalMesh;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* GripSkeletalMesh = NewObject<USkeletalMesh>();
+	USkeletalMesh* GripSkeletalMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* MagazineSkeletalMesh = NewObject<USkeletalMesh>();
+	USkeletalMesh* MagazineSkeletalMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* StockSkeletalMesh = NewObject<USkeletalMesh>();
+	USkeletalMesh* StockSkeletalMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMesh* ScopeSkeletalMesh = NewObject<USkeletalMesh>();
+	USkeletalMesh* ScopeSkeletalMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMesh* BarrelExtensionStaticMesh = NewObject<UStaticMesh>();
+	UStaticMesh* BarrelExtensionStaticMesh;
 
 	// Weapon Materials
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
@@ -105,18 +116,16 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void FireWeapon();
-	
-	// UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
-	// ENUM FiringMode;
-	// Single fire
-	// Burst-fire
-	// Auto-fire
-	// Toggleable
-	// Binary trigger
+
+	UFUNCTION(BlueprintCallable)
+	virtual void Reload();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void LineTrace();
+	FVector LineTrace(FVector startPoint, FVector endPoint);
 
 public:	
 	// Called every frame
