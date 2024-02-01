@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#define BulletTrace ECC_GameTraceChannel1
 
 #include "BaseWeapon.h"
 #include "ZombieBase.h"
@@ -9,6 +10,7 @@
 #include "Camera/CameraComponent.h"
 #include "CollisionQueryParams.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
+
 
 // Sets default values
 ABaseWeapon::ABaseWeapon()
@@ -69,7 +71,8 @@ void ABaseWeapon::LineTrace()
 	UWorld* World = GetWorld();
 
 	// Set the collision channel to use for the line trace
-	ECollisionChannel TraceChannel = ECC_Visibility;
+	ECollisionChannel TraceChannel = ECollisionChannel::BulletTrace;
+	//ECollisionChannel::ECC_PhysicsBody
 
 	FCollisionQueryParams TraceParams;
 
@@ -98,7 +101,9 @@ void ABaseWeapon::LineTrace()
 
 			if (HitResult.PhysMaterial.IsValid())
 			{
-				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.PhysMaterial.Get()->GetName());
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.GetActor()->GetName());
+				
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.PhysMaterial.Get()->GetName());
 				
 				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Material: %s"), HitResult.PhysMaterial.Get()->SurfaceType));
 
