@@ -29,14 +29,22 @@ ABaseWeapon::ABaseWeapon()
 	WeaponGrip = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Grip"));
 	WeaponGrip->SetupAttachment(WeaponBody);
 
+	GripSkeletalMesh = NewObject<USkeletalMesh>();
+
 	WeaponMagazine = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Magazine"));
 	WeaponMagazine->SetupAttachment(WeaponBody);
+
+	MagazineSkeletalMesh = NewObject<USkeletalMesh>();
 
 	WeaponStock = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Stock"));
 	WeaponStock->SetupAttachment(WeaponBody);
 
+	StockSkeletalMesh = NewObject<USkeletalMesh>();
+
 	WeaponScope = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Scope"));
 	WeaponScope->SetupAttachment(WeaponBody);
+
+	ScopeSkeletalMesh = NewObject<USkeletalMesh>();
 
 	InteractionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Interaction Capsule"));
 	InteractionCapsule->SetupAttachment(Root);

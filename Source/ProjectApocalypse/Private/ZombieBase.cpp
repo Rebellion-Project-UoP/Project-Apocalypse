@@ -6,22 +6,20 @@
 #include "NavigationSystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
-
-
-
 
 FVector AZombieBase::getSteeringVelocity()
 {
 	return _velocity;
 }
 
+
 // Sets default values
 AZombieBase::AZombieBase()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-
-
+	
 	PrimaryActorTick.bCanEverTick = true;
 
 	aggroRange = 2000.0f;
@@ -31,6 +29,7 @@ AZombieBase::AZombieBase()
 	_behaviours = TArray<USteeringBehaviour*>();
 
 	playerDetected = false;
+
 }
 
 // Called when the game starts or when spawned
@@ -38,7 +37,17 @@ void AZombieBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	_aiController = Cast<AZombieController>(GetController());
+	AddComponentByClass(UNeighbourhoodRadius::StaticClass(), false, this->GetActorTransform(), true);
+
+	swipeHitBox = Cast<UBoxComponent>(GetComponentsByTag(UBoxComponent::StaticClass(), "attack")[0]);
+
+	swipeHitBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::FAttachmentTransformRules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true), "rh_attackHitBox");
+
+	swipeHitBox->OnComponentBeginOverlap.AddDynamic(this, &AZombieBase::OnBoxBeginOverlap);
+
+	neighbourhood = GetComponentByClass<UNeighbourhoodRadius>();
+	
+	healthComponent = Cast<UHealthComp>(GetComponentByClass(UHealthComp::StaticClass()));
 	
 	//gets the behaviours attached to the zombie
 	TArray<UActorComponent*> behavioursFound = GetComponentsByClass(USteeringBehaviour::StaticClass());
@@ -58,6 +67,8 @@ void AZombieBase::BeginPlay()
 }
 
 
+
+
 // Called every frame
 void AZombieBase::Tick(float DeltaTime)
 {
@@ -73,7 +84,24 @@ void AZombieBase::Tick(float DeltaTime)
 		Move();
 	}
 
+
 }
+
+void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (Cast<AProjectApocalypseCharacter>(OtherActor)) {
+		AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(OtherActor);
+
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, "damage");
+
+		if (Cast<UHealthComp>(player->GetComponentByClass(UHealthComp::StaticClass()))->Implements<UDamageInterface>()) {
+			UHealthComp* health = Cast<UHealthComp>(player->GetComponentByClass(UHealthComp::StaticClass()));
+
+			IDamageInterface::Execute_TakeDamage(health, 20);
+		}
+	}
+}
+
 
 void AZombieBase::Move()
 {
@@ -96,12 +124,7 @@ void AZombieBase::Move()
 	if (_velocity != FVector::Zero()) {
 		_velocity.Z = 0;
 
-		GetCharacterMovement()->MovementMode = EMovementMode::MOVE_Walking; 
-
-		GetCharacterMovement()->Velocity = _velocity;
-
-		SetActorLocation(GetTransform().GetLocation() + (GetActorForwardVector() * GetCharacterMovement()->MaxWalkSpeed)* UGameplayStatics::GetWorldDeltaSeconds(GetWorld()));
-		
+		GetMovementComponent()->AddInputVector((GetActorForwardVector()));
 
 	}
 
