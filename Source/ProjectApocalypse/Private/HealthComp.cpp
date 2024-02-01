@@ -37,5 +37,10 @@ void UHealthComp::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 void UHealthComp::TakeDamage_Implementation(float damage)
 {
 	currHealth -= damage;
+
+	if (currHealth <= 0) {
+		
+		GetOwner()->Destroy();
+	}
 }
 
