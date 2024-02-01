@@ -74,6 +74,8 @@ void ABaseWeapon::LineTrace()
 	ECollisionChannel TraceChannel = ECollisionChannel::BulletTrace;
 	//ECollisionChannel::ECC_PhysicsBody
 
+	//ETraceTypeQuery TraceChannel = UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1);
+
 	FCollisionQueryParams TraceParams;
 
 	TraceParams.bReturnPhysicalMaterial = true;
@@ -98,26 +100,27 @@ void ABaseWeapon::LineTrace()
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a zombie!"));
 			AZombieBase* Hit = Cast<AZombieBase>(HitResult.GetActor());
 
-
 			if (HitResult.PhysMaterial.IsValid())
 			{
-				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.GetActor()->GetName());
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.GetActor()->GetName());
 				
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.PhysMaterial.Get()->GetName());
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.PhysMaterial.Get()->GetName());
 				
 				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Material: %s"), HitResult.PhysMaterial.Get()->SurfaceType));
-
 
 				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Hit physcis material!"));			
 			}
 
 			Hit->Destroy(); //temporary needs to have a damage function implimented.
 		}
+
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, UEnum::GetValueAsString(TraceChannel));
+
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a something!"));
 
 		return;
 	}
-	
+
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit nothing!"));
 }
 
