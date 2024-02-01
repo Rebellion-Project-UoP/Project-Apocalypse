@@ -24,6 +24,7 @@ FVector UWallAvoidance::Calculate()
 		if (hit.GetComponent()->ComponentHasTag("Wall")) {
 		
 			penDistance = FVector::Distance(hit.TraceEnd, hit.TraceEnd - hit.ImpactPoint);
+			GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, FString::FormatAsNumber(penDistance));
 
 
 			steeringForce += (hit.Normal * penDistance);
@@ -55,6 +56,6 @@ FVector UWallAvoidance::Calculate()
 	}
 
 
-	return steeringForce * 6;
+	return steeringForce;
 }
 
