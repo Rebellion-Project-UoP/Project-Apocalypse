@@ -33,7 +33,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Sky")
 		ADirectionalLight* nightLightSource;
 
-	UPROPERTY(EditAnywhere, Category = "Sky")
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "Sky")
 		float turnRate;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Environment")

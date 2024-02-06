@@ -8,7 +8,7 @@
 #include "Camera/CameraComponent.h"
 #include "CollisionQueryParams.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
-
+#include <Kismet/GameplayStatics.h>
 #include "Math/UnitConversion.h"
 
 // Sets default values
@@ -66,7 +66,7 @@ ABaseWeapon::ABaseWeapon()
 
 	WorldRef = GetWorld();
 	
-	Mag = MagSize;
+	Mag = 0;
 
 	ReloadTime = 0;
 }
@@ -75,6 +75,10 @@ ABaseWeapon::ABaseWeapon()
 void ABaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
+
+	PlayerRef = Cast<AProjectApocalypseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
+	Mag = MagSize;
 
 	UpdateWeaponMesh();
 }
@@ -114,30 +118,25 @@ void ABaseWeapon::LineTrace()
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a zombie!"));
 			AZombieBase* Hit = Cast<AZombieBase>(HitResult.GetActor());
+			
+			DealDamage(Hit);
+
+			if (Hit)
+			{
+
+
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Works"));
+
+			} // Remember to fix this so that it takes score only when the player final shot hits. Ask Niamh if hit markers with score is okay as it will fix this problem and could have a chunk of score like 50 when the zombie is killed.
 
 			if (HitResult.PhysMaterial.IsValid())
 			{
-				if (HitResult.PhysMaterial->SurfaceType == SurfaceType1)
-				{
-					GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Head"));
-				}
-				if (HitResult.PhysMaterial->SurfaceType == SurfaceType2)
-				{
-					GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
-				}
-				if (HitResult.PhysMaterial->SurfaceType == SurfaceType3)
-				{
-					GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
-				}
-
-				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.GetActor()->GetName());
-				
-				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.PhysMaterial.Get()->GetName());
-				
-				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Material: %s"), HitResult.PhysMaterial.Get()->SurfaceType));
+				PlayerRef->PlayerScore += CalculateScore(HitResult);
 			}
 
-			Hit->Destroy(); //temporary needs to have a damage function implimented.
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Score: %i"), PlayerRef->PlayerScore));
+
+			//Hit->Destroy(); //temporary needs to have a damage function implimented.
 
 			return;
 		}
@@ -282,27 +281,38 @@ void ABaseWeapon::Reloading()
 	}
 }
 
-//int32 ABaseWeapon::CalculateScore(const FHitResult& HitResult)
-//{
-//	int32 score = 0;
-//	
-//	if (HitResult.PhysMaterial->SurfaceType == SurfaceType1)
-//	{
-//		Cast<UHealthComp>(HitResult.GetActor()->GetComponentByClass(UHealthComp::StaticClass()));
-//		
-//		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Head"));
-//	}
-//	if (HitResult.PhysMaterial->SurfaceType == SurfaceType2)
-//	{
-//		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
-//	}
-//	if (HitResult.PhysMaterial->SurfaceType == SurfaceType3)
-//	{
-//		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
-//	}
-//		
-//	return int32();
-//}
+int32 ABaseWeapon::CalculateScore(const FHitResult& HitResult)
+{	
+	int32 score = 0;
+	
+	if (HitResult.PhysMaterial->SurfaceType == SurfaceType1)
+	{		
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Head"));
+		score = 20;
+	}
+	else if (HitResult.PhysMaterial->SurfaceType == SurfaceType2)
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
+		score = 10;
+	}
+	else if (HitResult.PhysMaterial->SurfaceType == SurfaceType3)
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Limb"));
+		score = 5;
+	}
+		
+	return score;
+}
+
+void ABaseWeapon::DealDamage(AZombieBase* Zombie)
+{
+	UHealthComp* ZombieHealthComp = Cast<UHealthComp>(Zombie->GetComponentByClass(UHealthComp::StaticClass()));
+
+	if (ZombieHealthComp)
+	{
+		IDamageInterface::Execute_TakeDamage(ZombieHealthComp, 100);   //Change 100 to Damage variable
+	}
+}
 
 void ABaseWeapon::OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                               UPrimitiveComponent* OtherComponent, int32 OtherBodytypeIndex,
