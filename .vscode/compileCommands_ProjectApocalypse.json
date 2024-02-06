@@ -32,6 +32,14 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\ItemBaseClass.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\ModularGunComponent.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
@@ -41,6 +49,14 @@
 	},
 	{
 		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\ObstacleAvoidance.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\Pickupable.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
@@ -192,6 +208,14 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\ItemBaseClass.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\ModularGunComponent.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
@@ -201,6 +225,14 @@
 	},
 	{
 		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\ObstacleAvoidance.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\Pickupable.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_ProjectApocalypse\\ProjectApocalypse.261.rsp"

@@ -11,9 +11,9 @@
 
 UWander::UWander()
 {
-	_wanderRadius = 0.0f;
-	_wanderDistance = 0.0f;
-	_wanderJitter = 0.0f;
+	_wanderRadius = 100.0f;
+	_wanderDistance = 200.0f;
+	_wanderJitter = 57.0f;
 
 	_wanderTarget = FVector(0);
 	_wanderAngle = 0;
@@ -26,7 +26,7 @@ void UWander::BeginPlay()
 
 	FTimerHandle UnusedHandle;
 	
-	GetOwner()->GetWorldTimerManager().SetTimer(UnusedHandle, this, &UWander::UpdateAngle, 0.1, true, 0);
+	GetOwner()->GetWorldTimerManager().SetTimer(UnusedHandle, this, &UWander::UpdateAngle, 0.05, true, 0);
 
 }
 
