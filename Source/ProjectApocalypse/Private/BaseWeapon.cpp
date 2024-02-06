@@ -82,10 +82,7 @@ void ABaseWeapon::BeginPlay()
 void ABaseWeapon::LineTrace()
 {
 	// Set the collision channel to use for the line trace
-	//ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility;
-	ECollisionChannel TraceChannel = ECollisionChannel::BulletTrace;
-
-	//ETraceTypeQuery TraceChannel = UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1);
+	ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility;
 
 	FCollisionQueryParams TraceParams;
 
@@ -120,9 +117,22 @@ void ABaseWeapon::LineTrace()
 
 			if (HitResult.PhysMaterial.IsValid())
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.GetActor()->GetName());
+				if (HitResult.PhysMaterial->SurfaceType == SurfaceType1)
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Head"));
+				}
+				if (HitResult.PhysMaterial->SurfaceType == SurfaceType2)
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
+				}
+				if (HitResult.PhysMaterial->SurfaceType == SurfaceType3)
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
+				}
+
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.GetActor()->GetName());
 				
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.PhysMaterial.Get()->GetName());
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.PhysMaterial.Get()->GetName());
 				
 				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Material: %s"), HitResult.PhysMaterial.Get()->SurfaceType));
 			}
@@ -132,7 +142,7 @@ void ABaseWeapon::LineTrace()
 			return;
 		}
 
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, UEnum::GetValueAsString(TraceChannel));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, UEnum::GetValueAsString(TraceChannel));
 
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.GetActor()->GetName());
 
@@ -274,7 +284,22 @@ void ABaseWeapon::Reloading()
 
 //int32 ABaseWeapon::CalculateScore(const FHitResult& HitResult)
 //{
-//	if (HitResult.BoneName == TEXT(""))
+//	int32 score = 0;
+//	
+//	if (HitResult.PhysMaterial->SurfaceType == SurfaceType1)
+//	{
+//		Cast<UHealthComp>(HitResult.GetActor()->GetComponentByClass(UHealthComp::StaticClass()));
+//		
+//		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Head"));
+//	}
+//	if (HitResult.PhysMaterial->SurfaceType == SurfaceType2)
+//	{
+//		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
+//	}
+//	if (HitResult.PhysMaterial->SurfaceType == SurfaceType3)
+//	{
+//		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
+//	}
 //		
 //	return int32();
 //}

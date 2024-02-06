@@ -127,6 +127,7 @@ public:
 
 	//UFUNCTION()
 	//int32 CalculateScore(const FHitResult& HitResult);
+
 	void Reloading();
 
 	UWorld* WorldRef;
