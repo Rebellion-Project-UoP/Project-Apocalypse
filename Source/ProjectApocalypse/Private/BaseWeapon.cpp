@@ -121,18 +121,16 @@ void ABaseWeapon::LineTrace()
 			
 			DealDamage(Hit);
 
-			if (Hit)
+			if (!IsValid(Hit))
 			{
-
+				if (HitResult.PhysMaterial.IsValid())
+				{
+					PlayerRef->PlayerScore += CalculateScore(HitResult);
+				}
 
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Works"));
-
-			} // Remember to fix this so that it takes score only when the player final shot hits. Ask Niamh if hit markers with score is okay as it will fix this problem and could have a chunk of score like 50 when the zombie is killed.
-
-			if (HitResult.PhysMaterial.IsValid())
-			{
-				PlayerRef->PlayerScore += CalculateScore(HitResult);
-			}
+			} // Remember to fix this so that it takes score only when the player final shot hits. 
+			  //Ask Niamh if hit markers with score is okay as it will fix this problem and could have a chunk of score like 50 when the zombie is killed.
 
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Score: %i"), PlayerRef->PlayerScore));
 
