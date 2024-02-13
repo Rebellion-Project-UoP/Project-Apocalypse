@@ -263,8 +263,6 @@ void ABaseWeapon::Reloading()
 		//UE_LOG(LogTemp,Warning,TEXT("%i"), Mag);
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("%i"), Mag);
 
-
-
 		// setting ammunition and checking to see if its less than 0;
 		if ((Ammunition -= MagSize)<1)
 		{
