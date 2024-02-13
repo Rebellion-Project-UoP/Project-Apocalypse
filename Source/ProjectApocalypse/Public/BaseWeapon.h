@@ -31,6 +31,8 @@ public:
 	int MaxAmmunition;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Ammo")
 	int MagSize;
+
+	int Mag;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float Recoil;
@@ -44,6 +46,9 @@ public:
 	float Damage;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float ReloadSpeed;
+
+	float ReloadTime;
+	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float WeaponWeight;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
@@ -120,12 +125,18 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void Reload();
 
+	void Reloading();
+
+	UWorld* WorldRef;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	virtual void LineTrace();
 	FVector LineTrace(FVector startPoint, FVector endPoint);
+
+	FTimerHandle ReloadingTimer;
 
 public:	
 	// Called every frame
