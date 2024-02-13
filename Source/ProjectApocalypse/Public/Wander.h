@@ -21,10 +21,12 @@ public:
 	float _wanderDistance;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float _wanderJitter;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float _wanderAngle;
 
 private:
 	FVector _wanderTarget;
-	float _wanderAngle;
+
 
 public:
 	UWander();
