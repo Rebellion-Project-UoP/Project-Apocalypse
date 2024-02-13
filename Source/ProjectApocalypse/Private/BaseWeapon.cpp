@@ -160,7 +160,7 @@ FVector ABaseWeapon::LineTrace(FVector startPoint, FVector endPoint)
 
 	bool bHit = WorldRef->LineTraceSingleByChannel(HitResult, startPoint, endPoint, TraceChannel);
 
-	DrawDebugLine(WorldRef,startPoint, endPoint, FColor::Green, false, 2.0f, 0, 1.0f);
+	//DrawDebugLine(WorldRef,startPoint, endPoint, FColor::Green, false, 2.0f, 0, 1.0f);
 
 	if (bHit)
 	{
