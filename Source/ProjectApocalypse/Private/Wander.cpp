@@ -21,6 +21,7 @@ UWander::UWander()
 
 void UWander::BeginPlay()
 {
+
 	_wanderAngle = UKismetMathLibrary::RandomFloatInRange(0.0f, PI * 2);
 	_wanderTarget = FVector(cos(_wanderAngle), sin(_wanderAngle), 0) * _wanderRadius;
 
@@ -40,12 +41,14 @@ FVector UWander::Calculate()
 
 	FVector targetWorld = GetOwner()->GetActorLocation() + _wanderTarget;
 
-	targetWorld += GetOwner()->GetActorLocation().ForwardVector * _wanderDistance;
+	targetWorld += GetOwner()->GetActorForwardVector() * _wanderDistance;
+
 
 	
 	DrawDebugLine(GetWorld(), GetOwner()->GetActorLocation(), targetWorld, FColor::Red, false, 0.1);
 
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, targetWorld.ToString());
+
+	//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.1, FColor::Red, targetWorld.ToString());
 
 	return targetWorld - GetOwner()->GetActorLocation();
 }

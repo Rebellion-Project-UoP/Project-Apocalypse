@@ -121,7 +121,7 @@ void AZombieBase::Move()
 	_velocity = accel * UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
 	
 
-	_velocity.GetClampedToSize(70,GetCharacterMovement()->MaxWalkSpeed);
+	_velocity.GetClampedToSize(0,GetCharacterMovement()->MaxWalkSpeed);
 
 	if (_velocity != FVector::Zero()) {
 		_velocity.Z = 0;
