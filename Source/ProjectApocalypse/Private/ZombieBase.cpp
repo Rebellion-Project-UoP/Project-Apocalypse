@@ -94,7 +94,7 @@ void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 	if (Cast<AProjectApocalypseCharacter>(OtherActor)) {
 		AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(OtherActor);
 
-		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, "damage");
+		//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, "damage");
 
 		if (Cast<UHealthComp>(player->GetComponentByClass(UHealthComp::StaticClass()))->Implements<UDamageInterface>()) {
 			UHealthComp* health = Cast<UHealthComp>(player->GetComponentByClass(UHealthComp::StaticClass()));
