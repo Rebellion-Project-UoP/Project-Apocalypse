@@ -18,6 +18,8 @@
 AProjectApocalypseCharacter::AProjectApocalypseCharacter()
 {
 	CurrentStamina = MaxStamina;
+	Health = MaxHealth;
+	Hunger = 0.0f;
 
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -59,6 +61,7 @@ void AProjectApocalypseCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
+
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -67,9 +70,9 @@ void AProjectApocalypseCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+	PrintCurrentStats();
 }
 
-//////////////////////////////////////////////////////////////////////////
 // Input
 
 void AProjectApocalypseCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -187,6 +190,47 @@ void AProjectApocalypseCharacter::RegenStamina()
 	{
 		CurrentStamina = MaxStamina;
 		GetWorldTimerManager().ClearTimer(StaminaRegenTimerHandle);
-		
+
 	}
 }
+
+	void AProjectApocalypseCharacter::IncreaseHungerOverTime()
+	{
+		// Increase hunger by 0.1 every second
+		Hunger += 0.1f;
+		Hunger = FMath::Clamp(Hunger, 0.0f, MaxHunger);
+
+		// Check if hunger reaches 50 to start depleting health
+		if (Hunger >= 50.0f)
+		{
+			bShouldDepleteHealth = true;
+			DepleteHealth();
+		}
+	}
+
+	void AProjectApocalypseCharacter::DepleteHealth()
+	{
+		// Deplete health based on current hunger rate
+		if (bShouldDepleteHealth)
+		{
+			float HealthDecreaseRate = 0.01f * Hunger; // Deplete health at a rate multiplied by current hunger
+			Health -= HealthDecreaseRate;
+			Health = FMath::Clamp(Health, 0.0f, MaxHealth);
+
+			//if (Health <= 0.0f)
+			//{
+			//	// Implement logic for player death here
+			//}
+		}
+
+	
+	}
+
+	void AProjectApocalypseCharacter::Tick(float DeltaTime)
+	{
+		Super::Tick(DeltaTime);
+
+		// Update hunger and health stats
+		IncreaseHungerOverTime();
+		
+	}

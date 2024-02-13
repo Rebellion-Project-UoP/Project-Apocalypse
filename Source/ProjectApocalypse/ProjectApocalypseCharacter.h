@@ -88,6 +88,47 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
 	float StaminaRegenRate = 10.f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	float Health;
+
+	// Maximum health the player can have
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	float MaxHealth = 100.f;
+
+	// Player's current hunger
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hunger")
+	float Hunger;
+
+	// Maximum hunger the player can have
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hunger")
+	float MaxHunger = 100.f;
+
+	// Rate at which hunger affects health (modify as needed)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hunger")
+	float HungerHealthRate = 1.0f;
+
+	// Time interval for hunger increase (modify as needed)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hunger")
+	float HungerIncreaseInterval = 5.0f;
+
+
+	//UFUNCTION(BlueprintCallable, Category = "Player")
+	//void TakeDamage(float DamageAmount);
+
+	//// Function to check if the player is alive
+	//UFUNCTION(BlueprintPure, Category = "Player")
+	//bool IsAlive() const;
+
+	//// Function to handle hunger
+	//UFUNCTION(BlueprintCallable, Category = "Player")
+	//void IncreaseHunger(float HungerIncrease);
+
+	UFUNCTION(BlueprintCallable, Category = "Player")
+	void IncreaseHungerOverTime();
+
+	// Function to deplete health based on hunger
+	UFUNCTION(BlueprintCallable, Category = "Player")
+	void DepleteHealth();
 
 
 	UFUNCTION()
@@ -96,8 +137,15 @@ protected:
 	UFUNCTION()
 	void DrainStamina();
 
+	UFUNCTION()
+	void PrintCurrentStats();
+
+	void Tick(float DeltaTime);
+
 	FTimerHandle StaminaDrainTimerHandle;
 	FTimerHandle StaminaRegenTimerHandle;
+
+	bool bShouldDepleteHealth;
 
 	//float StaminaUsageRate;
 	//float StaminaRegenRate;
