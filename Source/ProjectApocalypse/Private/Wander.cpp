@@ -12,8 +12,8 @@
 UWander::UWander()
 {
 	_wanderRadius = 100.0f;
-	_wanderDistance = 200.0f;
-	_wanderJitter = 180.0f;
+	_wanderDistance = 100.0f;
+	_wanderJitter = 40.0f;
 
 	_wanderTarget = FVector(0);
 	_wanderAngle = 0;
@@ -45,13 +45,15 @@ FVector UWander::Calculate()
 	
 	DrawDebugLine(GetWorld(), GetOwner()->GetActorLocation(), targetWorld, FColor::Red, false, 0.1);
 
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, targetWorld.ToString());
+
 	return targetWorld - GetOwner()->GetActorLocation();
 }
 
 void UWander::UpdateAngle()
 {
 	_wanderAngle += UKismetMathLibrary::RandomFloatInRange(FMath::DegreesToRadians(-_wanderJitter), FMath::DegreesToRadians(_wanderJitter) );
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.2, FColor::Red, FString::SanitizeFloat(FMath::RadiansToDegrees(_wanderAngle)));
+	//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.2, FColor::Red, FString::SanitizeFloat(FMath::RadiansToDegrees(_wanderAngle)));
 
 }
 
