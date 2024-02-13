@@ -43,6 +43,7 @@ class AProjectApocalypseCharacter : public ACharacter
 
 
 
+
 public:
 	AProjectApocalypseCharacter();
 
@@ -107,5 +108,8 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Score")
+	int32 PlayerScore;
 };
 

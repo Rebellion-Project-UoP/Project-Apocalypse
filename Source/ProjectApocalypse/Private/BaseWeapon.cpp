@@ -1,12 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "BaseWeapon.h"
 #include "ZombieBase.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 #include "DrawDebugHelpers.h"
 #include "Camera/CameraComponent.h"
+#include "CollisionQueryParams.h"
+#include "PhysicalMaterials/PhysicalMaterial.h"
+#include <Kismet/GameplayStatics.h>
 #include "Math/UnitConversion.h"
 
 // Sets default values
@@ -64,7 +66,7 @@ ABaseWeapon::ABaseWeapon()
 
 	WorldRef = GetWorld();
 	
-	Mag = MagSize;
+	Mag = 0;
 
 	ReloadTime = 0;
 }
@@ -74,13 +76,21 @@ void ABaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 
+	PlayerRef = Cast<AProjectApocalypseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
+	Mag = MagSize;
+
 	UpdateWeaponMesh();
 }
 
 void ABaseWeapon::LineTrace()
 {
 	// Set the collision channel to use for the line trace
-	ECollisionChannel TraceChannel = ECC_Visibility;
+	ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility;
+
+	FCollisionQueryParams TraceParams;
+
+	TraceParams.bReturnPhysicalMaterial = true;
 
 	TArray<UCameraComponent*> FollowCamera;
 	GetParentActor()->GetComponents<UCameraComponent>(FollowCamera);
@@ -97,7 +107,7 @@ void ABaseWeapon::LineTrace()
 
 	FHitResult HitResult;
 
-	bool bHit = WorldRef->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, TraceChannel);
+	bool bHit = WorldRef->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, TraceChannel, TraceParams);
 
 	DrawDebugLine(WorldRef,StartPoint, EndPoint , FColor::Red, false, 2.0f, 0, 1.0f);
 
@@ -108,16 +118,36 @@ void ABaseWeapon::LineTrace()
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a zombie!"));
 			AZombieBase* Hit = Cast<AZombieBase>(HitResult.GetActor());
-		
-			Hit->Destroy(); //temporary needs to have a damage function implimented.
+			
+			DealDamage(Hit);
+
+			if (!IsValid(Hit))
+			{
+				if (HitResult.PhysMaterial.IsValid())
+				{
+					PlayerRef->PlayerScore += CalculateScore(HitResult);
+				}
+
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Works"));
+			} // Remember to fix this so that it takes score only when the player final shot hits. 
+			  //Ask Niamh if hit markers with score is okay as it will fix this problem and could have a chunk of score like 50 when the zombie is killed.
+
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Score: %i"), PlayerRef->PlayerScore));
+
+			//Hit->Destroy(); //temporary needs to have a damage function implimented.
 
 			return;
 		}
+
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, UEnum::GetValueAsString(TraceChannel));
+
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.GetActor()->GetName());
+
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a something!"));
 
 		return;
 	}
-	
+
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit nothing!"));
 }
 
@@ -244,6 +274,39 @@ void ABaseWeapon::Reloading()
 
 		
 		GetWorldTimerManager().ClearTimer(ReloadingTimer); //stopping the timer as reloading has been finished.
+	}
+}
+
+int32 ABaseWeapon::CalculateScore(const FHitResult& HitResult)
+{	
+	int32 score = 0;
+	
+	if (HitResult.PhysMaterial->SurfaceType == SurfaceType1)
+	{		
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Head"));
+		score = 20;
+	}
+	else if (HitResult.PhysMaterial->SurfaceType == SurfaceType2)
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
+		score = 10;
+	}
+	else if (HitResult.PhysMaterial->SurfaceType == SurfaceType3)
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Limb"));
+		score = 5;
+	}
+		
+	return score;
+}
+
+void ABaseWeapon::DealDamage(AZombieBase* Zombie)
+{
+	UHealthComp* ZombieHealthComp = Cast<UHealthComp>(Zombie->GetComponentByClass(UHealthComp::StaticClass()));
+
+	if (ZombieHealthComp)
+	{
+		IDamageInterface::Execute_TakeDamage(ZombieHealthComp, 100);   //Change 100 to Damage variable
 	}
 }
 

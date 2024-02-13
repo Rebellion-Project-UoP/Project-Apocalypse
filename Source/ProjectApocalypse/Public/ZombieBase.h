@@ -43,6 +43,9 @@ private:
 
 	//stores all steering behaviours for the zombie
 	TArray<USteeringBehaviour*> _behaviours;
+
+	//USkeletalMeshComponent* _skeletalMesh;
+
 public:
 	// Sets default values for this character's properties
 	AZombieBase();
