@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
-
 #include "CoreMinimal.h"
 #include "Components/CapsuleComponent.h"
+#include <ZombieBase.h>
+#include "../ProjectApocalypseCharacter.h"
 #include "GameFramework/Actor.h"
 #include "BaseWeapon.generated.h"
 
@@ -125,9 +125,17 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void Reload();
 
+	UFUNCTION()
+	int32 CalculateScore(const FHitResult& HitResult);
+
+	UFUNCTION()
+	virtual void DealDamage(AZombieBase* Zombie);
+
 	void Reloading();
 
 	UWorld* WorldRef;
+	AProjectApocalypseCharacter* PlayerRef;
+
 
 protected:
 	// Called when the game starts or when spawned

@@ -63,7 +63,9 @@ void AZombieBase::BeginPlay()
 	//GetWorldTimerManager().SetTimer(UnusedHandle, this, &AZombieBase::MoveToPlayer, 2, true, 0);
 
 	
-	
+	//_skeletalMesh = Cast<USkeletalMeshComponent>(this->GetComponentByClass(USkeletalMeshComponent::StaticClass));
+
+	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel1, ECollisionResponse::ECR_Block);
 }
 
 
@@ -92,7 +94,7 @@ void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 	if (Cast<AProjectApocalypseCharacter>(OtherActor)) {
 		AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(OtherActor);
 
-		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, "damage");
+		//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, "damage");
 
 		if (Cast<UHealthComp>(player->GetComponentByClass(UHealthComp::StaticClass()))->Implements<UDamageInterface>()) {
 			UHealthComp* health = Cast<UHealthComp>(player->GetComponentByClass(UHealthComp::StaticClass()));
@@ -119,7 +121,7 @@ void AZombieBase::Move()
 	_velocity = accel * UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
 	
 
-	_velocity.GetClampedToSize(70,GetCharacterMovement()->MaxWalkSpeed);
+	_velocity.GetClampedToSize(0,GetCharacterMovement()->MaxWalkSpeed);
 
 	if (_velocity != FVector::Zero()) {
 		_velocity.Z = 0;

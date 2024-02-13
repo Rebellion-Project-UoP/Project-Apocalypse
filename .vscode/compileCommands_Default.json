@@ -16,6 +16,14 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\DamageInterface.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_Default\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\DayNightCycle.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
@@ -32,6 +40,14 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\HealthComp.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_Default\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\ItemBaseClass.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
@@ -41,6 +57,14 @@
 	},
 	{
 		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\ModularGunComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_Default\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\NeighbourhoodRadius.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_Default\\ProjectApocalypse.261.rsp"
@@ -73,6 +97,14 @@
 	},
 	{
 		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\Seek.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_Default\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Private\\Separation.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_Default\\ProjectApocalypse.261.rsp"
@@ -192,6 +224,14 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\DamageInterface.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_Default\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\DayNightCycle.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
@@ -208,6 +248,14 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
 	},
 	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\HealthComp.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_Default\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\ItemBaseClass.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
@@ -217,6 +265,14 @@
 	},
 	{
 		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\ModularGunComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_Default\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\NeighbourhoodRadius.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_Default\\ProjectApocalypse.261.rsp"
@@ -249,6 +305,14 @@
 	},
 	{
 		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\Seek.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_Default\\ProjectApocalypse.261.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.2\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\Source\\ProjectApocalypse\\Public\\Separation.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe",
 			"@C:\\Users\\Aden\\Documents\\GitHub\\Project-Apocalypse\\.vscode\\compileCommands_Default\\ProjectApocalypse.261.rsp"
