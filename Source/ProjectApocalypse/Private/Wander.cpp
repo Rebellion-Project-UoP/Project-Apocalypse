@@ -45,7 +45,7 @@ FVector UWander::Calculate()
 
 
 	
-	DrawDebugLine(GetWorld(), GetOwner()->GetActorLocation(), targetWorld, FColor::Red, false, 0.1);
+	//DrawDebugLine(GetWorld(), GetOwner()->GetActorLocation(), targetWorld, FColor::Red, false, 0.1);
 
 
 	//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.1, FColor::Red, targetWorld.ToString());

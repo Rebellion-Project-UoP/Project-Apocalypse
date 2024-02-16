@@ -53,6 +53,6 @@ FVector UWallAvoidance::Calculate()
 		}
 	}
 
-	return steeringForce * 6;
+	return steeringForce * 2;
 }
 

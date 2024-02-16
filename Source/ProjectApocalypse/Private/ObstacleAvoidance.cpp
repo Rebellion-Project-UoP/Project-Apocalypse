@@ -51,6 +51,6 @@ FVector UObstacleAvoidance::Calculate()
 		}
 	}
 
-	return steeringForce * 6;
+	return steeringForce * 2;
 
 }
