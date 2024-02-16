@@ -13,6 +13,8 @@ void USeek::BeginPlay()
 {
 	_playerRef = Cast<AProjectApocalypseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
+	
+
 }
 
 FVector USeek::Calculate()
