@@ -37,8 +37,6 @@ void AZombieBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AddComponentByClass(UNeighbourhoodRadius::StaticClass(), false, this->GetActorTransform(), true);
-
 	swipeHitBox = Cast<UBoxComponent>(GetComponentsByTag(UBoxComponent::StaticClass(), "attack")[0]);
 
 	swipeHitBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::FAttachmentTransformRules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true), "rh_attackHitBox");
@@ -101,7 +99,6 @@ void AZombieBase::Tick(float DeltaTime)
 		GetCharacterMovement()->MaxWalkSpeed = maxRunSpeed;
 	}
 
-
 }
 
 void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -110,9 +107,9 @@ void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 		AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(OtherActor);
 
 		//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, "damage");
+		if (player->GetComponentByClass<UHealthComp>()->Implements<UDamageInterface>()) {
 
-		if (Cast<UHealthComp>(player->GetComponentByClass(UHealthComp::StaticClass()))->Implements<UDamageInterface>()) {
-			UHealthComp* health = Cast<UHealthComp>(player->GetComponentByClass(UHealthComp::StaticClass()));
+			UHealthComp* health = player->GetComponentByClass<UHealthComp>();
 
 			IDamageInterface::Execute_TakeDamage(health, 20);
 		}
