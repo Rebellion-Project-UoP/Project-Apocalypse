@@ -17,14 +17,16 @@ FVector UWallAvoidance::Calculate()
 	FVector location = GetOwner()->GetActorLocation();
 	FVector fwdVector = GetOwner()->GetActorForwardVector();
 
-	if (GetWorld()->LineTraceSingleByChannel(hit, location, location + fwdVector * viewDistance, ECollisionChannel::ECC_Visibility)) {
+	FCollisionQueryParams CollisionParameters;
 
+	CollisionParameters.AddIgnoredActor(GetOwner());
+
+	if (GetWorld()->LineTraceSingleByChannel(hit, location, location + fwdVector * viewDistance, ECollisionChannel::ECC_Visibility, CollisionParameters)) {
 
 
 		if (hit.GetComponent()->ComponentHasTag("Wall")) {
-		
-			penDistance = FVector::Distance(hit.TraceEnd, hit.TraceEnd - hit.ImpactPoint);
 
+			penDistance = FVector::Distance(hit.TraceEnd, hit.TraceEnd - hit.ImpactPoint);
 
 			steeringForce += (hit.Normal * penDistance);
 		}
@@ -32,11 +34,9 @@ FVector UWallAvoidance::Calculate()
 
 	FHitResult hitRight;
 
-	if (GetWorld()->LineTraceSingleByChannel(hitRight, location, location + (fwdVector + GetOwner()->GetActorRightVector()) * (viewDistance /3), ECollisionChannel::ECC_Visibility)) {
+	if (GetWorld()->LineTraceSingleByChannel(hitRight, location, location + (fwdVector + GetOwner()->GetActorRightVector()) * (viewDistance / 3), ECollisionChannel::ECC_Visibility, CollisionParameters)) {
 		if (hitRight.GetComponent()->ComponentHasTag("Wall")) {
 			penDistance = FVector::Distance(hitRight.TraceEnd, hitRight.TraceEnd - hitRight.ImpactPoint);
-
-
 
 			steeringForce += (hitRight.Normal * penDistance);
 		}
@@ -44,17 +44,15 @@ FVector UWallAvoidance::Calculate()
 
 	FHitResult hitLeft;
 
-	if (GetWorld()->LineTraceSingleByChannel(hitLeft, location, location + (fwdVector - GetOwner()->GetActorRightVector()) * (viewDistance / 3), ECollisionChannel::ECC_Visibility)) {
+	if (GetWorld()->LineTraceSingleByChannel(hitLeft, location, location + (fwdVector - GetOwner()->GetActorRightVector()) * (viewDistance / 3), ECollisionChannel::ECC_Visibility, CollisionParameters)) {
 		if (hitLeft.GetComponent()->ComponentHasTag("Wall")) {
 			penDistance = FVector::Distance(hitLeft.TraceEnd, hitLeft.TraceEnd - hitLeft.ImpactPoint);
-
 
 			steeringForce += (hitLeft.Normal * penDistance);
 
 		}
 	}
 
-
-	return steeringForce * 6;
+	return steeringForce * 2;
 }
 
