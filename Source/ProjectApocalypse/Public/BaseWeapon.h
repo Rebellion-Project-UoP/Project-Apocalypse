@@ -31,7 +31,7 @@ public:
 	int MaxAmmunition;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Ammo")
 	int MagSize;
-
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Ammo")
 	int Mag;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
