@@ -42,12 +42,19 @@ bool bFromSweep, const FHitResult &SweepResult)
 {
 	if (Cast<AProjectApocalypseCharacter>(OtherActor))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Collided with the Player!"));
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided with the player!"));
+
+		ItemSpawnerRef->bItemPickedUp = true;
 
 		Destroy();
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Collided not with the Player!"));
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided not with the player!"));
 	}
+}
+
+void AItemBaseClass::SetItemSpawnPointRef(ARandomItemSpawnPoint* Ref)
+{
+	ItemSpawnerRef = Ref;
 }

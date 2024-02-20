@@ -37,6 +37,11 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Item Spawning")
 	bool bItemPickedUp = false;
 
+	FTimerHandle RespawnItemTimerHandle;
+
 	UFUNCTION()
 	void SpawnItem();
+
+	UFUNCTION()
+	void Test();
 };

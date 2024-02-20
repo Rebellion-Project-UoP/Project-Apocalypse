@@ -2,6 +2,7 @@
 
 #include "RandomItemSpawnPoint.h"
 #include "Kismet/GameplayStatics.h"
+#include <ItemBaseClass.h>
 
 // Sets default values
 ARandomItemSpawnPoint::ARandomItemSpawnPoint()
@@ -23,10 +24,13 @@ void ARandomItemSpawnPoint::BeginPlay()
 void ARandomItemSpawnPoint::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 }
 
 void ARandomItemSpawnPoint::SpawnItem()
 {
+	spawnedActorsClass = nullptr;
+
 	FActorSpawnParameters spawnInfo;
 	spawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	
@@ -43,12 +47,32 @@ void ARandomItemSpawnPoint::SpawnItem()
 		//spawnedActorsClass.
 	}
 
+	//AItemBaseClass* ItemRef = Cast<AItemBaseClass>(spawnedActor.Get());
+
+	//ItemRef->SetItemSpawnPointRef(this);
+
+	GetWorldTimerManager().SetTimer(RespawnItemTimerHandle, this, &ARandomItemSpawnPoint::Test, 1.0f, true);
+
 
 	//Debug
 		//UE_LOG(LogTemp, Warning, TEXT("%i"), randNumber);
 		//UE_LOG(LogTemp, Warning, TEXT("%i"), itemToSpawn.Num());
 		//GetWorld()->SpawnActor<AActor>(itemToSpawn[FMath::RandRange(0, (itemToSpawn.Max() - 1))], GetActorTransform(), spawnInfo);
 		//GetWorld()->SpawnActor<AActor>(itemToSpawn[0], GetActorTransform(), spawnInfo);
+}
+
+void ARandomItemSpawnPoint::Test()
+{
+	if (bItemPickedUp)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Respawn"));
+
+		return;
+		//GetWorldTimerManager().SetTimer(RespawnItemTimerHandle, this, &ARandomItemSpawnPoint::Test, 1.0f, true);
+	}
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Respawn"));
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Not Respawned"));
+
 }
 
 //when choosing the random item to spawn, it should be relevant to the environment around it. Examples: next to an ammo/gun crate spawn weapons/ammo or next to a rubbish pile spawn trashy items or building materials.

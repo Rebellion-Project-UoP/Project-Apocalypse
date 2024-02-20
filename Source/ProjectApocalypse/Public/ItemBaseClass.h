@@ -3,6 +3,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
+#include <RandomItemSpawnPoint.h>
 #include "GameFramework/Actor.h"
 #include "ItemBaseClass.generated.h"
 
@@ -29,8 +30,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
 	class UBoxComponent* CollisionBox;	
 
+	ARandomItemSpawnPoint* ItemSpawnerRef;
+
 	//AProjectApocalypseCharacter* _myPlayerRef;
 
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	void SetItemSpawnPointRef(ARandomItemSpawnPoint* Ref);
 };
