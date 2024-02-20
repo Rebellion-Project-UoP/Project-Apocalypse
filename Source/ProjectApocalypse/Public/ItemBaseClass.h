@@ -29,6 +29,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
 	class UBoxComponent* CollisionBox;	
 
+
+
 	//AProjectApocalypseCharacter* _myPlayerRef;
 
 	UFUNCTION()

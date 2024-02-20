@@ -43,6 +43,8 @@ bool bFromSweep, const FHitResult &SweepResult)
 	if (Cast<AProjectApocalypseCharacter>(OtherActor))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Collided with the Player!"));
+
+		Destroy();
 	}
 	else
 	{
