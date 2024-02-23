@@ -30,6 +30,8 @@ AZombieBase::AZombieBase()
 
 	playerDetected = false;
 
+	isAttacking = false;
+
 	isDead = false;
 
 }

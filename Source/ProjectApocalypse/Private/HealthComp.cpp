@@ -48,6 +48,7 @@ void UHealthComp::TakeDamage_Implementation(float damage)
 
 	if (zombie) {
 		zombie->Death();
+
 		return;
 	}
 
