@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "ItemBaseClass.h"
 #include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 
@@ -40,21 +39,7 @@ UPrimitiveComponent *OtherComponent,
 int32 OtherBodyIndex, 
 bool bFromSweep, const FHitResult &SweepResult)
 {
-	if (Cast<AProjectApocalypseCharacter>(OtherActor))
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided with the player!"));
 
-		ItemSpawnerRef->bItemPickedUp = true;
 
-		Destroy();
-	}
-	else
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided not with the player!"));
-	}
 }
 
-void AItemBaseClass::SetItemSpawnPointRef(ARandomItemSpawnPoint* Ref)
-{
-	ItemSpawnerRef = Ref;
-}

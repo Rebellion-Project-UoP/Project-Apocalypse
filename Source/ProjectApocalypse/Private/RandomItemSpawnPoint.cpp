@@ -2,7 +2,7 @@
 
 #include "RandomItemSpawnPoint.h"
 #include "Kismet/GameplayStatics.h"
-#include <ItemBaseClass.h>
+#include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 
 // Sets default values
 ARandomItemSpawnPoint::ARandomItemSpawnPoint()
@@ -10,6 +10,19 @@ ARandomItemSpawnPoint::ARandomItemSpawnPoint()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	RootComponent = Root;
+
+	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
+	CollisionBox->SetupAttachment(Root);
+
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ARandomItemSpawnPoint::OnOverlapBegin);
+
+	spawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	TimerDelegate.BindUFunction(this, FName("SpawnItem"));
+
+	delayTimer = 3;
 }
 
 // Called when the game starts or when spawned
@@ -29,56 +42,59 @@ void ARandomItemSpawnPoint::Tick(float DeltaTime)
 
 void ARandomItemSpawnPoint::SpawnItem()
 {
-	spawnedActorsClass = nullptr;
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Spawn!"));
 
-	FActorSpawnParameters spawnInfo;
-	spawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	GetWorldTimerManager().ClearTimer(RespawnItemDelayTimerHandle);
 	
 	int randNumber = FMath::RandRange(0, (itemToSpawn.Max() - 1));
 
-	GetWorld()->SpawnActor<AActor>(itemToSpawn[randNumber], GetActorTransform(), spawnInfo);
-
-	spawnedActor = itemToSpawn[randNumber];
-
-	if (spawnedActor != nullptr)
+	if (itemToSpawn[randNumber])
 	{
-		spawnedActorsClass = spawnedActor.Get();
-		
-		//spawnedActorsClass.
-	}
-
-	//AItemBaseClass* ItemRef = Cast<AItemBaseClass>(spawnedActor.Get());
-
-	//ItemRef->SetItemSpawnPointRef(this);
-
-	GetWorldTimerManager().SetTimer(RespawnItemTimerHandle, this, &ARandomItemSpawnPoint::Test, 1.0f, true);
-
-
-	//Debug
-		//UE_LOG(LogTemp, Warning, TEXT("%i"), randNumber);
-		//UE_LOG(LogTemp, Warning, TEXT("%i"), itemToSpawn.Num());
-		//GetWorld()->SpawnActor<AActor>(itemToSpawn[FMath::RandRange(0, (itemToSpawn.Max() - 1))], GetActorTransform(), spawnInfo);
-		//GetWorld()->SpawnActor<AActor>(itemToSpawn[0], GetActorTransform(), spawnInfo);
-}
-
-void ARandomItemSpawnPoint::Test()
-{
-	if (bItemPickedUp)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Respawn"));
+		spawnedActor = GetWorld()->SpawnActor<AActor>(itemToSpawn[randNumber], GetActorTransform(), spawnInfo);
 
 		return;
-		//GetWorldTimerManager().SetTimer(RespawnItemTimerHandle, this, &ARandomItemSpawnPoint::Test, 1.0f, true);
 	}
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Respawn"));
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Not Respawned"));
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Not Valid Actor to Spawn"));
+		
+		spawnedActor = nullptr;
 
+		GetWorldTimerManager().SetTimer(RespawnItemDelayTimerHandle, TimerDelegate, delayTimer, false);
+
+		return;
+	}
 }
 
-//when choosing the random item to spawn, it should be relevant to the environment around it. Examples: next to an ammo/gun crate spawn weapons/ammo or next to a rubbish pile spawn trashy items or building materials.
+void ARandomItemSpawnPoint::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
+AActor* OtherActor, 
+UPrimitiveComponent* OtherComponent, 
+int32 OtherBodyIndex, 
+bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (spawnedActor)
+	{
+		if (OtherActor != spawnedActor)
+		{
 
-//Add the feature of regenerating the random spawn after the item has been picked up. This will be done after I have completed working on the player pick up.
+			if (Cast<AProjectApocalypseCharacter>(OtherActor))
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided with the player!"));
 
-//Maybe check whether the spawned item variable becomes null because the item is interacted with then it can be respawned?
-//But then need to get around the fact that the variable will be null when nothing is spawned
-//However this could be good and be what the designer wants.
+				spawnedActor->Destroy();
+
+				spawnedActor = nullptr;
+
+				GetWorldTimerManager().SetTimer(RespawnItemDelayTimerHandle, TimerDelegate, delayTimer, false);
+			}
+			else
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided not with the player!"));
+			}
+		}
+	}
+}
+
+//when choosing the random item to spawn, it should be relevant to the environment around it. 
+//Examples: next to an ammo/gun crate spawn weapons/ammo or next to a rubbish pile spawn trashy items or building materials.
+
