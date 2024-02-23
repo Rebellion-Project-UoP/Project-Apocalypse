@@ -313,6 +313,8 @@ void ABaseWeapon::DealDamage(AZombieBase* Zombie)
 	if (ZombieHealthComp)
 	{
 		IDamageInterface::Execute_TakeDamage(ZombieHealthComp, 100);   //Change 100 to Damage variable
+		Zombie->Flinch();
+
 	}
 }
 

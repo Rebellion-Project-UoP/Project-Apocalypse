@@ -30,6 +30,8 @@ AZombieBase::AZombieBase()
 
 	playerDetected = false;
 
+	isDead = false;
+
 }
 
 // Called when the game starts or when spawned
@@ -64,6 +66,8 @@ void AZombieBase::BeginPlay()
 	//_skeletalMesh = Cast<USkeletalMeshComponent>(this->GetComponentByClass(USkeletalMeshComponent::StaticClass));
 
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel1, ECollisionResponse::ECR_Block);
+
+
 }
 
 
@@ -74,30 +78,30 @@ void AZombieBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!playerDetected) {
-
-
-		if (GetVelocity().Length() > maxWalkSpeed) {
-
-			GetCharacterMovement()->MaxWalkSpeed -= 2;
-
-			if (GetVelocity().Length() <= maxWalkSpeed) {
-
-				GetCharacterMovement()->MaxWalkSpeed = maxWalkSpeed;
-			}
-		}
-
-
-		SetActorRotation(UKismetMathLibrary::RInterpTo_Constant(GetActorRotation(), _velocity.ToOrientationRotator(), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 80));
-
-
-
-
-		Move();
+	if (isDead) {
+		return;
 	}
-	else {
+
+
+	if (playerDetected) {
 		GetCharacterMovement()->MaxWalkSpeed = maxRunSpeed;
+		return;
 	}
+
+	if (GetVelocity().Length() > maxWalkSpeed) {
+
+		GetCharacterMovement()->MaxWalkSpeed -= 2;
+
+		if (GetVelocity().Length() <= maxWalkSpeed) {
+
+			GetCharacterMovement()->MaxWalkSpeed = maxWalkSpeed;
+		}
+	}
+
+	SetActorRotation(UKismetMathLibrary::RInterpTo_Constant(GetActorRotation(), _velocity.ToOrientationRotator(), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 80));
+
+	Move();
+
 
 }
 
