@@ -9,6 +9,8 @@
 #include "CollisionQueryParams.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include <Kismet/GameplayStatics.h>
+
+#include "Engine/SkeletalMeshSocket.h"
 #include "Math/UnitConversion.h"
 
 // Sets default values
@@ -69,6 +71,8 @@ ABaseWeapon::ABaseWeapon()
 	Mag = 0;
 
 	ReloadTime = 0;
+
+	Magnification = 2;
 }
 
 // Called when the game starts or when spawned
@@ -95,7 +99,8 @@ FHitResult ABaseWeapon::LineTrace()
 	TArray<UCameraComponent*> FollowCamera;
 	GetParentActor()->GetComponents<UCameraComponent>(FollowCamera);
 
-	FVector StartPoint = GetParentActor()->GetActorLocation(); //needs to be changed to barrel socket
+	//FVector StartPoint = GetParentActor()->GetActorLocation(); //needs to be changed to barrel socket
+	FVector StartPoint = WeaponBarrel->GetSocketLocation("BarrelExtension-Slot"); //needs to be changed to barrel socket
 
 	FVector HitLocation = LineTrace(FollowCamera[0]->GetComponentLocation(), FollowCamera[0]->GetComponentLocation() + FollowCamera[0]->GetForwardVector()*5000); // change 5000 to the range variable
 
@@ -237,13 +242,12 @@ void ABaseWeapon::Reload()
 	// 	ReloadTime = 3.0f;
 	// } //safety net to stop reloading being re-triggered.
 
-	if (Ammunition > 0)
+	if (Ammunition > 0 && Mag!=MagSize)
 	{
 		ReloadTime = 3.0f;
-
-		//GetWorldTimerManager().SetTimer(ReloadTimer, this, Reloading, 1.0f, true, 2.0f);
+		
 		GetWorldTimerManager().SetTimer(ReloadingTimer, this, &ABaseWeapon::Reloading, 0.1f, true);
-		//
+		
 
 		return;
 	}
@@ -260,22 +264,25 @@ void ABaseWeapon::Reloading()
 
 	
 	if (ReloadTime <=0)
-	{
-		//some logic to detect remaining ammo supply and apply based on remaining suply or magsize.
-		//additionally need to remove reloaded amount from supply.
+	{		
+		int SpentAmmo = MagSize-Mag; //calc spent ammo
+
+		if (Ammunition<SpentAmmo)
+		{
+			Mag += Ammunition;
+		}
+		else
+		{
+			Mag += SpentAmmo;
+		}
 		
-		Mag = MagSize;
-
-		//UE_LOG(LogTemp,Warning,TEXT("%i"), Mag);
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("%i"), Mag);
-
-		// setting ammunition and checking to see if its less than 0;
-		if ((Ammunition -= MagSize)<1)
+		Ammunition -= SpentAmmo;
+		
+		if (Ammunition <1) //minus spent ammo to reserves
 		{
 			Ammunition = 0;
 		}
 		
-		//UE_LOG(LogTemp,Warning,TEXT("RELOADED!!"));
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("RELOADED!!"));
 
 		

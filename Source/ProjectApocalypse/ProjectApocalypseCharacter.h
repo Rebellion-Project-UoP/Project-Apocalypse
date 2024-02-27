@@ -41,7 +41,8 @@ class AProjectApocalypseCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* SprintAction;
 
-
+	UPROPERTY(EditAnywhere, category = Stamina)
+	float StaminaRegenDelay;
 
 
 public:
