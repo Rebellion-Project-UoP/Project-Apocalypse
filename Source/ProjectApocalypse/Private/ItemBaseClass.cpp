@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "ItemBaseClass.h"
 #include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 
@@ -40,12 +39,7 @@ UPrimitiveComponent *OtherComponent,
 int32 OtherBodyIndex, 
 bool bFromSweep, const FHitResult &SweepResult)
 {
-	if (Cast<AProjectApocalypseCharacter>(OtherActor))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Collided with the Player!"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Collided not with the Player!"));
-	}
+
+
 }
+
