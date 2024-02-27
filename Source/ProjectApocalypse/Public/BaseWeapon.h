@@ -5,15 +5,14 @@
 #include <ZombieBase.h>
 #include "../ProjectApocalypseCharacter.h"
 #include "GameFramework/Actor.h"
+#include "Sound/SoundCue.h"
 #include "BaseWeapon.generated.h"
 
 UENUM (BlueprintType)
 enum class FiringMode
 {	 SingleFire,
 	 BurstFire,
-	 AutoFire,
-	 Toggleable,
-	 BinaryTrigger
+	 AutoFire
 };
 
 UCLASS()
@@ -47,6 +46,9 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float ReloadSpeed;
 
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
+	USoundCue* GunShot;
+	
 	float ReloadTime;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
@@ -136,6 +138,12 @@ public:
 	UWorld* WorldRef;
 	AProjectApocalypseCharacter* PlayerRef;
 
+	void SingleFire();
+
+	void BurstFire();
+
+	void AutoFire();
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -145,6 +153,9 @@ protected:
 	FVector LineTrace(FVector startPoint, FVector endPoint);
 
 	FTimerHandle ReloadingTimer;
+
+	UPROPERTY(EditAnywhere)
+	FiringMode FireMode;
 
 public:	
 	// Called every frame

@@ -216,16 +216,27 @@ void ABaseWeapon::FireWeapon()
 {
 	if (Mag > 0)
 	{
-		for (int i = 0; i < pellets; ++i)
+		switch (FireMode)
 		{
-			LineTrace();
+		case 0: // Single fire
+			SingleFire();
+			break;
+		case 1: // Burst fire
+			BurstFire();
+			break;
+		case 2: // Auto fire
+			AutoFire();
+			break;
+		default:
+			break;
+			
 		}
-		
-		--Mag;
+
+		//PlayerRef->GetFollowCamera();
 		
 		return;
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Click Click... No ammo!?"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Click Click... No ammo!?"));
 }
 
 void ABaseWeapon::Reload()
@@ -282,6 +293,41 @@ void ABaseWeapon::Reloading()
 		
 		GetWorldTimerManager().ClearTimer(ReloadingTimer); //stopping the timer as reloading has been finished.
 	}
+}
+
+void ABaseWeapon::SingleFire()
+{
+	
+	for (int i = 0; i < pellets; ++i)
+	{
+		LineTrace();
+	}
+
+	--Mag;
+}
+
+void ABaseWeapon::BurstFire()
+{
+	//use a timer instead.
+	for (int i = 0; i < MagSize/8; ++i)
+	{
+		UGameplayStatics::PlaySound2D(this, GunShot);
+		
+		for (int j = 0; j < pellets; ++j)
+		{
+			LineTrace();
+		}
+		--Mag;
+	}
+}
+
+void ABaseWeapon::AutoFire()
+{
+	for (int i = 0; i < pellets; ++i)
+	{
+		LineTrace();
+	}
+	--Mag;
 }
 
 int32 ABaseWeapon::CalculateScore(const FHitResult& HitResult)
