@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #pragma once
 #include "CoreMinimal.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
-#include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 
 #include "RandomItemSpawnPoint.generated.h"
 
@@ -29,14 +29,25 @@ public:
 	TArray<TSubclassOf<class AActor>> itemToSpawn;
 
 	UPROPERTY(VisibleAnywhere, Category = "Item Spawning")
-	TSubclassOf<class AActor> spawnedActor;
+	AActor* spawnedActor;
 
-	UPROPERTY(VisibleAnywhere, Category = "Item Spawning")
-	UClass* spawnedActorsClass;
+	UPROPERTY(EditAnywhere, Category = "Item Spawning")
+	float delayTimer;
 
-	UPROPERTY(VisibleAnywhere, Category = "Item Spawning")
-	bool bItemPickedUp = false;
+	UPROPERTY()
+	USceneComponent* Root;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
+	class UBoxComponent* CollisionBox;
+
+	FActorSpawnParameters spawnInfo;
+
+	FTimerHandle RespawnItemDelayTimerHandle;
+	FTimerDelegate TimerDelegate;
 
 	UFUNCTION()
 	void SpawnItem();
+
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

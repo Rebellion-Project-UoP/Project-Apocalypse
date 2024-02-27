@@ -15,7 +15,7 @@ class PROJECTAPOCALYPSE_API AAssaultRifle : public ABaseWeapon
 	GENERATED_BODY()
 
 public:
-	virtual void FireWeapon() override;
+	virtual FHitResult FireWeapon() override;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

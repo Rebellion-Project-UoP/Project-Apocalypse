@@ -87,7 +87,7 @@ void ABaseWeapon::BeginPlay()
 	UpdateWeaponMesh();
 }
 
-void ABaseWeapon::LineTrace()
+FHitResult ABaseWeapon::LineTrace()
 {
 	// Set the collision channel to use for the line trace
 	ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility;
@@ -141,7 +141,7 @@ void ABaseWeapon::LineTrace()
 
 			//Hit->Destroy(); //temporary needs to have a damage function implimented.
 
-			return;
+			return HitResult;
 		}
 
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, UEnum::GetValueAsString(TraceChannel));
@@ -150,10 +150,12 @@ void ABaseWeapon::LineTrace()
 
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a something!"));
 
-		return;
+		return HitResult;
 	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit nothing!"));
+	return HitResult;
+
 }
 
 FVector ABaseWeapon::LineTrace(FVector startPoint, FVector endPoint)
@@ -212,20 +214,24 @@ void ABaseWeapon::UpdateWeaponMesh()
 	WeaponBarrelExtension->SetStaticMesh(nullptr);
 }
 
-void ABaseWeapon::FireWeapon()
+FHitResult ABaseWeapon::FireWeapon()
 {
+	FHitResult result;
+
 	if (Mag > 0)
 	{
 		for (int i = 0; i < pellets; ++i)
 		{
-			LineTrace();
+		 	result = LineTrace();
 		}
 		
 		--Mag;
 		
-		return;
+		return result;
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Click Click... No ammo!?"));
+
+	return result;
 }
 
 void ABaseWeapon::Reload()
@@ -314,6 +320,8 @@ void ABaseWeapon::DealDamage(AZombieBase* Zombie)
 	if (ZombieHealthComp)
 	{
 		IDamageInterface::Execute_TakeDamage(ZombieHealthComp, 100);   //Change 100 to Damage variable
+		Zombie->Flinch();
+
 	}
 }
 

@@ -120,7 +120,7 @@ public:
 	void UpdateWeaponMesh();
 
 	UFUNCTION(BlueprintCallable)
-	virtual void FireWeapon();
+	virtual FHitResult FireWeapon();
 
 	UFUNCTION(BlueprintCallable)
 	virtual void Reload();
@@ -141,7 +141,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	virtual void LineTrace();
+	virtual FHitResult LineTrace();
 	FVector LineTrace(FVector startPoint, FVector endPoint);
 
 	FTimerHandle ReloadingTimer;

@@ -25,17 +25,17 @@ public:
 
 
 	UPROPERTY(EditAnywhere, Category = "Sky")
-		AActor* sun;
+	AActor* sun;
 
 	UPROPERTY(EditAnywhere, Category = "Sky")
-		ADirectionalLight* dayLightSource;
+	ADirectionalLight* dayLightSource;
 
 	UPROPERTY(EditAnywhere, Category = "Sky")
-		ADirectionalLight* nightLightSource;
+	ADirectionalLight* nightLightSource;
 
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "Sky")
-		float turnRate;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sky")
+	float rotationTimeInSeconds;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Environment")
-		bool bIsNightTime = false;
+	bool bIsNightTime = false;
 };

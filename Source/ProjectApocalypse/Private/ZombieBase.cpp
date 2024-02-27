@@ -19,7 +19,7 @@ FVector AZombieBase::getSteeringVelocity()
 AZombieBase::AZombieBase()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	
+
 	PrimaryActorTick.bCanEverTick = true;
 
 	aggroRange = 2000.0f;
@@ -30,14 +30,16 @@ AZombieBase::AZombieBase()
 
 	playerDetected = false;
 
+	isAttacking = false;
+
+	isDead = false;
+
 }
 
 // Called when the game starts or when spawned
 void AZombieBase::BeginPlay()
 {
 	Super::BeginPlay();
-
-	AddComponentByClass(UNeighbourhoodRadius::StaticClass(), false, this->GetActorTransform(), true);
 
 	swipeHitBox = Cast<UBoxComponent>(GetComponentsByTag(UBoxComponent::StaticClass(), "attack")[0]);
 
@@ -46,26 +48,28 @@ void AZombieBase::BeginPlay()
 	swipeHitBox->OnComponentBeginOverlap.AddDynamic(this, &AZombieBase::OnBoxBeginOverlap);
 
 	neighbourhood = GetComponentByClass<UNeighbourhoodRadius>();
-	
+
 	healthComponent = Cast<UHealthComp>(GetComponentByClass(UHealthComp::StaticClass()));
-	
+
 	//gets the behaviours attached to the zombie
 	TArray<UActorComponent*> behavioursFound = GetComponentsByClass(USteeringBehaviour::StaticClass());
 
-	for(int i = 0; i < behavioursFound.Num(); i++ )
+	for (int i = 0; i < behavioursFound.Num(); i++)
 	{
 		USteeringBehaviour* b = Cast<USteeringBehaviour>(behavioursFound[i]);
 		_behaviours.Add(b);
-		
+
 	};
-	
+
 	//FTimerHandle UnusedHandle;
 	//GetWorldTimerManager().SetTimer(UnusedHandle, this, &AZombieBase::MoveToPlayer, 2, true, 0);
 
-	
+
 	//_skeletalMesh = Cast<USkeletalMeshComponent>(this->GetComponentByClass(USkeletalMeshComponent::StaticClass));
 
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel1, ECollisionResponse::ECR_Block);
+
+
 }
 
 
@@ -76,15 +80,34 @@ void AZombieBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!playerDetected) {
-
-		SetActorRotation(UKismetMathLibrary::RInterpTo_Constant(GetActorRotation(), _velocity.ToOrientationRotator(), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 80));
-	
-
-
-
-		Move();
+	if (isDead) {
+		return;
 	}
+
+	if (isAttacking) {
+		return;
+	}
+
+	if (playerDetected) {
+		GetCharacterMovement()->MaxWalkSpeed = maxRunSpeed;
+		return;
+	}
+
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.1, FColor::Red, "here");
+
+	if (GetVelocity().Length() > maxWalkSpeed) {
+
+		GetCharacterMovement()->MaxWalkSpeed -= 2;
+
+		if (GetVelocity().Length() <= maxWalkSpeed) {
+
+			GetCharacterMovement()->MaxWalkSpeed = maxWalkSpeed;
+		}
+	}
+
+	SetActorRotation(UKismetMathLibrary::RInterpTo_Constant(GetActorRotation(), _velocity.ToOrientationRotator(), UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 80));
+
+	Move();
 
 
 }
@@ -95,9 +118,9 @@ void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 		AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(OtherActor);
 
 		//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1, FColor::Red, "damage");
+		if (player->GetComponentByClass<UHealthComp>()->Implements<UDamageInterface>()) {
 
-		if (Cast<UHealthComp>(player->GetComponentByClass(UHealthComp::StaticClass()))->Implements<UDamageInterface>()) {
-			UHealthComp* health = Cast<UHealthComp>(player->GetComponentByClass(UHealthComp::StaticClass()));
+			UHealthComp* health = player->GetComponentByClass<UHealthComp>();
 
 			IDamageInterface::Execute_TakeDamage(health, 20);
 		}
@@ -119,9 +142,11 @@ void AZombieBase::Move()
 
 	FVector accel = steeringForce / 1;
 	_velocity = accel * UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
-	
 
-	_velocity.GetClampedToSize(0,GetCharacterMovement()->MaxWalkSpeed);
+
+	_velocity = _velocity.GetClampedToSize(0, GetCharacterMovement()->MaxWalkSpeed);
+
+
 
 	if (_velocity != FVector::Zero()) {
 		_velocity.Z = 0;
