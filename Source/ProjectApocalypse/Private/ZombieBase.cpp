@@ -34,6 +34,7 @@ AZombieBase::AZombieBase()
 
 	isDead = false;
 
+	hasPointsBeenReceived = false;
 }
 
 // Called when the game starts or when spawned

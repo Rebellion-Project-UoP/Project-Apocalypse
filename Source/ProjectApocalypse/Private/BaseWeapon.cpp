@@ -116,28 +116,42 @@ FHitResult ABaseWeapon::LineTrace()
 
 	DrawDebugLine(WorldRef,StartPoint, EndPoint , FColor::Red, false, 2.0f, 0, 1.0f);
 
-
 	if (bHit)
 	{
 		if (Cast<AZombieBase>(HitResult.GetActor()))
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a zombie!"));
 			AZombieBase* Hit = Cast<AZombieBase>(HitResult.GetActor());
-			
+
 			DealDamage(Hit);
 
-			if (!IsValid(Hit))
+			if (Hit->healthComponent->currHealth <= 0 && Hit->hasPointsBeenReceived == false)
 			{
 				if (HitResult.PhysMaterial.IsValid())
 				{
 					PlayerRef->PlayerScore += CalculateScore(HitResult);
+
+					Hit->hasPointsBeenReceived = true;
 				}
 
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Works"));
-			} // Remember to fix this so that it takes score only when the player final shot hits. 
-			  //Ask Niamh if hit markers with score is okay as it will fix this problem and could have a chunk of score like 50 when the zombie is killed.
+			}
+
+			//if (!IsValid(Hit))
+			//{
+			//	if (HitResult.PhysMaterial.IsValid())
+			//	{
+			//		PlayerRef->PlayerScore += CalculateScore(HitResult);
+			//	}
+
+			//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Works"));
+			//} 
+			// Remember to fix this so that it takes score only when the player final shot hits. 
+			//Ask Niamh if hit markers with score is okay as it will fix this problem and could have a chunk of score like 50 when the zombie is killed.
 
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Score: %i"), PlayerRef->PlayerScore));
+
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.PhysMaterial.Get()->GetName());
 
 			//Hit->Destroy(); //temporary needs to have a damage function implimented.
 
