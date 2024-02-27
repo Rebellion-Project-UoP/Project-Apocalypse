@@ -53,6 +53,8 @@ AProjectApocalypseCharacter::AProjectApocalypseCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 	PlayerScore = 0;
+
+	StaminaRegenDelay = 0.0f;
 }
 
 void AProjectApocalypseCharacter::BeginPlay()
@@ -133,9 +135,12 @@ void AProjectApocalypseCharacter::Look(const FInputActionValue& Value)
 
 void AProjectApocalypseCharacter::SprintStart()
 {
+
+	GetWorldTimerManager().ClearTimer(StaminaRegenTimerHandle);
+	
 	if (CurrentStamina > 0 && GetCharacterMovement()->Velocity.Size() > 0)
 	{
-		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.0f, FColor::Blue, "current drain is ");
+		//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.0f, FColor::Blue, "current drain is ");
 		GetWorld()->GetTimerManager().SetTimer(StaminaDrainTimerHandle,this, &AProjectApocalypseCharacter::DrainStamina, 0.1f, true,0.0f);
 		IsSprinting = true;
 		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
@@ -149,9 +154,10 @@ void AProjectApocalypseCharacter::SprintEnd()
 	IsSprinting = false;
 	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
 	GetWorldTimerManager().ClearTimer(StaminaDrainTimerHandle);
-	if (!IsSprinting && GetCharacterMovement()->Velocity.Size() <= 0)
+	
+	if (!IsSprinting)
 	{
-		GetWorld()->GetTimerManager().SetTimer(StaminaRegenTimerHandle, this, &AProjectApocalypseCharacter::RegenStamina, 0.1f, true, 0.0f);
+		GetWorld()->GetTimerManager().SetTimer(StaminaRegenTimerHandle, this, &AProjectApocalypseCharacter::RegenStamina, 0.1f, true, StaminaRegenDelay);
 	}
 	else
 	{
