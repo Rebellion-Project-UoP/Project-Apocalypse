@@ -84,11 +84,16 @@ void AZombieBase::Tick(float DeltaTime)
 		return;
 	}
 
+	if (isAttacking) {
+		return;
+	}
 
 	if (playerDetected) {
 		GetCharacterMovement()->MaxWalkSpeed = maxRunSpeed;
 		return;
 	}
+
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.1, FColor::Red, "here");
 
 	if (GetVelocity().Length() > maxWalkSpeed) {
 
