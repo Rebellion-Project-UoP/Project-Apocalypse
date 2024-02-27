@@ -54,6 +54,10 @@ AProjectApocalypseCharacter::AProjectApocalypseCharacter()
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 	PlayerScore = 0;
 
+	AmmoCrateReserves = 1;
+
+	HealthPackReserves = 1;
+
 	StaminaRegenDelay = 0.0f;
 }
 
@@ -68,6 +72,20 @@ void AProjectApocalypseCharacter::BeginPlay()
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
+		}
+	}
+
+	TArray<AActor*> children = TArray<AActor*>();
+
+	GetAllChildActors(children);
+
+	for (auto It = children.CreateConstIterator(); It; ++It)
+	{
+		ABaseWeapon* weapon = (Cast<ABaseWeapon>(*It));
+
+		if (weapon)
+		{
+			weaponRef = weapon;
 		}
 	}
 }

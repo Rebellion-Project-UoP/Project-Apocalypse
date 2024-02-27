@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BaseWeapon.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
 #include "ProjectApocalypseCharacter.generated.h"
-
 
 UCLASS(config = Game)
 class AProjectApocalypseCharacter : public ACharacter
@@ -112,5 +112,13 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Score")
 	int32 PlayerScore;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Consumables")
+	int32 AmmoCrateReserves;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Consumables")
+	int32 HealthPackReserves;
+
+	ABaseWeapon* weaponRef;
 };
 

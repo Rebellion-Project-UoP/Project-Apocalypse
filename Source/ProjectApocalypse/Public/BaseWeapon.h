@@ -3,9 +3,9 @@
 #include "CoreMinimal.h"
 #include "Components/CapsuleComponent.h"
 #include <ZombieBase.h>
-#include "../ProjectApocalypseCharacter.h"
 #include "GameFramework/Actor.h"
 #include "BaseWeapon.generated.h"
+class AProjectApocalypseCharacter;
 
 UENUM (BlueprintType)
 enum class FiringMode

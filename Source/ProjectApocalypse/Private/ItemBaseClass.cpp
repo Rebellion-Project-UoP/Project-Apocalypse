@@ -39,7 +39,19 @@ UPrimitiveComponent *OtherComponent,
 int32 OtherBodyIndex, 
 bool bFromSweep, const FHitResult &SweepResult)
 {
+	AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(OtherActor);
 
+	if (player)
+	{
+		PickUpAction(player);
+
+		Destroy();
+	}
 
 }
+
+void AItemBaseClass::PickUpAction(AProjectApocalypseCharacter* player)
+{
+}
+
 
