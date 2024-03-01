@@ -94,8 +94,6 @@ void AZombieBase::Tick(float DeltaTime)
 		return;
 	}
 
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.1, FColor::Red, "here");
-
 	if (GetVelocity().Length() > maxWalkSpeed) {
 
 		GetCharacterMovement()->MaxWalkSpeed -= 2;
