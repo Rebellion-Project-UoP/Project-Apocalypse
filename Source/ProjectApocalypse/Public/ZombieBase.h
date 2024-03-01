@@ -23,6 +23,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool isAttacking;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool isDead;
+
 	UFUNCTION(BlueprintCallable)
 		FVector getSteeringVelocity();
 
@@ -33,13 +36,16 @@ public:
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 			float maxRunSpeed;
 
+	UHealthComp* healthComponent;
+
+	bool hasPointsBeenReceived;
+
+
 		
 private:
 	FVector _velocity;
 
 	UBoxComponent* swipeHitBox;
-
-	UHealthComp* healthComponent;
 
 	//stores all steering behaviours for the zombie
 	TArray<USteeringBehaviour*> _behaviours;
@@ -60,6 +66,12 @@ public:
 
 	UFUNCTION()
 		void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void Flinch();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void Death();
 
 	void Move();
 	
