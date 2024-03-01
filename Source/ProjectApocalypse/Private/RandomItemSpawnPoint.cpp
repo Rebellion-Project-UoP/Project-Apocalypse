@@ -46,7 +46,7 @@ void ARandomItemSpawnPoint::SpawnItem()
 
 	GetWorldTimerManager().ClearTimer(RespawnItemDelayTimerHandle);
 	
-	int randNumber = FMath::RandRange(0, (itemToSpawn.Max() - 1));
+	int randNumber = FMath::RandRange(0, (itemToSpawn.Num() - 1));
 
 	if (itemToSpawn[randNumber])
 	{

@@ -54,4 +54,8 @@ void AItemBaseClass::PickUpAction(AProjectApocalypseCharacter* player)
 {
 }
 
+void AItemBaseClass::UseAction(AProjectApocalypseCharacter* player)
+{
+}
+
 

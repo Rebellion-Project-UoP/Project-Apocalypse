@@ -113,12 +113,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Score")
 	int32 PlayerScore;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Consumables")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Consumables")
 	int32 AmmoCrateReserves;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Consumables")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Consumables")
 	int32 HealthPackReserves;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Consumables")
+	TArray<TSubclassOf<class AActor>> CurrentItem;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Consumables")
+	int32 CurrentItemSelected;
+
 	ABaseWeapon* weaponRef;
+
+	UHealthComp* healthComponent;
 };
 

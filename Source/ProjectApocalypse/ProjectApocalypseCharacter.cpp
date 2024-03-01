@@ -58,6 +58,8 @@ AProjectApocalypseCharacter::AProjectApocalypseCharacter()
 
 	HealthPackReserves = 1;
 
+	CurrentItemSelected = 0;
+
 	StaminaRegenDelay = 0.0f;
 }
 
@@ -88,6 +90,8 @@ void AProjectApocalypseCharacter::BeginPlay()
 			weaponRef = weapon;
 		}
 	}
+
+	healthComponent = Cast<UHealthComp>(GetComponentByClass(UHealthComp::StaticClass()));
 }
 
 //////////////////////////////////////////////////////////////////////////

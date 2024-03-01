@@ -35,5 +35,6 @@ public:
 	UFUNCTION()
 	virtual void PickUpAction(AProjectApocalypseCharacter* player);
 
-
+	UFUNCTION(BlueprintCallable)
+	virtual void UseAction(AProjectApocalypseCharacter* player);
 };
