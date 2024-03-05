@@ -34,7 +34,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Item Spawning")
 	float delayTimer;
 
-	UPROPERTY()
 	USceneComponent* Root;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
@@ -45,9 +44,7 @@ public:
 	FTimerHandle RespawnItemDelayTimerHandle;
 	FTimerDelegate TimerDelegate;
 
-	UFUNCTION()
 	void SpawnItem();
 
-	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

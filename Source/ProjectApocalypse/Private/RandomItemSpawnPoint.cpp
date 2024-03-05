@@ -3,6 +3,7 @@
 #include "RandomItemSpawnPoint.h"
 #include "Kismet/GameplayStatics.h"
 #include "ProjectApocalypse/ProjectApocalypseCharacter.h"
+#include <ItemBaseClass.h>
 
 // Sets default values
 ARandomItemSpawnPoint::ARandomItemSpawnPoint()
@@ -20,8 +21,6 @@ ARandomItemSpawnPoint::ARandomItemSpawnPoint()
 
 	spawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	TimerDelegate.BindUFunction(this, FName("SpawnItem"));
-
 	delayTimer = 3;
 }
 
@@ -29,6 +28,8 @@ ARandomItemSpawnPoint::ARandomItemSpawnPoint()
 void ARandomItemSpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
+
+	TimerDelegate.BindUFunction(this, FName("SpawnItem"));
 	
 	SpawnItem();
 }
@@ -42,7 +43,7 @@ void ARandomItemSpawnPoint::Tick(float DeltaTime)
 
 void ARandomItemSpawnPoint::SpawnItem()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Spawn!"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Spawn!"));
 
 	GetWorldTimerManager().ClearTimer(RespawnItemDelayTimerHandle);
 	
@@ -56,7 +57,7 @@ void ARandomItemSpawnPoint::SpawnItem()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Not Valid Actor to Spawn"));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Not Valid Actor to Spawn"));
 		
 		spawnedActor = nullptr;
 
@@ -74,12 +75,19 @@ bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (spawnedActor)
 	{
-		if (OtherActor != spawnedActor)
-		{
+		AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(OtherActor);
 
-			if (Cast<AProjectApocalypseCharacter>(OtherActor))
+		if (player)
+		{
+			AItemBaseClass* itemBaseClassRef = Cast<AItemBaseClass>(spawnedActor);
+
+			if (itemBaseClassRef)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided with the player!"));
+				itemBaseClassRef->PickUpAction(player);
+
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Item picked up!"));
+
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided with the player!"));
 
 				spawnedActor->Destroy();
 
@@ -87,11 +95,12 @@ bool bFromSweep, const FHitResult& SweepResult)
 
 				GetWorldTimerManager().SetTimer(RespawnItemDelayTimerHandle, TimerDelegate, delayTimer, false);
 			}
-			else
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided not with the player!"));
-			}
 		}
+		else
+		{
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided not with the player!"));
+		}
+
 	}
 }
 
