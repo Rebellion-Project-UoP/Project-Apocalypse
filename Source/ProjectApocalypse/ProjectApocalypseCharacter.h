@@ -118,7 +118,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Consumables")
 	int32 HealthPackReserves;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Consumables")
 	TArray<TSubclassOf<class AActor>> CurrentItem;
 

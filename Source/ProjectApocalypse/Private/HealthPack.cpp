@@ -12,8 +12,11 @@ void AHealthPack::UseAction(AProjectApocalypseCharacter* player)
 {
 	if (player->HealthPackReserves > 0)
 	{
-		player->healthComponent->currHealth = 100;
+		if (player->healthComponent->currHealth < player->healthComponent->maxHealth && player->healthComponent->currHealth > 0)
+		{
+			player->healthComponent->currHealth = player->healthComponent->maxHealth;
 
-		player->HealthPackReserves--;
+			player->HealthPackReserves--;
+		}
 	}
 }

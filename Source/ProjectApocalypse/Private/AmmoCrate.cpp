@@ -10,16 +10,19 @@ void AAmmoCrate::PickUpAction(AProjectApocalypseCharacter* player)
 }
 
 void AAmmoCrate::UseAction(AProjectApocalypseCharacter* player)
-{
+{	
 	if (player->AmmoCrateReserves > 0)
 	{
-		player->weaponRef->Ammunition += 30;
-
-		if (player->weaponRef->Ammunition > player->weaponRef->MaxAmmunition)
+		if (player->weaponRef->Ammunition != player->weaponRef->MaxAmmunition)
 		{
-			player->weaponRef->Ammunition = player->weaponRef->MaxAmmunition;
-		}
+			player->weaponRef->Ammunition += 30;
 
-		player->AmmoCrateReserves--;
+			if (player->weaponRef->Ammunition > player->weaponRef->MaxAmmunition)
+			{
+				player->weaponRef->Ammunition = player->weaponRef->MaxAmmunition;
+			}
+
+			player->AmmoCrateReserves--;
+		}
 	}
 }

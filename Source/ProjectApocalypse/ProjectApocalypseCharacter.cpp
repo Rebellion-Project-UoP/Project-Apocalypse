@@ -116,7 +116,6 @@ void AProjectApocalypseCharacter::SetupPlayerInputComponent(class UInputComponen
 
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AProjectApocalypseCharacter::SprintEnd);
 	}
-
 }
 
 void AProjectApocalypseCharacter::Move(const FInputActionValue& Value)

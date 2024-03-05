@@ -22,8 +22,7 @@ AItemBaseClass::AItemBaseClass()
 void AItemBaseClass::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	//_myPlayerRef = Cast<AProjectApocalypseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
 }
 
 // Called every frame
@@ -47,7 +46,7 @@ bool bFromSweep, const FHitResult &SweepResult)
 
 		Destroy();
 	}
-
+	
 }
 
 void AItemBaseClass::PickUpAction(AProjectApocalypseCharacter* player)
