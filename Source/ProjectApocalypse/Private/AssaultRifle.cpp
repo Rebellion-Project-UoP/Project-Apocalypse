@@ -3,11 +3,11 @@
 
 #include "AssaultRifle.h"
 
-void AAssaultRifle::FireWeapon()
+FHitResult AAssaultRifle::FireWeapon()
 {
-	Super::FireWeapon();
-
 	UE_LOG(LogTemp, Warning , TEXT("bang"));
+
+	return Super::FireWeapon();
 }
 
 void AAssaultRifle::Tick(float DeltaTime)

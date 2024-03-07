@@ -9,10 +9,10 @@
 #include "BaseWeapon.generated.h"
 
 UENUM (BlueprintType)
-enum class FiringMode
-{	 SingleFire,
-	 BurstFire,
-	 AutoFire
+enum class FiringMode: uint8
+{	 SingleFire UMETA(DisplayName="Single"),
+	 BurstFire UMETA(DisplayName="Burst"),
+	 AutoFire UMETA(DisplayName="Auto")
 };
 
 UCLASS()
@@ -45,9 +45,6 @@ public:
 	float Damage;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float ReloadSpeed;
-
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
-	USoundCue* GunShot;
 	
 	float ReloadTime;
 	
@@ -68,6 +65,13 @@ public:
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
     bool bIsProjectile;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Audio")
+	USoundCue* GunShotNoise;
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Audio")
+	USoundCue* ReloadNoise;
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Audio")
+	USoundCue* MagEmptyNoise;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(ClampMin = 1))
 	int pellets;
@@ -122,7 +126,10 @@ public:
 	void UpdateWeaponMesh();
 
 	UFUNCTION(BlueprintCallable)
-	virtual void FireWeapon();
+	virtual FHitResult FireWeapon();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void EndFireWeapon();
 
 	UFUNCTION(BlueprintCallable)
 	virtual void Reload();
@@ -138,24 +145,37 @@ public:
 	UWorld* WorldRef;
 	AProjectApocalypseCharacter* PlayerRef;
 
-	void SingleFire();
+	FHitResult SingleFire();
 
-	void BurstFire();
+	FHitResult BurstFire();
 
-	void AutoFire();
+	FHitResult AutoFire();
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FiringMode FireMode;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bCanFire;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsFiring;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	virtual void LineTrace();
+	virtual FHitResult LineTrace();
 	FVector LineTrace(FVector startPoint, FVector endPoint);
 
 	FTimerHandle ReloadingTimer;
 
-	UPROPERTY(EditAnywhere)
-	FiringMode FireMode;
+	FTimerHandle FireRateTimer;
+
+	void FireRateCooldown();
+
+	float FireRatecounter;
+
+	bool IsReloading;
 
 public:	
 	// Called every frame

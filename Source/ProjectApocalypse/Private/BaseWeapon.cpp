@@ -9,8 +9,6 @@
 #include "CollisionQueryParams.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include <Kismet/GameplayStatics.h>
-
-#include "Engine/SkeletalMeshSocket.h"
 #include "Math/UnitConversion.h"
 
 // Sets default values
@@ -73,6 +71,12 @@ ABaseWeapon::ABaseWeapon()
 	ReloadTime = 0;
 
 	Magnification = 2;
+
+	FireRatecounter = 0;
+	
+	bCanFire = true;
+
+	IsReloading = false;
 }
 
 // Called when the game starts or when spawned
@@ -87,7 +91,7 @@ void ABaseWeapon::BeginPlay()
 	UpdateWeaponMesh();
 }
 
-void ABaseWeapon::LineTrace()
+FHitResult ABaseWeapon::LineTrace()
 {
 	// Set the collision channel to use for the line trace
 	ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility;
@@ -116,44 +120,40 @@ void ABaseWeapon::LineTrace()
 
 	DrawDebugLine(WorldRef,StartPoint, EndPoint , FColor::Red, false, 2.0f, 0, 1.0f);
 
-
 	if (bHit)
 	{
 		if (Cast<AZombieBase>(HitResult.GetActor()))
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a zombie!"));
 			AZombieBase* Hit = Cast<AZombieBase>(HitResult.GetActor());
-			
+
 			DealDamage(Hit);
 
-			if (!IsValid(Hit))
+			if (Hit->healthComponent->currHealth <= 0 && Hit->hasPointsBeenReceived == false)
 			{
 				if (HitResult.PhysMaterial.IsValid())
 				{
 					PlayerRef->PlayerScore += CalculateScore(HitResult);
+
+					Hit->hasPointsBeenReceived = true;
 				}
 
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Works"));
-			} // Remember to fix this so that it takes score only when the player final shot hits. 
-			  //Ask Niamh if hit markers with score is okay as it will fix this problem and could have a chunk of score like 50 when the zombie is killed.
-
+			}
+			
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Score: %i"), PlayerRef->PlayerScore));
 
-			//Hit->Destroy(); //temporary needs to have a damage function implimented.
-
-			return;
+			return HitResult;
 		}
-
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, UEnum::GetValueAsString(TraceChannel));
-
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, HitResult.GetActor()->GetName());
 
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a something!"));
 
-		return;
+		return HitResult;
 	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit nothing!"));
+	return HitResult;
+
 }
 
 FVector ABaseWeapon::LineTrace(FVector startPoint, FVector endPoint)
@@ -175,12 +175,24 @@ FVector ABaseWeapon::LineTrace(FVector startPoint, FVector endPoint)
 	return endPoint;
 }
 
+void ABaseWeapon::FireRateCooldown()
+{
+	FireRatecounter += 0.025f;
+
+	if (FireRatecounter >= FireRate)
+	{
+		EndFireWeapon();
+		
+		FireRatecounter = 0;
+		
+		GetWorldTimerManager().ClearTimer(FireRateTimer); //stopping the timer as fire rate cooldown has been finished.
+	}
+}
+
 // Called every frame
 void ABaseWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	//UpdateWeaponMesh();
 }
 
 void ABaseWeapon::UpdateWeaponMesh()
@@ -212,47 +224,69 @@ void ABaseWeapon::UpdateWeaponMesh()
 	WeaponBarrelExtension->SetStaticMesh(nullptr);
 }
 
-void ABaseWeapon::FireWeapon()
+FHitResult ABaseWeapon::FireWeapon()
 {
+	FHitResult result;
+	
 	if (Mag > 0)
 	{
 		switch (FireMode)
 		{
-		case 0: // Single fire
-			SingleFire();
+		case 0: // Single Fire
+			result = SingleFire();
 			break;
-		case 1: // Burst fire
-			BurstFire();
+		case 1: // Burst Fire
+			result = BurstFire();
 			break;
-		case 2: // Auto fire
-			AutoFire();
+		case 2: // Auto Fire
+			result = AutoFire();
 			break;
-		default:
-			break;
-			
 		}
 
-		//PlayerRef->GetFollowCamera();
-		
-		return;
+		bCanFire = false;
+
+		bIsFiring = true;
+
+		GetWorldTimerManager().SetTimer(FireRateTimer, this, &ABaseWeapon::FireRateCooldown, 0.025f, true);
+
+		return result;
 	}
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Click Click... No ammo!?"));
+
+	if (bIsFiring||Ammunition<=0)
+	{
+		UGameplayStatics::PlaySound2D(this, MagEmptyNoise);
+
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Can't fire weapon"));
+
+		return result;
+	}
+
+	Reload();
+	
+	return result;
+}
+
+void ABaseWeapon::EndFireWeapon()
+{
+	if (!IsReloading)
+	{
+		bCanFire = true;
+	}
 }
 
 void ABaseWeapon::Reload()
 {
-	//needs to be changed to actual reload time from weapons stat
-	// if (!ReloadTime>0.0f)
-	// {
-	// 	ReloadTime = 3.0f;
-	// } //safety net to stop reloading being re-triggered.
-
-	if (Ammunition > 0 && Mag!=MagSize)
+	if (Ammunition > 0 && Mag!=MagSize && !IsReloading)
 	{
+		bCanFire = false;
+
+		IsReloading = true;
+
+		UGameplayStatics::PlaySound2D(this, ReloadNoise);
+		
 		ReloadTime = 3.0f;
 		
 		GetWorldTimerManager().SetTimer(ReloadingTimer, this, &ABaseWeapon::Reloading, 0.1f, true);
-		
 
 		return;
 	}
@@ -263,8 +297,7 @@ void ABaseWeapon::Reload()
 void ABaseWeapon::Reloading()
 {
 	ReloadTime -= 0.1f;
-	
-	//UE_LOG(LogTemp,Warning,TEXT("RELOOOOOOOODING!"));
+
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("RELOOOOOOOODING!"));
 
 	
@@ -289,45 +322,64 @@ void ABaseWeapon::Reloading()
 		}
 		
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("RELOADED!!"));
-
 		
 		GetWorldTimerManager().ClearTimer(ReloadingTimer); //stopping the timer as reloading has been finished.
+
+		bCanFire = true;
+		
+		IsReloading = false;
 	}
 }
 
-void ABaseWeapon::SingleFire()
+FHitResult ABaseWeapon::SingleFire()
 {
+	FHitResult result;
+
+	UGameplayStatics::PlaySound2D(this, GunShotNoise);
 	
 	for (int i = 0; i < pellets; ++i)
 	{
-		LineTrace();
+		result = LineTrace();
 	}
-
+	
 	--Mag;
+
+	bCanFire = false;
+	
+	return result;
 }
 
-void ABaseWeapon::BurstFire()
-{
-	//use a timer instead.
-	for (int i = 0; i < MagSize/8; ++i)
-	{
-		UGameplayStatics::PlaySound2D(this, GunShot);
-		
-		for (int j = 0; j < pellets; ++j)
-		{
-			LineTrace();
-		}
-		--Mag;
-	}
-}
-
-void ABaseWeapon::AutoFire()
-{
+FHitResult ABaseWeapon::BurstFire()
+{	
+	FHitResult result;
+	
+	UGameplayStatics::PlaySound2D(this, GunShotNoise);
+	
 	for (int i = 0; i < pellets; ++i)
 	{
-		LineTrace();
+		result = LineTrace();
 	}
+	
 	--Mag;
+	
+	return result;
+	
+}
+
+FHitResult ABaseWeapon::AutoFire()
+{
+	FHitResult result;
+
+	UGameplayStatics::PlaySound2D(this, GunShotNoise);
+	
+	for (int i = 0; i < pellets; ++i)
+	{
+		result = LineTrace();
+	}
+	
+	--Mag;
+
+	return result;
 }
 
 int32 ABaseWeapon::CalculateScore(const FHitResult& HitResult)
@@ -360,6 +412,8 @@ void ABaseWeapon::DealDamage(AZombieBase* Zombie)
 	if (ZombieHealthComp)
 	{
 		IDamageInterface::Execute_TakeDamage(ZombieHealthComp, 100);   //Change 100 to Damage variable
+		Zombie->Flinch();
+
 	}
 }
 

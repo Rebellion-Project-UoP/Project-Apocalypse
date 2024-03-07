@@ -2,6 +2,8 @@
 
 
 #include "HealthComp.h"
+#include "ZombieBase.h"
+#include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 
 // Sets default values for this component's properties
 UHealthComp::UHealthComp()
@@ -38,9 +40,27 @@ void UHealthComp::TakeDamage_Implementation(float damage)
 {
 	currHealth -= damage;
 
-	if (currHealth <= 0) {
+	if (currHealth > 0) {
 		
-		GetOwner()->Destroy();
+		return;
 	}
+
+	AZombieBase* zombie = Cast<AZombieBase>(GetOwner());
+
+	if (zombie) {
+		zombie->Death();
+
+		return;
+	}
+
+	AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(GetOwner());
+	if (player)
+	{
+		player->Death();
+
+		return;
+	}
+
+	GetOwner()->Destroy();
 }
 

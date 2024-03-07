@@ -15,6 +15,7 @@
 //////////////////////////////////////////////////////////////////////////
 // AProjectApocalypseCharacter
 
+
 AProjectApocalypseCharacter::AProjectApocalypseCharacter()
 {
 	CurrentStamina = MaxStamina;
@@ -55,6 +56,8 @@ AProjectApocalypseCharacter::AProjectApocalypseCharacter()
 	PlayerScore = 0;
 
 	StaminaRegenDelay = 0.0f;
+
+	IsDead = false;
 }
 
 void AProjectApocalypseCharacter::BeginPlay()
