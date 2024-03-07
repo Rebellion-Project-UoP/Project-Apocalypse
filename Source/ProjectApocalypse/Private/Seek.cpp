@@ -6,22 +6,24 @@
 
 USeek::USeek()
 {
-	_seekTargetPos = FVector(0, 0, 0);
+	seekTargetPos = FVector(0, 0, 0);
 }
 
 void USeek::BeginPlay()
 {
-	_playerRef = Cast<AProjectApocalypseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-
 	
 
 }
 
 FVector USeek::Calculate()
 {
-	_seekTargetPos = _playerRef->GetActorTransform().GetLocation();
+	FVector direction = (seekTargetPos - GetOwner()->GetTransform().GetLocation());
+	float distance = FVector::Dist(GetOwner()->GetTransform().GetLocation(), seekTargetPos);
+	direction.Normalize();
+	FVector desiredVelocity = direction * (distance / 50);
 
-	FVector desiredVelocity = (_seekTargetPos - GetOwner()->GetTransform().GetLocation()).Normalize() * FVector(10);
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.1, FColor::Red, FString::SanitizeFloat(distance));
+	DrawDebugLine(GetWorld(), GetOwner()->GetTransform().GetLocation(), GetOwner()->GetTransform().GetLocation() + direction * (distance / 50), FColor::Red);
 
-	return FVector();
+	return desiredVelocity;
 }
