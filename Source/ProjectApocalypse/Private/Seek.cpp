@@ -22,8 +22,5 @@ FVector USeek::Calculate()
 	direction.Normalize();
 	FVector desiredVelocity = direction * (distance / 50);
 
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.1, FColor::Red, FString::SanitizeFloat(distance));
-	DrawDebugLine(GetWorld(), GetOwner()->GetTransform().GetLocation(), GetOwner()->GetTransform().GetLocation() + direction * (distance / 50), FColor::Red);
-
 	return desiredVelocity;
 }
