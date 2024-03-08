@@ -29,7 +29,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
 	class UBoxComponent* CollisionBox;	
 
-
 	virtual void PickUpAction(AProjectApocalypseCharacter* player);
 
 	UFUNCTION(BlueprintCallable)

@@ -73,6 +73,10 @@ ABaseWeapon::ABaseWeapon()
 	ReloadTime = 0;
 
 	Magnification = 2;
+
+	HeadshotMultiplier = 1.5f;
+	BodyShotMultiplier = 1.0f;
+	LimbShotMultiplier = 0.75f;
 }
 
 // Called when the game starts or when spawned
@@ -123,7 +127,7 @@ FHitResult ABaseWeapon::LineTrace()
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a zombie!"));
 			AZombieBase* Hit = Cast<AZombieBase>(HitResult.GetActor());
 
-			DealDamage(Hit);
+			DealDamage(Hit, HitResult);
 
 			if (Hit->healthComponent->currHealth <= 0 && Hit->hasPointsBeenReceived == false)
 			{
@@ -327,15 +331,37 @@ int32 ABaseWeapon::CalculateScore(const FHitResult& HitResult)
 	return score;
 }
 
-void ABaseWeapon::DealDamage(AZombieBase* Zombie)
+void ABaseWeapon::DealDamage(AZombieBase* Zombie, const FHitResult& HitResult)
 {
 	UHealthComp* ZombieHealthComp = Cast<UHealthComp>(Zombie->GetComponentByClass(UHealthComp::StaticClass()));
 
+	float finalDamage = 0;
+
 	if (ZombieHealthComp)
 	{
-		IDamageInterface::Execute_TakeDamage(ZombieHealthComp, 100);   //Change 100 to Damage variable
+		if (HitResult.PhysMaterial->SurfaceType == SurfaceType1)
+		{
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Head"));
+
+			finalDamage = Damage * HeadshotMultiplier;
+		}
+		else if (HitResult.PhysMaterial->SurfaceType == SurfaceType2)
+		{
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
+
+			finalDamage = Damage * BodyShotMultiplier;
+		}
+		else if (HitResult.PhysMaterial->SurfaceType == SurfaceType3)
+		{
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Limb"));
+
+			finalDamage = Damage * LimbShotMultiplier;
+		}
+
+		IDamageInterface::Execute_TakeDamage(ZombieHealthComp, finalDamage);   //Change 100 to Damage variable
 		Zombie->Flinch();
 
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Damage: %f"), finalDamage));
 	}
 }
 

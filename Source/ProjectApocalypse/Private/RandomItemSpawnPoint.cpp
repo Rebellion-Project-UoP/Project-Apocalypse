@@ -28,10 +28,10 @@ ARandomItemSpawnPoint::ARandomItemSpawnPoint()
 void ARandomItemSpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
-
-	TimerDelegate.BindUFunction(this, FName("SpawnItem"));
 	
 	SpawnItem();
+
+	//TimerDelegate.BindUFunction(this, FName("SpawnItem"));
 }
 
 // Called every frame
@@ -61,19 +61,21 @@ void ARandomItemSpawnPoint::SpawnItem()
 		
 		spawnedActor = nullptr;
 
-		GetWorldTimerManager().SetTimer(RespawnItemDelayTimerHandle, TimerDelegate, delayTimer, false);
+		GetWorldTimerManager().SetTimer(RespawnItemDelayTimerHandle, this, &ARandomItemSpawnPoint::SpawnItem, delayTimer, false);
 
 		return;
 	}
 }
 
-void ARandomItemSpawnPoint::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
-AActor* OtherActor, 
-UPrimitiveComponent* OtherComponent, 
-int32 OtherBodyIndex, 
-bool bFromSweep, const FHitResult& SweepResult)
+void ARandomItemSpawnPoint::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComponent,
+	int32 OtherBodyIndex,
+	bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (spawnedActor)
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided with the player!"));
+
+	if (spawnedActor && OtherActor != spawnedActor)
 	{
 		AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(OtherActor);
 
@@ -87,13 +89,11 @@ bool bFromSweep, const FHitResult& SweepResult)
 
 				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Item picked up!"));
 
-				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided with the player!"));
-
 				spawnedActor->Destroy();
 
 				spawnedActor = nullptr;
 
-				GetWorldTimerManager().SetTimer(RespawnItemDelayTimerHandle, TimerDelegate, delayTimer, false);
+				GetWorldTimerManager().SetTimer(RespawnItemDelayTimerHandle, this, &ARandomItemSpawnPoint::SpawnItem, delayTimer, false);
 			}
 		}
 		else
@@ -102,6 +102,7 @@ bool bFromSweep, const FHitResult& SweepResult)
 		}
 
 	}
+
 }
 
 //when choosing the random item to spawn, it should be relevant to the environment around it. 
