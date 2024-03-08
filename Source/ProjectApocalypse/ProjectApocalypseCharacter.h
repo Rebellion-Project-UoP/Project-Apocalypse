@@ -97,7 +97,6 @@ protected:
 	float StaminaRegenRate = 10.f;
 
 
-
 	UFUNCTION()
 	void RegenStamina();
 

@@ -72,7 +72,7 @@ ABaseWeapon::ABaseWeapon()
 
 	Magnification = 2;
 
-	FireRatecounter = 0;
+	FireRateCounter = 0;
 	
 	bCanFire = true;
 
@@ -89,6 +89,8 @@ void ABaseWeapon::BeginPlay()
 	Mag = MagSize;
 
 	UpdateWeaponMesh();
+
+	TrueAccuracy = FMath::Lerp(0.05, 0.001, Accuracy/100);
 }
 
 FHitResult ABaseWeapon::LineTrace()
@@ -104,13 +106,15 @@ FHitResult ABaseWeapon::LineTrace()
 	GetParentActor()->GetComponents<UCameraComponent>(FollowCamera);
 
 	//FVector StartPoint = GetParentActor()->GetActorLocation(); //needs to be changed to barrel socket
-	FVector StartPoint = WeaponBarrel->GetSocketLocation("BarrelExtension-Slot"); //needs to be changed to barrel socket
+	FVector StartPoint = WeaponBarrel->GetSocketLocation("BarrelExtension-Slot");
 
 	FVector HitLocation = LineTrace(FollowCamera[0]->GetComponentLocation(), FollowCamera[0]->GetComponentLocation() + FollowCamera[0]->GetForwardVector()*5000); // change 5000 to the range variable
 
 	FVector Direction = HitLocation - StartPoint;
+
+	Direction = Direction.GetSafeNormal() + FVector3d(FMath::RandRange(-TrueAccuracy,TrueAccuracy),FMath::RandRange(-TrueAccuracy,TrueAccuracy),FMath::RandRange(-TrueAccuracy,TrueAccuracy));
 	
-	FVector EndPoint = StartPoint + Direction.GetSafeNormal()*5000; //temporary until designer begins implementing weapon stats then use range
+	FVector EndPoint = StartPoint + Direction*Range; //temporary until designer begins implementing weapon stats then use range
 
 	//FVector EndPoint = Direction.GetSafeNormal()*Range;
 
@@ -177,13 +181,13 @@ FVector ABaseWeapon::LineTrace(FVector startPoint, FVector endPoint)
 
 void ABaseWeapon::FireRateCooldown()
 {
-	FireRatecounter += 0.025f;
+	FireRateCounter += 0.025f;
 
-	if (FireRatecounter >= FireRate)
+	if (FireRateCounter >= FireRate)
 	{
 		EndFireWeapon();
 		
-		FireRatecounter = 0;
+		FireRateCounter = 0;
 		
 		GetWorldTimerManager().ClearTimer(FireRateTimer); //stopping the timer as fire rate cooldown has been finished.
 	}
@@ -284,7 +288,7 @@ void ABaseWeapon::Reload()
 
 		UGameplayStatics::PlaySound2D(this, ReloadNoise);
 		
-		ReloadTime = 3.0f;
+		ReloadTime = ReloadSpeed;
 		
 		GetWorldTimerManager().SetTimer(ReloadingTimer, this, &ABaseWeapon::Reloading, 0.1f, true);
 
@@ -298,7 +302,7 @@ void ABaseWeapon::Reloading()
 {
 	ReloadTime -= 0.1f;
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("RELOOOOOOOODING!"));
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Reloading in: %f"),ReloadTime));
 
 	
 	if (ReloadTime <=0)
@@ -320,8 +324,6 @@ void ABaseWeapon::Reloading()
 		{
 			Ammunition = 0;
 		}
-		
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("RELOADED!!"));
 		
 		GetWorldTimerManager().ClearTimer(ReloadingTimer); //stopping the timer as reloading has been finished.
 
@@ -411,7 +413,7 @@ void ABaseWeapon::DealDamage(AZombieBase* Zombie)
 
 	if (ZombieHealthComp)
 	{
-		IDamageInterface::Execute_TakeDamage(ZombieHealthComp, 100);   //Change 100 to Damage variable
+		IDamageInterface::Execute_TakeDamage(ZombieHealthComp, Damage);
 		Zombie->Flinch();
 
 	}
@@ -425,7 +427,7 @@ void ABaseWeapon::OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedCom
 	{
 		UE_LOG(LogTemp, Warning, TEXT("The player"));
 		// Destroy();
-		// return;
+		return;
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("Not the player"));

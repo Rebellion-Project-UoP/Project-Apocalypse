@@ -35,7 +35,7 @@ public:
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float Recoil;
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, meta=(ClampMin = 0, ClampMax = 100), Category="Weapon Stats")
 	float Accuracy;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float FireRate;
@@ -173,9 +173,11 @@ protected:
 
 	void FireRateCooldown();
 
-	float FireRatecounter;
+	float FireRateCounter;
 
 	bool IsReloading;
+
+	float TrueAccuracy;
 
 public:	
 	// Called every frame
