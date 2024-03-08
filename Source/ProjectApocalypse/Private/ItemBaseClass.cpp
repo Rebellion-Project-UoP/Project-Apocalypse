@@ -14,6 +14,8 @@ AItemBaseClass::AItemBaseClass()
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
 	CollisionBox->SetupAttachment(Root);
+
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &AItemBaseClass::OnOverlapBegin);
 }
 
 // Called when the game starts or when spawned
@@ -27,6 +29,12 @@ void AItemBaseClass::BeginPlay()
 void AItemBaseClass::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+}
+
+void AItemBaseClass::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided with the player!"));
 
 }
 
