@@ -34,8 +34,6 @@ void UWander::BeginPlay()
 FVector UWander::Calculate()
 {
 
-
-
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::SanitizeFloat(FMath::RadiansToDegrees(_wanderAngle)));
 	_wanderTarget = FVector(cos(_wanderAngle), sin(_wanderAngle), 0) * _wanderRadius;
 

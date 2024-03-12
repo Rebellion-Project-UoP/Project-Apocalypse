@@ -9,14 +9,10 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class PROJECTAPOCALYPSE_API USeek : public USteeringBehaviour
 {
 	GENERATED_BODY()
-	
-private:
-	FVector _seekTargetPos;
-	AProjectApocalypseCharacter* _playerRef;
 
 public:
 	// Sets default values for this component's properties
@@ -25,4 +21,8 @@ public:
 public:
 	void BeginPlay() override;
 	FVector Calculate() override;
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FVector seekTargetPos;
 };
