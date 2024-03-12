@@ -3,10 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BaseWeapon.h"
+#include <ItemBaseClass.h>
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
 #include "ProjectApocalypseCharacter.generated.h"
-
 
 UCLASS(config = Game)
 class AProjectApocalypseCharacter : public ACharacter
@@ -47,6 +48,12 @@ class AProjectApocalypseCharacter : public ACharacter
 
 public:
 	AProjectApocalypseCharacter();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void Death();
+
+	UPROPERTY(EditAnywhere)
+	bool IsDead;
 
 
 protected:
@@ -91,7 +98,6 @@ protected:
 	float StaminaRegenRate = 10.f;
 
 
-
 	UFUNCTION()
 	void RegenStamina();
 
@@ -110,7 +116,23 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Score")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Score")
 	int32 PlayerScore;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Consumables")
+	int32 AmmoCrateReserves;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Consumables")
+	int32 HealthPackReserves;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Consumables")
+	TArray<TSubclassOf<AItemBaseClass>> CurrentItem;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Consumables")
+	int32 CurrentItemSelected;
+
+	ABaseWeapon* weaponRef;
+
+	UHealthComp* healthComponent;
 };
 
