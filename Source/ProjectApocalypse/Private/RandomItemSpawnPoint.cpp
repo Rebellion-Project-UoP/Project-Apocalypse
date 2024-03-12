@@ -3,6 +3,7 @@
 #include "RandomItemSpawnPoint.h"
 #include "Kismet/GameplayStatics.h"
 #include "ProjectApocalypse/ProjectApocalypseCharacter.h"
+#include <ItemBaseClass.h>
 
 // Sets default values
 ARandomItemSpawnPoint::ARandomItemSpawnPoint()
@@ -20,8 +21,6 @@ ARandomItemSpawnPoint::ARandomItemSpawnPoint()
 
 	spawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	TimerDelegate.BindUFunction(this, FName("SpawnItem"));
-
 	delayTimer = 3;
 }
 
@@ -31,6 +30,8 @@ void ARandomItemSpawnPoint::BeginPlay()
 	Super::BeginPlay();
 	
 	SpawnItem();
+
+	//TimerDelegate.BindUFunction(this, FName("SpawnItem"));
 }
 
 // Called every frame
@@ -42,11 +43,11 @@ void ARandomItemSpawnPoint::Tick(float DeltaTime)
 
 void ARandomItemSpawnPoint::SpawnItem()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Spawn!"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Spawn!"));
 
 	GetWorldTimerManager().ClearTimer(RespawnItemDelayTimerHandle);
 	
-	int randNumber = FMath::RandRange(0, (itemToSpawn.Max() - 1));
+	int randNumber = FMath::RandRange(0, (itemToSpawn.Num() - 1));
 
 	if (itemToSpawn[randNumber])
 	{
@@ -56,43 +57,52 @@ void ARandomItemSpawnPoint::SpawnItem()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Not Valid Actor to Spawn"));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Not Valid Actor to Spawn"));
 		
 		spawnedActor = nullptr;
 
-		GetWorldTimerManager().SetTimer(RespawnItemDelayTimerHandle, TimerDelegate, delayTimer, false);
+		GetWorldTimerManager().SetTimer(RespawnItemDelayTimerHandle, this, &ARandomItemSpawnPoint::SpawnItem, delayTimer, false);
 
 		return;
 	}
 }
 
-void ARandomItemSpawnPoint::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
-AActor* OtherActor, 
-UPrimitiveComponent* OtherComponent, 
-int32 OtherBodyIndex, 
-bool bFromSweep, const FHitResult& SweepResult)
+void ARandomItemSpawnPoint::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComponent,
+	int32 OtherBodyIndex,
+	bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (spawnedActor)
-	{
-		if (OtherActor != spawnedActor)
-		{
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided with the player!"));
 
-			if (Cast<AProjectApocalypseCharacter>(OtherActor))
+	if (spawnedActor && OtherActor != spawnedActor)
+	{
+		AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(OtherActor);
+
+		if (player)
+		{
+			AItemBaseClass* itemBaseClassRef = Cast<AItemBaseClass>(spawnedActor);
+
+			if (itemBaseClassRef)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided with the player!"));
+				itemBaseClassRef->PickUpAction(player);
+
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Item picked up!"));
 
 				spawnedActor->Destroy();
 
 				spawnedActor = nullptr;
 
-				GetWorldTimerManager().SetTimer(RespawnItemDelayTimerHandle, TimerDelegate, delayTimer, false);
-			}
-			else
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided not with the player!"));
+				GetWorldTimerManager().SetTimer(RespawnItemDelayTimerHandle, this, &ARandomItemSpawnPoint::SpawnItem, delayTimer, false);
 			}
 		}
+		else
+		{
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided not with the player!"));
+		}
+
 	}
+
 }
 
 //when choosing the random item to spawn, it should be relevant to the environment around it. 

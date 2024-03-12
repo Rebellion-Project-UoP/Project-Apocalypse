@@ -34,6 +34,7 @@ AZombieBase::AZombieBase()
 
 	isDead = false;
 
+	hasPointsBeenReceived = false;
 }
 
 // Called when the game starts or when spawned
@@ -92,8 +93,6 @@ void AZombieBase::Tick(float DeltaTime)
 		GetCharacterMovement()->MaxWalkSpeed = maxRunSpeed;
 		return;
 	}
-
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.1, FColor::Red, "here");
 
 	if (GetVelocity().Length() > maxWalkSpeed) {
 

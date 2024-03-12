@@ -3,17 +3,16 @@
 #include "CoreMinimal.h"
 #include "Components/CapsuleComponent.h"
 #include <ZombieBase.h>
-#include "../ProjectApocalypseCharacter.h"
 #include "GameFramework/Actor.h"
+#include "Sound/SoundCue.h"
 #include "BaseWeapon.generated.h"
+class AProjectApocalypseCharacter;
 
 UENUM (BlueprintType)
-enum class FiringMode
-{	 SingleFire,
-	 BurstFire,
-	 AutoFire,
-	 Toggleable,
-	 BinaryTrigger
+enum class FiringMode: uint8
+{	 SingleFire UMETA(DisplayName="Single"),
+	 BurstFire UMETA(DisplayName="Burst"),
+	 AutoFire UMETA(DisplayName="Auto")
 };
 
 UCLASS()
@@ -36,7 +35,7 @@ public:
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float Recoil;
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, meta=(ClampMin = 0, ClampMax = 100), Category="Weapon Stats")
 	float Accuracy;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float FireRate;
@@ -44,9 +43,15 @@ public:
 	float Range;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float Damage;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon Stats")
+	float HeadshotMultiplier;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon Stats")
+	float BodyShotMultiplier;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon Stats")
+	float LimbShotMultiplier;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float ReloadSpeed;
-
+	
 	float ReloadTime;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
@@ -66,6 +71,13 @@ public:
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Weapon Stats")
     bool bIsProjectile;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Audio")
+	USoundCue* GunShotNoise;
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Audio")
+	USoundCue* ReloadNoise;
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Audio")
+	USoundCue* MagEmptyNoise;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(ClampMin = 1))
 	int pellets;
@@ -123,19 +135,36 @@ public:
 	virtual FHitResult FireWeapon();
 
 	UFUNCTION(BlueprintCallable)
+	virtual void EndFireWeapon();
+
+	UFUNCTION(BlueprintCallable)
 	virtual void Reload();
 
 	UFUNCTION()
 	int32 CalculateScore(const FHitResult& HitResult);
 
 	UFUNCTION()
-	virtual void DealDamage(AZombieBase* Zombie);
+	virtual void DealDamage(AZombieBase* Zombie, const FHitResult& HitResult);
 
 	void Reloading();
 
 	UWorld* WorldRef;
 	AProjectApocalypseCharacter* PlayerRef;
 
+	FHitResult SingleFire();
+
+	FHitResult BurstFire();
+
+	FHitResult AutoFire();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FiringMode FireMode;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bCanFire;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsFiring;
 
 protected:
 	// Called when the game starts or when spawned
@@ -145,6 +174,16 @@ protected:
 	FVector LineTrace(FVector startPoint, FVector endPoint);
 
 	FTimerHandle ReloadingTimer;
+
+	FTimerHandle FireRateTimer;
+
+	void FireRateCooldown();
+
+	float FireRateCounter;
+
+	bool IsReloading;
+
+	float TrueAccuracy;
 
 public:	
 	// Called every frame

@@ -9,7 +9,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Separation.generated.h"
 
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class PROJECTAPOCALYPSE_API USeparation : public USteeringBehaviour
 {
 	GENERATED_BODY()

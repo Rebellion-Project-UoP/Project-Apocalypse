@@ -15,6 +15,7 @@
 //////////////////////////////////////////////////////////////////////////
 // AProjectApocalypseCharacter
 
+
 AProjectApocalypseCharacter::AProjectApocalypseCharacter()
 {
 	CurrentStamina = MaxStamina;
@@ -54,7 +55,15 @@ AProjectApocalypseCharacter::AProjectApocalypseCharacter()
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 	PlayerScore = 0;
 
+	AmmoCrateReserves = 1;
+
+	HealthPackReserves = 1;
+
+	CurrentItemSelected = 0;
+
 	StaminaRegenDelay = 0.0f;
+
+	IsDead = false;
 }
 
 void AProjectApocalypseCharacter::BeginPlay()
@@ -70,6 +79,22 @@ void AProjectApocalypseCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	TArray<AActor*> children = TArray<AActor*>();
+
+	GetAllChildActors(children);
+
+	for (auto It = children.CreateConstIterator(); It; ++It)
+	{
+		ABaseWeapon* weapon = (Cast<ABaseWeapon>(*It));
+
+		if (weapon)
+		{
+			weaponRef = weapon;
+		}
+	}
+
+	healthComponent = Cast<UHealthComp>(GetComponentByClass(UHealthComp::StaticClass()));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -94,7 +119,6 @@ void AProjectApocalypseCharacter::SetupPlayerInputComponent(class UInputComponen
 
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AProjectApocalypseCharacter::SprintEnd);
 	}
-
 }
 
 void AProjectApocalypseCharacter::Move(const FInputActionValue& Value)

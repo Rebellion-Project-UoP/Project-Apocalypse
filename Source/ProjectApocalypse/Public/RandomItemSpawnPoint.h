@@ -34,7 +34,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Item Spawning")
 	float delayTimer;
 
-	UPROPERTY()
 	USceneComponent* Root;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")

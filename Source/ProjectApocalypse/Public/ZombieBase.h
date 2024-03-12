@@ -36,13 +36,16 @@ public:
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 			float maxRunSpeed;
 
+	UHealthComp* healthComponent;
+
+	bool hasPointsBeenReceived;
+
+
 		
 private:
 	FVector _velocity;
 
 	UBoxComponent* swipeHitBox;
-
-	UHealthComp* healthComponent;
 
 	//stores all steering behaviours for the zombie
 	TArray<USteeringBehaviour*> _behaviours;
