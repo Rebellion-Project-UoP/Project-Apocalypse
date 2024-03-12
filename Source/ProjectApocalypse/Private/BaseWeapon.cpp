@@ -93,7 +93,7 @@ void ABaseWeapon::BeginPlay()
 
 	UpdateWeaponMesh();
 
-	TrueAccuracy = FMath::Lerp(0.05, 0.001, Accuracy/100);
+	TrueAccuracy = FMath::Lerp(0.05F, 0.0F, Accuracy/100);
 }
 
 FHitResult ABaseWeapon::LineTrace()
