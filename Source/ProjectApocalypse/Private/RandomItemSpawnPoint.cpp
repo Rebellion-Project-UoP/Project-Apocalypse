@@ -73,8 +73,6 @@ UPrimitiveComponent* OtherComponent,
 int32 OtherBodyIndex, 
 bool bFromSweep, const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided with the player!"));
-
 	if (spawnedActor)
 	{
 		AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(OtherActor);
