@@ -44,6 +44,12 @@ public:
 	float Range;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float Damage;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon Stats")
+	float HeadshotMultiplier;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon Stats")
+	float BodyShotMultiplier;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon Stats")
+	float LimbShotMultiplier;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float ReloadSpeed;
 
@@ -129,7 +135,7 @@ public:
 	int32 CalculateScore(const FHitResult& HitResult);
 
 	UFUNCTION()
-	virtual void DealDamage(AZombieBase* Zombie);
+	virtual void DealDamage(AZombieBase* Zombie, const FHitResult& HitResult);
 
 	void Reloading();
 

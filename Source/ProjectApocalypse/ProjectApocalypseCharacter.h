@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BaseWeapon.h"
+#include <ItemBaseClass.h>
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
 #include "ProjectApocalypseCharacter.generated.h"
@@ -120,7 +121,7 @@ public:
 	int32 HealthPackReserves;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Consumables")
-	TArray<TSubclassOf<class AActor>> CurrentItem;
+	TArray<TSubclassOf<AItemBaseClass>> CurrentItem;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Consumables")
 	int32 CurrentItemSelected;
