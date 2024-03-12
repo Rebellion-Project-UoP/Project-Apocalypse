@@ -48,6 +48,12 @@ class AProjectApocalypseCharacter : public ACharacter
 public:
 	AProjectApocalypseCharacter();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void Death();
+
+	UPROPERTY(EditAnywhere)
+	bool IsDead;
+
 
 protected:
 	/** Called for Sprint input */
@@ -91,7 +97,6 @@ protected:
 	float StaminaRegenRate = 10.f;
 
 
-
 	UFUNCTION()
 	void RegenStamina();
 
@@ -110,7 +115,7 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Score")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Score")
 	int32 PlayerScore;
 };
 
