@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "ItemBaseClass.h"
 #include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 
@@ -15,16 +14,13 @@ AItemBaseClass::AItemBaseClass()
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
 	CollisionBox->SetupAttachment(Root);
-
-	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &AItemBaseClass::OnOverlapBegin);
 }
 
 // Called when the game starts or when spawned
 void AItemBaseClass::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	//_myPlayerRef = Cast<AProjectApocalypseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
 }
 
 // Called every frame
@@ -34,18 +30,15 @@ void AItemBaseClass::Tick(float DeltaTime)
 
 }
 
-void AItemBaseClass::OnOverlapBegin(UPrimitiveComponent *OverlappedComponent, 
-AActor *OtherActor, 
-UPrimitiveComponent *OtherComponent, 
-int32 OtherBodyIndex, 
-bool bFromSweep, const FHitResult &SweepResult)
+void AItemBaseClass::PickUpAction(AProjectApocalypseCharacter* player)
 {
-	if (Cast<AProjectApocalypseCharacter>(OtherActor))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Collided with the Player!"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Collided not with the Player!"));
-	}
+
 }
+
+void AItemBaseClass::UseAction(AProjectApocalypseCharacter* player)
+{
+
+}
+
+
+
