@@ -21,7 +21,7 @@ ARandomItemSpawnPoint::ARandomItemSpawnPoint()
 
 	spawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	delayTimer = 3;
+	delayTimer = 30;
 }
 
 // Called when the game starts or when spawned
