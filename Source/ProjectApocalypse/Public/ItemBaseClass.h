@@ -6,6 +6,8 @@
 
 #include "ItemBaseClass.generated.h"
 
+class AProjectApocalypseCharacter;
+
 UCLASS()
 class PROJECTAPOCALYPSE_API AItemBaseClass : public AActor
 {
