@@ -172,7 +172,7 @@ void AProjectApocalypseCharacter::Look(const FInputActionValue& Value)
 void AProjectApocalypseCharacter::SprintStart()
 {
 	
-	if (CurrentStamina > 0 && bIsAiming)
+	if (CurrentStamina > 0 && !bIsAiming)
 	{
 		GetWorldTimerManager().ClearTimer(StaminaRegenTimerHandle);
 		
