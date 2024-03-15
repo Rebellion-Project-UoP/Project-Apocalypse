@@ -71,6 +71,8 @@ protected:
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
 
+	void StopMoving();
+
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
@@ -97,6 +99,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
 	float StaminaRegenRate = 10.f;
 
+	bool bIsMoving;
 
 	UFUNCTION()
 	void RegenStamina();
@@ -134,5 +137,8 @@ public:
 	ABaseWeapon* weaponRef;
 
 	UHealthComp* healthComponent;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsAiming;
 };
 
