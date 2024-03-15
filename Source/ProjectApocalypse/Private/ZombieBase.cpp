@@ -121,7 +121,7 @@ void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 
 			UHealthComp* health = player->GetComponentByClass<UHealthComp>();
 
-			IDamageInterface::Execute_TakeDamage(health, damage);
+			IDamageInterface::Execute_TakeDamage(health, 20);
 		}
 	}
 }
