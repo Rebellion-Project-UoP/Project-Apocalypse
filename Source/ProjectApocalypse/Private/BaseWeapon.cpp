@@ -65,6 +65,8 @@ ABaseWeapon::ABaseWeapon()
 	BarrelExtensionStaticMesh = NewObject<UStaticMesh>();
 
 	WorldRef = GetWorld();
+
+	BulletDirection = FVector(0,0,0);
 	
 	Mag = 0;
 
@@ -118,6 +120,8 @@ FHitResult ABaseWeapon::LineTrace()
 	FVector Direction = HitLocation - StartPoint;
 
 	Direction = Direction.GetSafeNormal() + FVector3d(FMath::RandRange(-TrueAccuracy,TrueAccuracy),FMath::RandRange(-TrueAccuracy,TrueAccuracy),FMath::RandRange(-TrueAccuracy,TrueAccuracy));
+
+	BulletDirection = Direction;
 	
 	FVector EndPoint = StartPoint + Direction*Range; //temporary until designer begins implementing weapon stats then use range
 
@@ -127,7 +131,7 @@ FHitResult ABaseWeapon::LineTrace()
 
 	bool bHit = WorldRef->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, TraceChannel, TraceParams);
 
-	DrawDebugLine(WorldRef,StartPoint, EndPoint , FColor::Red, false, 2.0f, 0, 1.0f);
+	//DrawDebugLine(WorldRef,StartPoint, EndPoint , FColor::Red, false, 2.0f, 0, 1.0f);
 
 	if (bHit)
 	{
