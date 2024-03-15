@@ -80,6 +80,8 @@ ABaseWeapon::ABaseWeapon()
 	bCanFire = true;
 
 	IsReloading = false;
+
+	bMakeEmptyNoise = false;
 }
 
 // Called when the game starts or when spawned
@@ -259,9 +261,14 @@ FHitResult ABaseWeapon::FireWeapon()
 		return result;
 	}
 
-	if (bIsFiring||Ammunition<=0)
+	if (bIsFiring||Ammunition<1)
 	{
-		UGameplayStatics::PlaySound2D(this, MagEmptyNoise);
+		if (bMakeEmptyNoise)
+		{
+			UGameplayStatics::PlaySound2D(this, MagEmptyNoise);
+			
+			bMakeEmptyNoise = false;
+		}
 
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Can't fire weapon"));
 

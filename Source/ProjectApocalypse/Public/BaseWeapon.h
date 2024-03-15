@@ -166,6 +166,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsFiring;
 
+	UPROPERTY(BlueprintReadWrite)
+	bool bMakeEmptyNoise;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
