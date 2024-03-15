@@ -64,6 +64,10 @@ AProjectApocalypseCharacter::AProjectApocalypseCharacter()
 	StaminaRegenDelay = 0.0f;
 
 	IsDead = false;
+
+	bIsMoving = false;
+
+	bIsAiming = false;
 }
 
 void AProjectApocalypseCharacter::BeginPlay()
@@ -111,6 +115,7 @@ void AProjectApocalypseCharacter::SetupPlayerInputComponent(class UInputComponen
 
 		//Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AProjectApocalypseCharacter::Move);
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &AProjectApocalypseCharacter::StopMoving);
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProjectApocalypseCharacter::Look);
@@ -123,6 +128,8 @@ void AProjectApocalypseCharacter::SetupPlayerInputComponent(class UInputComponen
 
 void AProjectApocalypseCharacter::Move(const FInputActionValue& Value)
 {
+	bIsMoving = true;
+	
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
@@ -144,6 +151,11 @@ void AProjectApocalypseCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
+void AProjectApocalypseCharacter::StopMoving()
+{
+	bIsMoving = false;
+}
+
 void AProjectApocalypseCharacter::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D
@@ -159,11 +171,11 @@ void AProjectApocalypseCharacter::Look(const FInputActionValue& Value)
 
 void AProjectApocalypseCharacter::SprintStart()
 {
-
-	GetWorldTimerManager().ClearTimer(StaminaRegenTimerHandle);
 	
-	if (CurrentStamina > 0 && GetCharacterMovement()->Velocity.Size() > 0)
+	if (CurrentStamina > 0 && !bIsAiming)
 	{
+		GetWorldTimerManager().ClearTimer(StaminaRegenTimerHandle);
+		
 		//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.0f, FColor::Blue, "current drain is ");
 		GetWorld()->GetTimerManager().SetTimer(StaminaDrainTimerHandle,this, &AProjectApocalypseCharacter::DrainStamina, 0.1f, true,0.0f);
 		IsSprinting = true;
@@ -193,7 +205,7 @@ void AProjectApocalypseCharacter::SprintEnd()
 void AProjectApocalypseCharacter::DrainStamina()
 {
 	//CurrentStamina -= 1;
-		if (CurrentStamina > 0)
+		if (CurrentStamina > 0 && bIsMoving)
 		{
 			CurrentStamina -= SprintStaminaDrainRate * 0.1f; // Decrease stamina based on the drain rate and interval
 	
