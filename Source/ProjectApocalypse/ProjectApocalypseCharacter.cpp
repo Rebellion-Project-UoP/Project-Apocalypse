@@ -120,7 +120,7 @@ void AProjectApocalypseCharacter::SetupPlayerInputComponent(class UInputComponen
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProjectApocalypseCharacter::Look);
 
-		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started , this, &AProjectApocalypseCharacter::SprintStart);
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered , this, &AProjectApocalypseCharacter::SprintStart);
 
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AProjectApocalypseCharacter::SprintEnd);
 	}
@@ -171,13 +171,25 @@ void AProjectApocalypseCharacter::Look(const FInputActionValue& Value)
 
 void AProjectApocalypseCharacter::SprintStart()
 {
+	if (bIsAiming)
+	{
+		if (!StaminaRegenTimerHandle.IsValid())
+		{
+			GetWorld()->GetTimerManager().SetTimer(StaminaRegenTimerHandle, this, &AProjectApocalypseCharacter::RegenStamina, 0.1f, true, StaminaRegenDelay);
+		}
+
+		return;
+	}
 	
-	if (CurrentStamina > 0 && !bIsAiming)
+	if (CurrentStamina > 0)
 	{
 		GetWorldTimerManager().ClearTimer(StaminaRegenTimerHandle);
 		
 		//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.0f, FColor::Blue, "current drain is ");
-		GetWorld()->GetTimerManager().SetTimer(StaminaDrainTimerHandle,this, &AProjectApocalypseCharacter::DrainStamina, 0.1f, true,0.0f);
+		if (!StaminaDrainTimerHandle.IsValid())
+		{
+			GetWorld()->GetTimerManager().SetTimer(StaminaDrainTimerHandle,this, &AProjectApocalypseCharacter::DrainStamina, 0.1f, true,0.0f);
+		}
 		IsSprinting = true;
 		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 		/*GetWorldTimerManager().SetTimer(StaminaDrainTimerHandle, this, &AProjectApocalypseCharacter::DrainStamina, 0.1f, true);*/
@@ -187,6 +199,11 @@ void AProjectApocalypseCharacter::SprintStart()
 
 void AProjectApocalypseCharacter::SprintEnd()
 {
+	if (bIsAiming)
+	{
+		return;
+	}
+	
 	IsSprinting = false;
 	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
 	GetWorldTimerManager().ClearTimer(StaminaDrainTimerHandle);
@@ -205,18 +222,23 @@ void AProjectApocalypseCharacter::SprintEnd()
 void AProjectApocalypseCharacter::DrainStamina()
 {
 	//CurrentStamina -= 1;
-		if (CurrentStamina > 0 && bIsMoving)
-		{
-			CurrentStamina -= SprintStaminaDrainRate * 0.1f; // Decrease stamina based on the drain rate and interval
-	
-	
-		}
-		if (CurrentStamina <= 0)
-		{
-			CurrentStamina = 0;
-			GetWorldTimerManager().ClearTimer(StaminaDrainTimerHandle);
-			SprintEnd(); // Stop sprinting when stamina is depleted
-		}
+	if (bIsAiming)
+	{
+		GetWorldTimerManager().ClearTimer(StaminaDrainTimerHandle);
+		return;
+	}
+	if (CurrentStamina > 0 && bIsMoving)
+	{
+		CurrentStamina -= SprintStaminaDrainRate * 0.1f; // Decrease stamina based on the drain rate and interval
+
+		
+	}
+	if (CurrentStamina <= 0)
+	{
+		CurrentStamina = 0;
+		GetWorldTimerManager().ClearTimer(StaminaDrainTimerHandle);
+		SprintEnd(); // Stop sprinting when stamina is depleted
+	}
 }
 
 void AProjectApocalypseCharacter::RegenStamina()
