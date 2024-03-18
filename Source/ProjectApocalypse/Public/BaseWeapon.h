@@ -55,17 +55,7 @@ public:
 	float ReloadTime;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
-	float WeaponWeight;
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
-	float Knockback;
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
-	float Overheat;
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
-	float Cooldown;
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float DamageFalloff;
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
-	float ExplosionRadius;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float Magnification;
 

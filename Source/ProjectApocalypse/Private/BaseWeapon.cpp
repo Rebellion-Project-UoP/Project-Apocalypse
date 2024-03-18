@@ -137,7 +137,7 @@ FHitResult ABaseWeapon::LineTrace()
 	{
 		if (Cast<AZombieBase>(HitResult.GetActor()))
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a zombie!"));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a zombie!"));
 			AZombieBase* Hit = Cast<AZombieBase>(HitResult.GetActor());
 
 			DealDamage(Hit, HitResult);
@@ -151,20 +151,20 @@ FHitResult ABaseWeapon::LineTrace()
 					Hit->hasPointsBeenReceived = true;
 				}
 
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Works"));
+				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Works"));
 			}
 			
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Score: %i"), PlayerRef->PlayerScore));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Score: %i"), PlayerRef->PlayerScore));
 
 			return HitResult;
 		}
 
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a something!"));
+		// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit a something!"));
 
 		return HitResult;
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit nothing!"));
+	// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("You hit nothing!"));
 	return HitResult;
 
 }
@@ -274,7 +274,7 @@ FHitResult ABaseWeapon::FireWeapon()
 			bMakeEmptyNoise = false;
 		}
 
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Can't fire weapon"));
+		// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Can't fire weapon"));
 
 		return result;
 	}
@@ -316,7 +316,7 @@ void ABaseWeapon::Reloading()
 {
 	ReloadTime -= 0.1f;
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Reloading in: %f"),ReloadTime));
+	// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Reloading in: %f"),ReloadTime));
 
 	
 	if (ReloadTime <=0)
