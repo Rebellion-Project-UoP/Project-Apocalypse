@@ -84,6 +84,8 @@ ABaseWeapon::ABaseWeapon()
 	IsReloading = false;
 
 	bMakeEmptyNoise = false;
+
+	pellets = 1;
 }
 
 // Called when the game starts or when spawned
