@@ -156,6 +156,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsFiring;
 
+	UPROPERTY(BlueprintReadOnly)
+	bool IsReloading;
+
 	UPROPERTY(BlueprintReadWrite)
 	bool bMakeEmptyNoise;
 
@@ -176,8 +179,7 @@ protected:
 	void FireRateCooldown();
 
 	float FireRateCounter;
-
-	bool IsReloading;
+	
 
 	float TrueAccuracy;
 

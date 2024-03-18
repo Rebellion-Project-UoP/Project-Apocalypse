@@ -281,7 +281,7 @@ FHitResult ABaseWeapon::FireWeapon()
 		return result;
 	}
 
-	Reload();
+	// Reload();
 	
 	return result;
 }
