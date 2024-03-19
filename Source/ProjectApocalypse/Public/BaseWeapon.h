@@ -165,6 +165,9 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	FVector BulletDirection;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Stats")
+	float RecoilCompensationAddition;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

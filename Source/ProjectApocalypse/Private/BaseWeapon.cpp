@@ -86,6 +86,8 @@ ABaseWeapon::ABaseWeapon()
 	bMakeEmptyNoise = false;
 
 	pellets = 1;
+
+	RecoilCompensationAddition = 0.2f;
 }
 
 // Called when the game starts or when spawned
