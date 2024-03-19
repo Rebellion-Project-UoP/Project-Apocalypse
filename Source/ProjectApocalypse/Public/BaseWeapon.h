@@ -55,17 +55,7 @@ public:
 	float ReloadTime;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
-	float WeaponWeight;
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
-	float Knockback;
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
-	float Overheat;
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
-	float Cooldown;
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float DamageFalloff;
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
-	float ExplosionRadius;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Weapon Stats")
 	float Magnification;
 
@@ -166,8 +156,14 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsFiring;
 
+	UPROPERTY(BlueprintReadOnly)
+	bool IsReloading;
+
 	UPROPERTY(BlueprintReadWrite)
 	bool bMakeEmptyNoise;
+
+	UPROPERTY(BlueprintReadOnly)
+	FVector BulletDirection;
 
 protected:
 	// Called when the game starts or when spawned
@@ -183,8 +179,7 @@ protected:
 	void FireRateCooldown();
 
 	float FireRateCounter;
-
-	bool IsReloading;
+	
 
 	float TrueAccuracy;
 
