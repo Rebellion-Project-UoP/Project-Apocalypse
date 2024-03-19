@@ -34,6 +34,8 @@ AZombieBase::AZombieBase()
 
 	isDead = false;
 
+	damagedOnce = false;
+
 	hasPointsBeenReceived = false;
 }
 
@@ -113,6 +115,10 @@ void AZombieBase::Tick(float DeltaTime)
 
 void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (damagedOnce) {
+		return;
+	}
+
 	if (Cast<AProjectApocalypseCharacter>(OtherActor)) {
 		AProjectApocalypseCharacter* player = Cast<AProjectApocalypseCharacter>(OtherActor);
 
@@ -122,6 +128,7 @@ void AZombieBase::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 			UHealthComp* health = player->GetComponentByClass<UHealthComp>();
 			
 			IDamageInterface::Execute_TakeDamage(health, damage);
+			damagedOnce = true;
 		}
 	}
 }
