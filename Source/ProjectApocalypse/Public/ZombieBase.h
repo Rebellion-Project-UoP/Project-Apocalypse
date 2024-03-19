@@ -37,6 +37,8 @@ public:
 			float maxRunSpeed;
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 			float damage;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+			bool damagedOnce;
 
 	UHealthComp* healthComponent;
 

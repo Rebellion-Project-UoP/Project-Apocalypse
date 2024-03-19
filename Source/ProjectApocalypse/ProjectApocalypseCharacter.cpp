@@ -68,6 +68,8 @@ AProjectApocalypseCharacter::AProjectApocalypseCharacter()
 	bIsMoving = false;
 
 	bIsAiming = false;
+
+	bCanSprint = true;
 }
 
 void AProjectApocalypseCharacter::BeginPlay()
@@ -171,6 +173,11 @@ void AProjectApocalypseCharacter::Look(const FInputActionValue& Value)
 
 void AProjectApocalypseCharacter::SprintStart()
 {
+	if (!bCanSprint)
+	{
+		return;
+	}
+	
 	if (bIsAiming)
 	{
 		if (!StaminaRegenTimerHandle.IsValid())
@@ -183,7 +190,11 @@ void AProjectApocalypseCharacter::SprintStart()
 	
 	if (CurrentStamina > 0)
 	{
-		GetWorldTimerManager().ClearTimer(StaminaRegenTimerHandle);
+		if (StaminaRegenTimerHandle.IsValid())
+		{
+			GetWorldTimerManager().ClearTimer(StaminaRegenTimerHandle);
+		}
+
 		
 		//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 1.0f, FColor::Blue, "current drain is ");
 		if (!StaminaDrainTimerHandle.IsValid())
@@ -194,7 +205,9 @@ void AProjectApocalypseCharacter::SprintStart()
 		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 		/*GetWorldTimerManager().SetTimer(StaminaDrainTimerHandle, this, &AProjectApocalypseCharacter::DrainStamina, 0.1f, true);*/
 
+		return;
 	}
+	bCanSprint = false;
 }
 
 void AProjectApocalypseCharacter::SprintEnd()
@@ -216,7 +229,7 @@ void AProjectApocalypseCharacter::SprintEnd()
 	{
 		GetWorldTimerManager().ClearTimer(StaminaRegenTimerHandle);
 	}
-	
+	bCanSprint = true;
 }
 
 void AProjectApocalypseCharacter::DrainStamina()
