@@ -86,7 +86,10 @@ ABaseWeapon::ABaseWeapon()
 	bMakeEmptyNoise = false;
 
 	pellets = 1;
+
+	RecoilCompensationAddition = 0.2f;
 }
+
 
 // Called when the game starts or when spawned
 void ABaseWeapon::BeginPlay()
@@ -148,9 +151,13 @@ FHitResult ABaseWeapon::LineTrace()
 			{
 				if (HitResult.PhysMaterial.IsValid())
 				{
-					PlayerRef->PlayerScore += CalculateScore(HitResult);
+					int32 scoreToAdd = CalculateScore(HitResult);
+					
+					PlayerRef->PlayerScore += scoreToAdd;
 
 					Hit->hasPointsBeenReceived = true;
+
+					ScoreAdditionIndicator(scoreToAdd, bodyPartHit);
 				}
 
 				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Works"));
@@ -408,16 +415,19 @@ int32 ABaseWeapon::CalculateScore(const FHitResult& HitResult)
 	{		
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Head"));
 		score = 20;
+		scoreAddition = 20;
 	}
 	else if (HitResult.PhysMaterial->SurfaceType == SurfaceType2)
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
 		score = 10;
+		scoreAddition = 10;
 	}
 	else if (HitResult.PhysMaterial->SurfaceType == SurfaceType3)
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Limb"));
 		score = 5;
+		scoreAddition = 5;
 	}
 		
 	return score;
@@ -436,18 +446,21 @@ void ABaseWeapon::DealDamage(AZombieBase* Zombie, const FHitResult& HitResult)
 			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Head"));
 
 			finalDamage = Damage * HeadshotMultiplier;
+			bodyPartHit = "Headshot";
 		}
 		else if (HitResult.PhysMaterial->SurfaceType == SurfaceType2)
 		{
 			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Torso"));
 
 			finalDamage = Damage * BodyShotMultiplier;
+			bodyPartHit = "Bodyshot";
 		}
 		else if (HitResult.PhysMaterial->SurfaceType == SurfaceType3)
 		{
 			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Limb"));
 
 			finalDamage = Damage * LimbShotMultiplier;
+			bodyPartHit = "Limbshot";
 		}
 
 		IDamageInterface::Execute_TakeDamage(ZombieHealthComp, finalDamage);   //Change 100 to Damage variable
@@ -455,6 +468,11 @@ void ABaseWeapon::DealDamage(AZombieBase* Zombie, const FHitResult& HitResult)
 
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Damage: %f"), finalDamage));
 	}
+}
+
+void ABaseWeapon::ScoreAdditionIndicator(int32& Score, FString& BodyPartHit)
+{
+	OnScoreAdditionIndicatorCalled.Broadcast();
 }
 
 void ABaseWeapon::OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
