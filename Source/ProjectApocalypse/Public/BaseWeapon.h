@@ -15,6 +15,8 @@ enum class FiringMode: uint8
 	 AutoFire UMETA(DisplayName="Auto")
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMyFunctionCalled);
+
 UCLASS()
 class PROJECTAPOCALYPSE_API ABaseWeapon : public AActor
 {
@@ -136,6 +138,9 @@ public:
 	UFUNCTION()
 	virtual void DealDamage(AZombieBase* Zombie, const FHitResult& HitResult);
 
+	UFUNCTION(BlueprintCallable)
+	void ScoreAdditionIndicator(int32& Score, FString& BodyPartHit);
+
 	void Reloading();
 
 	UWorld* WorldRef;
@@ -167,6 +172,16 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Stats")
 	float RecoilCompensationAddition;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnMyFunctionCalled OnScoreAdditionIndicatorCalled;
+
+	UPROPERTY(BlueprintReadOnly)
+	int32 scoreAddition;
+
+	UPROPERTY(BlueprintReadOnly)
+	FString bodyPartHit;
+
 
 protected:
 	// Called when the game starts or when spawned
