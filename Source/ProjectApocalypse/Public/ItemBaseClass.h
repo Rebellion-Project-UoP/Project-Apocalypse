@@ -34,5 +34,5 @@ public:
 	virtual void PickUpAction(AProjectApocalypseCharacter* player);
 
 	UFUNCTION(BlueprintCallable)
-	virtual void UseAction(AProjectApocalypseCharacter* player);
+	virtual void UseAction(AProjectApocalypseCharacter* player, bool& outActionUsed);
 };

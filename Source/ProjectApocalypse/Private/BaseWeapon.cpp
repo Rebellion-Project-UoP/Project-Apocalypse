@@ -157,7 +157,7 @@ FHitResult ABaseWeapon::LineTrace()
 
 					Hit->hasPointsBeenReceived = true;
 
-					ScoreAdditionIndicator(scoreToAdd, bodyPartHit);
+					ScoreAdditionIndicator();
 				}
 
 				//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Works"));
@@ -470,7 +470,7 @@ void ABaseWeapon::DealDamage(AZombieBase* Zombie, const FHitResult& HitResult)
 	}
 }
 
-void ABaseWeapon::ScoreAdditionIndicator(int32& Score, FString& BodyPartHit)
+void ABaseWeapon::ScoreAdditionIndicator()
 {
 	OnScoreAdditionIndicatorCalled.Broadcast();
 }
