@@ -139,7 +139,7 @@ public:
 	virtual void DealDamage(AZombieBase* Zombie, const FHitResult& HitResult);
 
 	UFUNCTION(BlueprintCallable)
-	void ScoreAdditionIndicator(int32& Score, FString& BodyPartHit);
+	void ScoreAdditionIndicator();
 
 	void Reloading();
 

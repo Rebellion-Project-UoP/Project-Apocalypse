@@ -17,5 +17,5 @@ class PROJECTAPOCALYPSE_API AHealthPack : public AItemBaseClass
 public:
 	virtual void PickUpAction(AProjectApocalypseCharacter* player) override;
 
-	virtual void UseAction(AProjectApocalypseCharacter* player) override;
+	virtual void UseAction(AProjectApocalypseCharacter* player, bool& outActionUsed) override;
 };
