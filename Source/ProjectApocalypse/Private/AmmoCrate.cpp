@@ -6,6 +6,7 @@
 
 void AAmmoCrate::PickUpAction(AProjectApocalypseCharacter* player)
 {
+	Super::PickUpAction(player);
 	player->AmmoCrateReserves++;
 }
 
@@ -15,15 +16,9 @@ void AAmmoCrate::UseAction(AProjectApocalypseCharacter* player, bool& outActionU
 
 	if (player->AmmoCrateReserves > 0)
 	{
-		if (player->weaponRef->Ammunition < player->weaponRef->MaxAmmunition)
+		if (player->weaponRef->Ammunition < player->weaponRef->MaxAmmunition+player->weaponRef->MagSize-player->weaponRef->Mag)
 		{
-			//player->weaponRef->Ammunition += 30;
-			player->weaponRef->Ammunition = player->weaponRef->MaxAmmunition;
-
-			if (player->weaponRef->Ammunition > player->weaponRef->MaxAmmunition)
-			{
-				player->weaponRef->Ammunition = player->weaponRef->MaxAmmunition;
-			}
+			player->weaponRef->Ammunition = player->weaponRef->MaxAmmunition+player->weaponRef->MagSize-player->weaponRef->Mag;
 
 			player->AmmoCrateReserves--;
 

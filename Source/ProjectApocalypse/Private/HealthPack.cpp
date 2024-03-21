@@ -5,6 +5,7 @@
 
 void AHealthPack::PickUpAction(AProjectApocalypseCharacter* player)
 {
+	Super::PickUpAction(player);
 	player->HealthPackReserves++;
 }
 

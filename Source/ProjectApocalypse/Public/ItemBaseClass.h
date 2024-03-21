@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
+#include "Sound/SoundCue.h"
 
 #include "ItemBaseClass.generated.h"
 
@@ -16,6 +17,9 @@ class PROJECTAPOCALYPSE_API AItemBaseClass : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AItemBaseClass();
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	USoundCue* PickupNoise;
 
 protected:
 	// Called when the game starts or when spawned

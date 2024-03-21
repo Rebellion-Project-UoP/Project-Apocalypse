@@ -76,6 +76,7 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
+	UPROPERTY(BlueprintReadWrite)
 	bool bCanSprint;
 
 
@@ -136,6 +137,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Consumables")
 	int32 CurrentItemSelected;
 
+	UPROPERTY(BlueprintReadWrite)
 	ABaseWeapon* weaponRef;
 
 	UHealthComp* healthComponent;
