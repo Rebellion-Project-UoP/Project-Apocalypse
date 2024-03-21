@@ -73,7 +73,6 @@ void ARandomItemSpawnPoint::OnOverlapBegin(UPrimitiveComponent* OverlappedCompon
 	int32 OtherBodyIndex,
 	bool bFromSweep, const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Collided with the player!"));
 
 	if (spawnedActor && OtherActor != spawnedActor)
 	{
@@ -94,6 +93,8 @@ void ARandomItemSpawnPoint::OnOverlapBegin(UPrimitiveComponent* OverlappedCompon
 				spawnedActor = nullptr;
 
 				GetWorldTimerManager().SetTimer(RespawnItemDelayTimerHandle, this, &ARandomItemSpawnPoint::SpawnItem, delayTimer, false);
+
+				
 			}
 		}
 		else

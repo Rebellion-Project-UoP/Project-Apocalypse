@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ItemBaseClass.h"
+
+#include "Kismet/GameplayStatics.h"
 #include "ProjectApocalypse/ProjectApocalypseCharacter.h"
 
 // Sets default values
@@ -32,6 +34,10 @@ void AItemBaseClass::Tick(float DeltaTime)
 
 void AItemBaseClass::PickUpAction(AProjectApocalypseCharacter* player)
 {
+	if (PickupNoise)
+	{
+		UGameplayStatics::PlaySound2D(this, PickupNoise, PickupNoise->GetVolumeMultiplier(), PickupNoise->GetPitchMultiplier(), 0.2);
+	}
 
 }
 

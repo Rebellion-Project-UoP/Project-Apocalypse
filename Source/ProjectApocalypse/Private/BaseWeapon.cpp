@@ -98,7 +98,10 @@ void ABaseWeapon::BeginPlay()
 
 	PlayerRef = Cast<AProjectApocalypseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
-	Mag = MagSize;
+	//get ref to game state
+	
+	//get current ammo count set ammo to ammo count
+	//get current mag count set mag to mag count
 
 	UpdateWeaponMesh();
 
@@ -486,6 +489,6 @@ void ABaseWeapon::OnInteractionCapsuleOverlap(UPrimitiveComponent* OverlappedCom
 		return;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Not the player"));
+	//UE_LOG(LogTemp, Warning, TEXT("Not the player"));
 }
 
